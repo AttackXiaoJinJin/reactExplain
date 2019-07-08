@@ -21,19 +21,32 @@ const RESERVED_PROPS = {
 };
 
 let specialPropKeyWarningShown, specialPropRefWarningShown;
+// { id: "one", class: "two" }
 
+//判断是否设置了ref的属性,true有，false没有
 function hasValidRef(config) {
+  //如果是development环境的话
   if (__DEV__) {
+    //如果config中存在ref属性的话
+    //在jQuery中 .call/.apply的更大作用是绑定this
     if (hasOwnProperty.call(config, 'ref')) {
+      //Object.getOwnPropertyDescriptor() es5
+      //Object.getOwnPropertyDescriptors() es6
+      //https://blog.csdn.net/qq_30100043/article/details/53424963
+
+      //返回对象config的属性ref 的get对象
       const getter = Object.getOwnPropertyDescriptor(config, 'ref').get;
+      //如果isReactWarning，则忽略ref属性，返回false
       if (getter && getter.isReactWarning) {
         return false;
       }
     }
   }
+  //<div ref={this.optionsTEchart} ></div>
   return config.ref !== undefined;
 }
-
+//判断是否设置了key
+//同hasValidRef，不解释了
 function hasValidKey(config) {
   if (__DEV__) {
     if (hasOwnProperty.call(config, 'key')) {
@@ -111,6 +124,9 @@ function defineRefPropWarningGetter(props, displayName) {
 const ReactElement = function(type, key, ref, self, source, owner, props) {
   const element = {
     // This tag allows us to uniquely identify this as a React Element
+    //标识element的类型
+    //因为jsx都是通过createElement创建的，所以ReactElement的类型固定:为REACT_ELEMENT_TYPE
+    //重要！是react最终渲染到DOM上时，需要判断$$typeof===REACT_ELEMENT_TYPE
     $$typeof: REACT_ELEMENT_TYPE,
 
     // Built-in properties that belong on the element
@@ -301,6 +317,14 @@ export function jsxDEV(type, config, maybeKey, source, self) {
  * Create and return a new ReactElement of the given type.
  * See https://reactjs.org/docs/react-api.html#createelement
  */
+//作用：根据所传的参数创建ReactElement元素
+
+//  type:"div",
+//  config:{ id: "one", class: "two" },
+//  children:React.createElement( "span", { id: "spanOne" }, "this is spanOne"),
+//  React.createElement("span", { id: "spanTwo" }, "this is spanTwo")
+
+//注意：react只写了3个参数，实际上，从第三个参数往后都是children
 export function createElement(type, config, children) {
   let propName;
 
@@ -311,20 +335,23 @@ export function createElement(type, config, children) {
   let ref = null;
   let self = null;
   let source = null;
-
+  //赋给标签的props不为空时
   if (config != null) {
     if (hasValidRef(config)) {
       ref = config.ref;
     }
     if (hasValidKey(config)) {
+      //防止是Number
       key = '' + config.key;
     }
-
+    //__self、__source 暂时不知道是干啥用的属性
     self = config.__self === undefined ? null : config.__self;
     source = config.__source === undefined ? null : config.__source;
     // Remaining properties are added to a new props object
     for (propName in config) {
+      //如果config中的属性不是标签原生属性，则放入props对象中
       if (
+
         hasOwnProperty.call(config, propName) &&
         !RESERVED_PROPS.hasOwnProperty(propName)
       ) {
@@ -335,37 +362,60 @@ export function createElement(type, config, children) {
 
   // Children can be more than one argument, and those are transferred onto
   // the newly allocated props object.
+  //子元素数量
   const childrenLength = arguments.length - 2;
   if (childrenLength === 1) {
     props.children = children;
   } else if (childrenLength > 1) {
     const childArray = Array(childrenLength);
+    //依次将children push进array中
     for (let i = 0; i < childrenLength; i++) {
       childArray[i] = arguments[i + 2];
     }
+    //如果是development环境的话
     if (__DEV__) {
+      //冻结array
+      //未在微信发表
+      //https://www.jianshu.com/p/91e5dc520c0d?utm_campaign=hugo&utm_medium=reader_share&utm_content=note&utm_source=weixin-friends&from=singlemessage&isappinstalled=0
       if (Object.freeze) {
         Object.freeze(childArray);
       }
     }
+    //开发中写的this.props.children就是子元素的集合
     props.children = childArray;
   }
 
   // Resolve default props
+
+  //为传入的props设置默认值，比如：
+  //class Comp extends React.Component{
+  //  static defaultProps = {
+  //     aaa: 'one',
+  //     bbb: () => {},
+  //     ccc: {},
+  //   };
+  //
+  // }
+
   if (type && type.defaultProps) {
     const defaultProps = type.defaultProps;
     for (propName in defaultProps) {
+      //如果props数组中未设值，则设置默认值（注意：null也算设置了值）
       if (props[propName] === undefined) {
         props[propName] = defaultProps[propName];
       }
     }
   }
+
   if (__DEV__) {
+    //一旦ref或key存在
     if (key || ref) {
+      //如果type是组件的话，赋值displayName
       const displayName =
         typeof type === 'function'
           ? type.displayName || type.name || 'Unknown'
           : type;
+      //可不看
       if (key) {
         defineKeyPropWarningGetter(props, displayName);
       }
@@ -375,13 +425,13 @@ export function createElement(type, config, children) {
     }
   }
   return ReactElement(
-    type,
-    key,
-    ref,
-    self,
-    source,
-    ReactCurrentOwner.current,
-    props,
+    type,  //'div'
+    key,  //null
+    ref,  //null
+    self, //null
+    source, //null
+    ReactCurrentOwner.current, //
+    props, //自定义的属性、方法
   );
 }
 
