@@ -121,21 +121,31 @@ function defineRefPropWarningGetter(props, displayName) {
  * indicating filename, line number, and/or other information.
  * @internal
  */
+
+// type,  //'div'
+// key,  //null
+// ref,  //null
+// self, //null
+// source, //null
+// ReactCurrentOwner.current, //null或Fiber
+// props, //自定义的属性、方法，注意：props.children=childArray
 const ReactElement = function(type, key, ref, self, source, owner, props) {
   const element = {
     // This tag allows us to uniquely identify this as a React Element
     //标识element的类型
     //因为jsx都是通过createElement创建的，所以ReactElement的类型固定:为REACT_ELEMENT_TYPE
-    //重要！是react最终渲染到DOM上时，需要判断$$typeof===REACT_ELEMENT_TYPE
+    //重要！因为react最终渲染到DOM上时，需要判断$$typeof===REACT_ELEMENT_TYPE
     $$typeof: REACT_ELEMENT_TYPE,
 
     // Built-in properties that belong on the element
+    //设置元素的内置属性
     type: type,
     key: key,
     ref: ref,
     props: props,
 
     // Record the component responsible for creating this element.
+    //记录创建react.element的组件（this？）
     _owner: owner,
   };
 
@@ -144,12 +154,19 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
     // an external backing store so that we can freeze the whole object.
     // This can be replaced with a WeakMap once they are implemented in
     // commonly used development environments.
+
+    //验证flag是不固定的.我们将其放置在一个store上，从而能冻结整个object
+    //这样一旦它们被用在开发环境时，用WeakMap代替
+
+    //WeakMap
+    // http://es6.ruanyifeng.com/#docs/set-map
     element._store = {};
 
     // To make comparing ReactElements easier for testing purposes, we make
     // the validation flag non-enumerable (where possible, which should
     // include every environment we run tests in), so the test framework
     // ignores it.
+    //方便测试用
     Object.defineProperty(element._store, 'validated', {
       configurable: false,
       enumerable: false,
@@ -430,8 +447,8 @@ export function createElement(type, config, children) {
     ref,  //null
     self, //null
     source, //null
-    ReactCurrentOwner.current, //
-    props, //自定义的属性、方法
+    ReactCurrentOwner.current, //null或Fiber
+    props, //自定义的属性、方法，注意：props.children=childArray
   );
 }
 
