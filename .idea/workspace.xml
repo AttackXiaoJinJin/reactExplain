@@ -2,971 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11f8bc77-0e8b-4e46-ba98-688306b0187b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AUTHORS" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CODE_OF_CONDUCT.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CONTRIBUTING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README-react.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/appveyor.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dangerfile.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/art/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/art/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/art/VectorWidget.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/art/app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/art/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/art/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/art/webpack.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/art/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/AttributeTableSnapshot.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/public/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/src/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/src/App.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/src/attributes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/attribute-behavior/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/public/react-logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/public/renderer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/public/renderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/public/test.mp4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/Fixture.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/FixtureSet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/Header.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/Iframe.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/IssueList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/TestCase.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/buttons/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/custom-elements/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/date-inputs/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/date-inputs/switch-date-test-case.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/error-handling/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/event-pooling/hit-box.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/event-pooling/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/event-pooling/mouse-move.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/event-pooling/persistence.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/home.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/hydration/Code.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/hydration/code-transformer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/hydration/codemirror-paraiso-dark.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/hydration/data.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/hydration/hydration.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/hydration/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/input-change-events/InputPlaceholderFixture.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/input-change-events/RadioClickFixture.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/input-change-events/RadioGroupFixture.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/input-change-events/RadioNameChangeFixture.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/input-change-events/RangeKeyboardFixture.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/input-change-events/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/media-events/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/mouse-events/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/mouse-events/mouse-movement.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/number-inputs/NumberInputDecimal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/number-inputs/NumberInputExtraZeroes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/number-inputs/NumberTestCase.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/number-inputs/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/password-inputs/PasswordTestCase.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/password-inputs/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/pointer-events/drag-box.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/pointer-events/drag.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/pointer-events/hover-box.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/pointer-events/hover.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/pointer-events/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/range-inputs/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/selection-events/OnSelectEventTestCase.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/selection-events/ReorderedInputsTestCase.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/selection-events/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/selects/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/suspense/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/text-inputs/InputTestCase.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/text-inputs/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/text-inputs/ReplaceEmailInput.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/text-inputs/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/fixtures/textareas/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/components/propTypes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/polyfills.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/react-loader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/src/tags.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/dom/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/expiration/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/expiration/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/expiration/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/expiration/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/expiration/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/.env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/src/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/src/Editor.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/src/Fibers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/src/describeFibers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-debugger/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/fiber-triangle/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/babel-standalone/dev.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/browserify/dev/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/browserify/dev/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/browserify/dev/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/browserify/dev/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/browserify/dev/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/browserify/prod/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/browserify/prod/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/browserify/prod/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/browserify/prod/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/browserify/prod/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/dev/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/dev/app/initialize.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/dev/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/dev/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/dev/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/dev/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/dev/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/prod/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/prod/app/initialize.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/prod/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/prod/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/prod/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/prod/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/brunch/prod/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/build-all.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/globals/dev.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/globals/prod.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/requirejs/dev.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/requirejs/prod.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/dev/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/dev/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/dev/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/dev/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/dev/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/dev/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/prod/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/prod/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/prod/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/prod/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/prod/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/rjs/prod/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/dev/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/dev/build.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/dev/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/dev/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/dev/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/dev/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/dev/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/prod/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/prod/build.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/prod/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/prod/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/prod/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/prod/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs-builder/prod/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs/dev.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/systemjs/prod.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/dev/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/dev/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/dev/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/dev/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/dev/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/dev/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/prod/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/prod/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/prod/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/prod/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/prod/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack-alias/prod/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/dev/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/dev/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/dev/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/dev/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/dev/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/dev/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/prod/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/prod/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/prod/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/prod/input.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/prod/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/packaging/webpack/prod/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/scheduler/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/server/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/server/render.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/src/components/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/src/components/Chrome.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/src/components/Chrome.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/src/components/Page.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/src/components/Page.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/ssr/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/tracing/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/tracing/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/tracing/test.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/tracing/test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/public/img/acdlite.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/public/img/bvaughn.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/public/img/flarnie.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/public/img/gaearon.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/public/img/sebmarkbage.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/public/img/sophiebits.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/public/img/trueadm.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/public/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/src/api/data.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/src/api/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/src/components/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/src/components/ContributorListPage.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/src/components/Spinner.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/src/components/Spinner.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/src/components/UserPage.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/suspense/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/time-slicing/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/time-slicing/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/time-slicing/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/time-slicing/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/time-slicing/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/time-slicing/public/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/time-slicing/src/Charts.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/time-slicing/src/Clock.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/time-slicing/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/time-slicing/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/unstable-async/time-slicing/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/netlify.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/create-subscription/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/create-subscription/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/create-subscription/npm/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/create-subscription/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/create-subscription/src/__tests__/createSubscription-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/create-subscription/src/createSubscription.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/EventPluginHub.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/EventPluginRegistry.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/EventPluginUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/EventPropagators.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/PluginModuleType.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/ReactControlledComponent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/ReactGenericBatching.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/ReactSyntheticEventType.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/ResponderEventPlugin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/ResponderSyntheticEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/ResponderTopLevelEventTypes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/ResponderTouchHistoryStore.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/SyntheticEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/TopLevelEventTypes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/__tests__/EventPluginRegistry-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/__tests__/ResponderEventPlugin-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/__tests__/accumulateInto-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/accumulate.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/accumulateInto.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/forEachAccumulated.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/forks/ResponderTopLevelEventTypes.dom.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/events/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/jest-react/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/jest-react/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/jest-react/npm/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/jest-react/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/jest-react/src/JestReact.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/Circle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/Rectangle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/Wedge.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/npm/Circle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/npm/Rectangle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/npm/Wedge.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/npm/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/src/ReactART.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/src/ReactARTHostConfig.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/src/ReactARTInternals.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/src/__tests__/ReactART-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-art/src/__tests__/__snapshots__/ReactART-test.js.snap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-cache/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-cache/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-cache/npm/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-cache/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-cache/src/LRU.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-cache/src/ReactCache.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-cache/src/__tests__/ReactCache-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/index.fb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/npm/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/npm/profiling.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/npm/server.browser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/npm/server.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/npm/server.node.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/npm/test-utils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/npm/unstable-native-dependencies.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/server.browser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/server.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/server.node.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/CSSPropertyOperations-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/DOMPropertyOperations-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/EventPluginHub-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactBrowserEventEmitter-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactChildReconciler-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactComponent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactComponentLifeCycle-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactComponentLifeCycle-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactCompositeComponent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactCompositeComponentDOMMinimalism-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactCompositeComponentNestedState-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactCompositeComponentState-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOM-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMAttribute-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMComponent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMComponentTree-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMEventListener-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMFiber-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMFiberAsync-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMIframe-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMInput-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMInvalidARIAHook-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMOption-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMRoot-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMSVG-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMSelect-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMSelection-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationAttributes-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationBasic-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationCheckbox-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationClassContextType-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationElements-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationFragment-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationInput-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationLegacyContext-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationModes-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationNewContext-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationReconnecting-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationRefs-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationSelect-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationSpecialTypes-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationTextarea-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerIntegrationUserInteraction-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerLifecycles-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerLifecycles-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMServerSuspense-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMSuspensePlaceholder-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMTextComponent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMTextarea-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactDOMserverIntegrationProgress-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactEmptyComponent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactErrorBoundaries-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactErrorLoggingRecovery-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactEventIndependence-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactFunctionComponent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactIdentity-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactLegacyErrorBoundaries-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactMockedComponent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactMount-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactMountDestruction-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactMultiChild-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactMultiChildReconcile-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactMultiChildText-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactRenderDocument-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactServerRendering-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactServerRenderingBrowser-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactServerRenderingHydration-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactTestUtils-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactTreeTraversal-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/ReactUpdates-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/__snapshots__/ReactTestUtils-test.js.snap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/escapeTextForBrowser-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/findDOMNode-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/multiple-copies-of-react-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/quoteAttributeValueForBrowser-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/refs-destruction-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/refs-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/renderSubtreeIntoContainer-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/utils/ReactDOMServerIntegrationTestUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/__tests__/validateDOMNesting-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/DOMPropertyOperations.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactDOM.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactDOMClientInjection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactDOMComponent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactDOMComponentTree.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactDOMFB.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactDOMHostConfig.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactDOMInput.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactDOMOption.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactDOMSelect.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactDOMSelection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactDOMTextarea.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ReactInputSelection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/ToStringValue.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/__tests__/dangerouslySetInnerHTML-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/__tests__/getNodeForCharacterOffset-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/getActiveElement.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/getNodeForCharacterOffset.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/inputValueTracking.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/setInnerHTML.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/setTextContent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/client/validateDOMNesting.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/BeforeInputEventPlugin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/ChangeEventPlugin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/DOMEventPluginOrder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/DOMTopLevelEventTypes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/EnterLeaveEventPlugin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/EventListener.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/FallbackCompositionState.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/ReactBrowserEventEmitter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/ReactDOMEventListener.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SelectEventPlugin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SimpleEventPlugin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticAnimationEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticClipboardEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticCompositionEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticDragEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticFocusEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticInputEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticKeyboardEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticMouseEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticPointerEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticTouchEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticTransitionEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticUIEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/SyntheticWheelEvent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/__tests__/BeforeInputEventPlugin-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/__tests__/ChangeEventPlugin-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/__tests__/EnterLeaveEventPlugin-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/__tests__/SelectEventPlugin-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/__tests__/SimpleEventPlugin-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/__tests__/SyntheticClipboardEvent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/__tests__/SyntheticEvent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/__tests__/SyntheticKeyboardEvent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/__tests__/SyntheticMouseEvent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/__tests__/SyntheticWheelEvent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/__tests__/getEventKey-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/forks/EventListener-www.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/getEventCharCode.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/getEventKey.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/getEventModifierState.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/getEventTarget.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/getVendorPrefixedEventName.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/events/isEventSupported.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/server/DOMMarkupOperations.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/server/ReactDOMNodeStreamRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/server/ReactDOMServerBrowser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/server/ReactDOMServerNode.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/server/ReactDOMStringRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/server/ReactPartialRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/server/escapeTextForBrowser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/server/quoteAttributeValueForBrowser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/CSSProperty.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/CSSPropertyOperations.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/DOMNamespaces.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/DOMProperty.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/HTMLNodeType.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/ReactControlledValuePropTypes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/ReactDOMInvalidARIAHook.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/ReactDOMNullInputValuePropHook.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/ReactDOMUnknownPropertyHook.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/assertValidProps.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/checkReact.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/createMicrosoftUnsafeLocalFunction.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/dangerousStyleValue.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/hyphenateStyleName.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/isCustomComponent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/omittedCloseTags.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/possibleStandardNames.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/validAriaProperties.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/voidElementTags.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/shared/warnValidStyle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/test-utils/ReactTestUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/src/unstable-native-dependencies/ReactDOMUnstableNativeDependencies.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/test-utils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-dom/unstable-native-dependencies.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-is/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-is/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-is/npm/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-is/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-is/src/ReactIs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-is/src/__tests__/ReactIs-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/fabric.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/NativeMethodsMixin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/NativeMethodsMixinUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactFabric.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactFabricComponentTree.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactFabricEventEmitter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactFabricGlobalResponderHandler.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactFabricHostConfig.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactFabricInjection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeAttributePayload.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeBridgeEventPlugin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeComponent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeComponentTree.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeEventEmitter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeEventPluginOrder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeFiberHostComponent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeFiberInspector.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeFrameScheduling.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeGlobalResponderHandler.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeHostConfig.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeInjection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeInjectionShared.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/ReactNativeTypes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/BatchedBridge.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/ExceptionsManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/FabricUIManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/InitializeCore.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/Platform.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/RCTEventEmitter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/ReactNativeViewConfigRegistry.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/TextInputState.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/UIManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/deepDiffer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/deepFreezeAndThrowOnMutationInDev.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__mocks__/flattenStyle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__tests__/ReactFabric-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__tests__/ReactFabricAndNative-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__tests__/ReactNativeAttributePayload-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__tests__/ReactNativeError-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__tests__/ReactNativeEvents-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__tests__/ReactNativeMount-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__tests__/__snapshots__/ReactFabric-test.internal.js.snap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__tests__/__snapshots__/ReactNativeEvents-test.internal.js.snap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__tests__/__snapshots__/ReactNativeMount-test.internal.js.snap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-native-renderer/src/__tests__/createReactNativeComponentClass-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-noop-renderer/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-noop-renderer/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-noop-renderer/npm/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-noop-renderer/npm/persistent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-noop-renderer/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-noop-renderer/persistent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-noop-renderer/src/ReactNoop.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-noop-renderer/src/ReactNoopPersistent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-noop-renderer/src/createReactNoop.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/inline-typed.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/inline.art.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/inline.dom.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/inline.fabric.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/inline.native.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/inline.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/npm/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/npm/persistent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/npm/reflection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/persistent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/reflection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactCapturedValue.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactChildFiber.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactCurrentFiber.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactDebugFiberPerf.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiber.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberBeginWork.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberClassComponent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberCommitWork.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberCompleteWork.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberContext.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberDevToolsHook.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberDispatcher.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberErrorDialog.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberErrorLogger.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberExpirationTime.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberHostConfig.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberHostContext.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberHydrationContext.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberInstrumentation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberLazyComponent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberNewContext.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberPendingPriority.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberReconciler.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberRoot.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberScheduler.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberStack.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberSuspenseComponent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberTreeReflection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactFiberUnwindWork.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactProfilerTimer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactStrictModeWarnings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactTypeOfMode.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/ReactUpdateQueue.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ErrorBoundaryReconciliation-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactExpiration-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactFiberHostContext-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactFragment-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncremental-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncrementalErrorHandling-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncrementalErrorLogging-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncrementalErrorReplay-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncrementalErrorReplay-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncrementalPerf-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncrementalReflection-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncrementalScheduling-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncrementalSideEffects-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncrementalTriangle-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncrementalUpdates-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactIncrementalUpdatesMinimalism-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactLazy-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactMemo-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactNewContext-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactPersistent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactPersistentUpdatesMinimalism-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactSuspense-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactSuspensePlaceholder-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactSuspenseWithNoopRenderer-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactTopLevelFragment-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactTopLevelText-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/ReactTracing-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/__tests__/__snapshots__/ReactIncrementalPerf-test.internal.js.snap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/forks/ReactFiberErrorDialog.native.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/forks/ReactFiberErrorDialog.www.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/forks/ReactFiberHostConfig.art.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/forks/ReactFiberHostConfig.custom.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/forks/ReactFiberHostConfig.dom.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/forks/ReactFiberHostConfig.fabric.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/forks/ReactFiberHostConfig.native.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/forks/ReactFiberHostConfig.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-reconciler/src/maxSigned31BitInt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/npm/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/npm/shallow.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/shallow.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/src/ReactShallowRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/src/ReactTestHostConfig.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/src/ReactTestRenderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/src/ReactTestRendererScheduling.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/src/__tests__/ReactShallowRenderer-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/src/__tests__/ReactTestRenderer-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/src/__tests__/ReactTestRenderer-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/src/__tests__/ReactTestRendererAsync-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-test-renderer/src/__tests__/ReactTestRendererTraversal-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/npm/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/React.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/ReactBaseClasses.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/ReactChildren.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/ReactContext.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/ReactCreateRef.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/ReactCurrentOwner.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/ReactDebugCurrentFrame.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/ReactElement.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/ReactElementValidator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/ReactLazy.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/ReactNoopUpdateQueue.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/ReactSharedInternals.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactChildren-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactClassEquivalence-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactCoffeeScriptClass-test.coffee" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactContextValidator-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactCreateRef-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactES6Class-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactElement-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactElementClone-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactElementValidator-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactJSXElement-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactJSXElementValidator-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactProfiler-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactProfilerDOM-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactProfilerDevToolsIntegration-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactPureComponent-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactStrictMode-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactStrictMode-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/ReactTypeScriptClass-test.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/__snapshots__/ReactProfiler-test.internal.js.snap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/createReactClassIntegration-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/createReactClassIntegration-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/forwardRef-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/forwardRef-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/onlyChild-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/testDefinitions/PropTypes.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/testDefinitions/React.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/__tests__/testDefinitions/ReactDOM.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/forks/ReactCurrentOwner.www.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/forwardRef.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react/src/memo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/npm/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/npm/tracing-profiling.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/npm/tracing.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/npm/umd/scheduler-tracing.development.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/npm/umd/scheduler-tracing.production.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/npm/umd/scheduler-tracing.profiling.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/npm/umd/scheduler.development.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/npm/umd/scheduler.production.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/npm/umd/scheduler.profiling.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/src/Scheduler.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/src/Tracing.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/src/TracingSubscriptions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/src/__tests__/Scheduler-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/src/__tests__/SchedulerDOM-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/src/__tests__/SchedulerNoDOM-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/src/__tests__/SchedulerUMDBundle-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/src/__tests__/Tracing-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/src/__tests__/Tracing-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/src/__tests__/TracingSubscriptions-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/scheduler/tracing.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ExecutionEnvironment.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/HostConfigWithNoHydration.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/HostConfigWithNoMutation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/HostConfigWithNoPersistence.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactElementType.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactErrorUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactFeatureFlags.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactInstanceMap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactLazyComponent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactPortal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactSharedInternals.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactSideEffectTags.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactSymbols.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactTreeTraversal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactTypes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactVersion.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/ReactWorkTags.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/__tests__/ReactDOMFrameScheduling-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/__tests__/ReactErrorUtils-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/__tests__/ReactSymbols-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/__tests__/describeComponentFrame-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/__tests__/reactProdInvariant-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/describeComponentFrame.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/ReactFeatureFlags.native-fabric-fb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/ReactFeatureFlags.native-fabric-oss.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/ReactFeatureFlags.native-fb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/ReactFeatureFlags.native-oss.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/ReactFeatureFlags.persistent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/ReactFeatureFlags.readonly.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/ReactFeatureFlags.test-renderer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/ReactFeatureFlags.test-renderer.www.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/ReactFeatureFlags.www.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/Scheduler.umd.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/SchedulerTracing.umd.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/invariant.www.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/invokeGuardedCallbackImpl.www.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/lowPriorityWarning.www.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/object-assign.umd.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/forks/warningWithoutStack.www.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/getComponentName.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/invariant.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/invokeGuardedCallbackImpl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/isTextInputElement.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/isValidElementType.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/lowPriorityWarning.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/reactProdInvariant.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/shallowEqual.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/warning.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/shared/warningWithoutStack.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react/src/React.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react/src/React.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/scripts/jest/setupEnvironment.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/scripts/jest/setupEnvironment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/authors" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/babel/__tests__/transform-prevent-infinite-loops-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/babel/__tests__/wrap-warning-with-env-check-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/babel/transform-object-assign-require.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/babel/transform-prevent-infinite-loops.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/babel/wrap-warning-with-env-check.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmark.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/hacker-news/benchmark.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/hacker-news/build.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/hacker-news/generate.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/hacker-news/grayarrow.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/hacker-news/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/hacker-news/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/hacker-news/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/hacker-news/top-stories.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/pe-class-components/benchmark.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/pe-class-components/build.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/pe-class-components/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/pe-functional-components/benchmark.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/pe-functional-components/build.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/pe-functional-components/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/pe-no-components/benchmark.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/pe-no-components/build.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/benchmarks/pe-no-components/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/build.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/runner.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/server.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/stats.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bench/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/circleci/bench.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/circleci/build.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/circleci/check_license.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/circleci/check_modules.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/circleci/set_up_github_keys.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/circleci/test_coverage.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/circleci/test_entry_point.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/circleci/test_print_warnings.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/circleci/track_stats.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/circleci/upload_build.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/error-codes/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/error-codes/Types.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/error-codes/__tests__/invertObject-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/error-codes/__tests__/replace-invariant-error-codes-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/error-codes/codes.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/error-codes/extract-errors.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/error-codes/invertObject.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/error-codes/replace-invariant-error-codes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint-rules/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint-rules/__tests__/no-primitive-constructors-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint-rules/__tests__/no-to-warn-dev-within-to-throw-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint-rules/__tests__/warning-and-invariant-args-test.internal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint-rules/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint-rules/no-primitive-constructors.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint-rules/no-to-warn-dev-within-to-throw.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint-rules/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint-rules/warning-and-invariant-args.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint/eslintrc.default.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint/eslintrc.es5.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint/eslintrc.esnext.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/eslint/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/facts-tracker/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/flow/config/flowconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/flow/createFlowConfigs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/flow/environment.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/flow/react-native-host-hooks.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/flow/runFlow.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/git/pre-commit" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/config.base.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/config.build.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/config.source-fire.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/config.source.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/dont-run-jest-directly.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/matchers/__tests__/toWarnDev-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/matchers/interactionTracing.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/matchers/toWarnDev.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/noHaste.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/preprocessor.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/setupEnvironment.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/setupFire.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/setupHostConfigs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/setupTests.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/shouldIgnoreConsoleError.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/spec-equivalence-reporter/setupTests.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/typescript/jest.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/jest/typescript/preprocessor.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/binding.gyp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/src/hardware-counter.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/src/hardware-counter.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/src/jsc-perf.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/src/perf-counters.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/src/portability.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/src/thread-local.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/perf-counters/src/thread-local.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/prettier/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/print-warnings/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/print-warnings/print-warnings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/add-git-tag.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/build-artifacts.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/check-circle-ci-status.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/check-environment-variables.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/check-npm-permissions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/check-package-dependencies.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/check-uncommitted-changes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/install-yarn-dependencies.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/parse-build-parameters.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/print-post-build-summary.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/run-automated-bundle-tests.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/run-automated-tests.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/update-git.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/update-noop-renderer-dependencies.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/update-package-versions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/update-yarn-dependencies.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build-commands/validate-version.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/build.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/publish-commands/check-build-status.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/publish-commands/commit-changelog.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/publish-commands/get-npm-two-factor-auth.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/publish-commands/parse-publish-params.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/publish-commands/print-post-publish-summary.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/publish-commands/publish-to-npm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/publish-commands/push-git-remote.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/publish.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/utils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/release/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/build.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/bundles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/forks.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/modules.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/packaging.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/plugins/closure-plugin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/plugins/sizes-plugin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/plugins/strip-unused-imports.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/plugins/use-forks-plugin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/results.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/shims/facebook-www/ReactBrowserEventEmitter_DO_NOT_USE.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/shims/facebook-www/ReactDOMComponentTree_DO_NOT_USE.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/shims/facebook-www/ReactInstanceMap_DO_NOT_USE.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/shims/facebook-www/findDOMNode.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/shims/facebook-www/renderSubtreeIntoContainer_DO_NOT_USE.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/shims/react-native-fb/ReactFeatureFlags.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/shims/react-native/NativeMethodsMixin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/shims/react-native/ReactFabric.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/shims/react-native/ReactNative.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/shims/react-native/ReactNativeViewConfigRegistry.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/shims/react-native/createReactNativeComponentClass.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/stats.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/sync.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/utils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/validate/eslintignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/validate/eslintrc.cjs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/validate/eslintrc.fb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/validate/eslintrc.rn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/validate/eslintrc.umd.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/validate/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/rollup/wrappers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/shared/__tests__/evalToString-test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/shared/evalToString.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/shared/inlinedHostConfigs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/shared/listChangedFiles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/shared/pathsByLanguageVersion.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/tasks/danger.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/tasks/eslint.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/tasks/flow-ci.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/tasks/flow.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/tasks/linc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/tasks/version-check.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/shared/ReactSymbols.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/shared/ReactSymbols.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -982,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="432" column="4" lean-forward="true" selection-start-line="432" selection-start-column="4" selection-end-line="432" selection-end-column="30" />
+            <state relative-caret-position="289">
+              <caret line="161" column="4" selection-start-line="161" selection-start-column="4" selection-end-line="161" selection-end-column="4" />
               <folding>
                 <element signature="e#190#231#0" expanded="true" />
                 <element signature="n#!!block;n#defineRefPropWarningGetter#0" />
@@ -994,6 +31,15 @@
                 <element signature="n#!!block;n#cloneElement#0" />
                 <element signature="n#!!block;n#isValidElement#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/shared/ReactSymbols.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="479">
+              <caret line="27" column="11" lean-forward="true" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -1050,10 +96,13 @@
     <findStrings>
       <find>createelement</find>
       <find>RESERVED_PROPS</find>
-      <find>ReactElement</find>
       <find>hasValidRef</find>
       <find>self</find>
       <find>source</find>
+      <find>childArray</find>
+      <find>props</find>
+      <find>ReactElement</find>
+      <find>REACT_ELEMENT_TYPE</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -1066,6 +115,7 @@
         <option value="$PROJECT_DIR$/react16.8.6/packages/react/src/React.js" />
         <option value="$PROJECT_DIR$/react16.8.6/scripts/jest/setupEnvironment.js" />
         <option value="$PROJECT_DIR$/test.html" />
+        <option value="$PROJECT_DIR$/react16.8.6/packages/shared/ReactSymbols.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js" />
       </list>
     </option>
@@ -1087,6 +137,39 @@
             <path>
               <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
               <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
+              <item name="react16.8.6" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
+              <item name="react16.8.6" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
+              <item name="react16.8.6" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+              <item name="react" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
+              <item name="react16.8.6" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+              <item name="react" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
+              <item name="react16.8.6" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+              <item name="shared" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -1133,15 +216,16 @@
       <updated>1553173920621</updated>
       <workItem from="1553173922036" duration="147000" />
       <workItem from="1562489237223" duration="5890000" />
-      <workItem from="1562595329754" duration="2986000" />
+      <workItem from="1562595329754" duration="6517000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9023000" />
+    <option name="totallyTimeSpent" value="12554000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="801" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2241867" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -1197,13 +281,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/scripts/jest/setupEnvironment.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -1218,10 +295,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/shared/ReactSymbols.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="27" column="11" lean-forward="true" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="432" column="4" lean-forward="true" selection-start-line="432" selection-start-column="4" selection-end-line="432" selection-end-column="30" />
+        <state relative-caret-position="289">
+          <caret line="161" column="4" selection-start-line="161" selection-start-column="4" selection-end-line="161" selection-end-column="4" />
           <folding>
             <element signature="e#190#231#0" expanded="true" />
             <element signature="n#!!block;n#defineRefPropWarningGetter#0" />
