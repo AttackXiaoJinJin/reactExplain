@@ -55,7 +55,19 @@ Component.prototype.isReactComponent = {};
  * @final
  * @protected
  */
+
+
+// 更新Component内部变量的API，
+// 也是开发中非常常用且重要的API
+
+// https://www.jianshu.com/p/7ab07f8c954c
+// https://www.jianshu.com/p/c19e259870a5
+
+//partialState：要更新的state，可以是Object/Function
+//callback： setState({xxx},callback)
 Component.prototype.setState = function(partialState, callback) {
+  // 判断setState中的partialState是否符合条件，
+  // 如果不符合则抛出Error
   invariant(
     typeof partialState === 'object' ||
       typeof partialState === 'function' ||
@@ -63,6 +75,8 @@ Component.prototype.setState = function(partialState, callback) {
     'setState(...): takes an object of state variables to update or a ' +
       'function which returns an object of state variables.',
   );
+  //重要！setState的更新机制
+  //在react-dom中实现，不在react中实现
   this.updater.enqueueSetState(this, partialState, callback, 'setState');
 };
 
@@ -80,6 +94,7 @@ Component.prototype.setState = function(partialState, callback) {
  * @final
  * @protected
  */
+//强制Component更新一次，无论props/state是否更新
 Component.prototype.forceUpdate = function(callback) {
   this.updater.enqueueForceUpdate(this, callback, 'forceUpdate');
 };
@@ -89,7 +104,9 @@ Component.prototype.forceUpdate = function(callback) {
  * we would like to deprecate them, we're not going to move them over to this
  * modern base class. Instead, we define a getter that warns if it's accessed.
  */
+//两个废弃的API，可不看
 if (__DEV__) {
+
   const deprecatedAPIs = {
     isMounted: [
       'isMounted',
@@ -128,6 +145,8 @@ ComponentDummy.prototype = Component.prototype;
 /**
  * Convenience component with default shallow equality check for sCU.
  */
+
+
 function PureComponent(props, context, updater) {
   this.props = props;
   this.context = context;
@@ -136,10 +155,13 @@ function PureComponent(props, context, updater) {
   this.updater = updater || ReactNoopUpdateQueue;
 }
 
+//PureComponent是继承自Component的
 const pureComponentPrototype = (PureComponent.prototype = new ComponentDummy());
 pureComponentPrototype.constructor = PureComponent;
 // Avoid an extra prototype jump for these methods.
 Object.assign(pureComponentPrototype, Component.prototype);
+
+//唯一的区别就是在原型上添加了isPureReactComponent属性去表示该Component是PureComponent
 pureComponentPrototype.isPureReactComponent = true;
 
 export {Component, PureComponent};
