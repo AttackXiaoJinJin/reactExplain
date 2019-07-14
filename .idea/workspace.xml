@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11f8bc77-0e8b-4e46-ba98-688306b0187b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/shared/ReactSymbols.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/shared/ReactSymbols.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactBaseClasses.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactBaseClasses.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,68 +17,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="161" column="4" selection-start-line="161" selection-start-column="4" selection-end-line="161" selection-end-column="4" />
-              <folding>
-                <element signature="e#190#231#0" expanded="true" />
-                <element signature="n#!!block;n#defineRefPropWarningGetter#0" />
-                <element signature="n#!!block;n#jsx#0" />
-                <element signature="n#!!block;n#jsxDEV#0" />
-                <element signature="n#!!block;n#createFactory#0" />
-                <element signature="n#!!block;n#cloneAndReplaceKey#0" />
-                <element signature="n#!!block;n#cloneElement#0" />
-                <element signature="n#!!block;n#isValidElement#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/shared/ReactSymbols.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="479">
-              <caret line="27" column="11" lean-forward="true" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactCurrentOwner.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+            <state relative-caret-position="361">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/react16.8.6/scripts/jest/setupEnvironment.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactBaseClasses.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="7" column="42" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/React.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="93" column="37" selection-start-line="93" selection-start-column="37" selection-end-line="93" selection-end-column="37" />
+            <state relative-caret-position="219">
+              <caret line="163" column="7" lean-forward="true" selection-start-line="163" selection-start-column="7" selection-end-line="163" selection-end-column="7" />
               <folding>
-                <element signature="e#190#237#0" expanded="true" />
+                <element signature="e#190#231#0" expanded="true" />
+                <element signature="e#3327#4237#0" />
               </folding>
             </state>
           </provider>
@@ -96,13 +52,13 @@
     <findStrings>
       <find>createelement</find>
       <find>RESERVED_PROPS</find>
-      <find>hasValidRef</find>
       <find>self</find>
       <find>source</find>
       <find>childArray</find>
       <find>props</find>
-      <find>ReactElement</find>
       <find>REACT_ELEMENT_TYPE</find>
+      <find>hasValidRef</find>
+      <find>ReactElement</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -114,9 +70,10 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react/src/React.js" />
         <option value="$PROJECT_DIR$/react16.8.6/scripts/jest/setupEnvironment.js" />
-        <option value="$PROJECT_DIR$/test.html" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/shared/ReactSymbols.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js" />
+        <option value="$PROJECT_DIR$/test.html" />
+        <option value="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactBaseClasses.js" />
       </list>
     </option>
   </component>
@@ -164,13 +121,6 @@
               <item name="react" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
-              <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
-              <item name="react16.8.6" type="462c0819:PsiDirectoryNode" />
-              <item name="packages" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -217,17 +167,18 @@
       <workItem from="1553173922036" duration="147000" />
       <workItem from="1562489237223" duration="5890000" />
       <workItem from="1562595329754" duration="6517000" />
+      <workItem from="1562755960815" duration="3427000" />
+      <workItem from="1563102327629" duration="1559000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12554000" />
+    <option name="totallyTimeSpent" value="17879000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="801" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2241867" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2241867" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -239,7 +190,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32753623" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32753623" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -295,13 +246,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/shared/ReactSymbols.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="479">
@@ -311,17 +255,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="161" column="4" selection-start-line="161" selection-start-column="4" selection-end-line="161" selection-end-column="4" />
+        <state relative-caret-position="380">
+          <caret line="120" column="29" selection-start-line="120" selection-start-column="29" selection-end-line="120" selection-end-column="29" />
           <folding>
             <element signature="e#190#231#0" expanded="true" />
             <element signature="n#!!block;n#defineRefPropWarningGetter#0" />
+            <element signature="e#4187#6197#0" />
             <element signature="n#!!block;n#jsx#0" />
             <element signature="n#!!block;n#jsxDEV#0" />
             <element signature="n#!!block;n#createFactory#0" />
             <element signature="n#!!block;n#cloneAndReplaceKey#0" />
             <element signature="n#!!block;n#cloneElement#0" />
             <element signature="n#!!block;n#isValidElement#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactBaseClasses.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="163" column="7" lean-forward="true" selection-start-line="163" selection-start-column="7" selection-end-line="163" selection-end-column="7" />
+          <folding>
+            <element signature="e#190#231#0" expanded="true" />
+            <element signature="e#3327#4237#0" />
           </folding>
         </state>
       </provider>
