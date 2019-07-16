@@ -18,24 +18,35 @@ if (__DEV__) {
 /**
  * Base class helpers for the updating state of a component.
  */
+//帮助更新组件状态的基类
 function Component(props, context, updater) {
   this.props = props;
+  //我在工作中没用到context，可以参考下这个：
+  //https://www.cnblogs.com/mengff/p/9511419.html
+  //是React封装的全局变量API
   this.context = context;
   // If a component has string refs, we will assign a different object later.
+  //如果在组件中用了 ref="stringa" 的话，用另一个obj赋值
   this.refs = emptyObject;
   // We initialize the default updater but the real one gets injected by the
   // renderer.
+  //虽然给updater赋了默认值，但真正的updater是在renderer中注册的
   this.updater = updater || ReactNoopUpdateQueue;
 }
-
+//原型上赋了一个flag
 Component.prototype.isReactComponent = {};
 
-/**
+/** 使用setState来改变Component内部的变量
+
  * Sets a subset of the state. Always use this to mutate
  * state. You should treat `this.state` as immutable.
- *
+
+ * this.state并不是立即更新的，所以在调用this.setState后可能 不能 拿到新值
+
  * There is no guarantee that `this.state` will be immediately updated, so
  * accessing `this.state` after calling this method may return the old value.
+ *
+ * 不能保证this.state是同步的（它也不是异步的），使用回调获取最新值
  *
  * There is no guarantee that calls to `setState` will run synchronously,
  * as they may eventually be batched together.  You can provide an optional
@@ -75,7 +86,7 @@ Component.prototype.setState = function(partialState, callback) {
     'setState(...): takes an object of state variables to update or a ' +
       'function which returns an object of state variables.',
   );
-  //重要！setState的更新机制
+  //重要！state的更新机制
   //在react-dom中实现，不在react中实现
   this.updater.enqueueSetState(this, partialState, callback, 'setState');
 };
@@ -84,8 +95,13 @@ Component.prototype.setState = function(partialState, callback) {
  * Forces an update. This should only be invoked when it is known with
  * certainty that we are **not** in a DOM transaction.
  *
+ * 在Component的深层次改变但未调用setState时，使用该方法
+ *
  * You may want to call this when you know that some deeper aspect of the
  * component's state has changed but `setState` was not called.
+ *
+ * forceUpdate不调用shouldComponentUpdate方法，
+ * 但会调用componentWillUpdate和componentDidUpdate方法
  *
  * This will not invoke `shouldComponentUpdate`, but it will invoke
  * `componentWillUpdate` and `componentDidUpdate`.
@@ -140,6 +156,8 @@ if (__DEV__) {
 }
 
 function ComponentDummy() {}
+
+//ComponentDummy的原型 继承 Component的原型
 ComponentDummy.prototype = Component.prototype;
 
 /**
@@ -155,13 +173,26 @@ function PureComponent(props, context, updater) {
   this.updater = updater || ReactNoopUpdateQueue;
 }
 
-//PureComponent是继承自Component的
+//PureComponent是继承自Component的,下面三行就是在继承Component
+
+//将Component的方法拷贝到pureComponentPrototype上
+// 用ComponentDummy的原因是为了不直接实例化一个Component实例，可以减少一些内存使用
 const pureComponentPrototype = (PureComponent.prototype = new ComponentDummy());
+
+//PureComponent.prototype.constructor = PureComponent
 pureComponentPrototype.constructor = PureComponent;
+
 // Avoid an extra prototype jump for these methods.
+//避免多一次原型链查找,因为上面两句已经让PureComponent继承了Component
+//下面多写了一句Object.assign()，是为了避免多一次原型链查找
+
+// Object.assign是浅拷贝，
+// 将Component.prototype上的方法都复制到PureComponent.prototype上
+// 也就是pureComponent的原型上
+// 详细请参考：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 Object.assign(pureComponentPrototype, Component.prototype);
 
-//唯一的区别就是在原型上添加了isPureReactComponent属性去表示该Component是PureComponent
+// 唯一的区别就是在原型上添加了isPureReactComponent属性去表示该Component是PureComponent
 pureComponentPrototype.isPureReactComponent = true;
 
 export {Component, PureComponent};
