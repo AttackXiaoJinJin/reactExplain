@@ -9,57 +9,84 @@
 <div></div>
 <script>
 
-  // const obj = { p: 'a' };
-  // console.log(Object.getOwnPropertyDescriptor(obj, 'p'));
-
-  function componentA() {
-  //   this.ref='a'
-  //   this.context='b'
-  //   this.callback=function () {
-  //     console.log('this is callback')
-  //   }
-  }
-
-  componentA.prototype='aaaaaaaa'
-
-  function extendFn() {
-
-  }
-
-  extendFn.prototype=componentA.prototype
-
-  function componentB() {
-
-  }
-
+  // // const obj = { p: 'a' };
+  // // console.log(Object.getOwnPropertyDescriptor(obj, 'p'));
+  //
+  // function componentA() {
+  // //   this.ref='a'
+  // //   this.context='b'
+  // //   this.callback=function () {
+  // //     console.log('this is callback')
+  // //   }
+  // }
+  //
+  // componentA.prototype.aaa='aaaaaaaa'
+  //
+  // function extendFn() {
+  //
+  // }
+  //
+  // extendFn.prototype=componentA.prototype
+  //
+  // function componentB() {
+  //
+  // }
+  //
   // const b = (componentB.prototype=new extendFn())
-  componentB.prototype=new extendFn()
-  let b=new extendFn()
-  console.log(b.prototype,extendFn.prototype,'prototype38')
+  // // componentB.prototype=new extendFn()
+  // // let b=new extendFn()
   // b.constructor=componentB
+  // console.log(componentB.prototype.__proto__===componentA.prototype,'prototype38')
+  //
+  // Object.assign(b,componentA.prototype)
+  // // console.log(componentB.prototype===componentA.prototype,'prototype38')
+  // console.log(componentB.prototype.aaa,componentA.prototype.aaa,'prototype38')
+  //
+  // // console.log(b,extendFn.prototype,'bbb33')
+  //
+  // // //=====================
+  // // function fn(){
+  // //   this.a = 1;
+  // // };
+  // // var obj = new fn();
+  // // console.log(obj.a);//1
+  // // //=======================
+  // // function fn(x){
+  // //   this.a = x;
+  // // };
+  // // var obj = new fn(2);
+  // // console.log(obj.a);//2
+  // // =====================
+  //
+  // // let a='2019-07-11'
+  // // console.log(new Date(a),'a58')
+  //
+  //
+  // function person(name){
+  //   this.name=name
+  // }
+  //
+  // function personone() {
+  //
+  // }
+  // personone.prototype=person.prototype
+  //
+  //
+  // function bbb() {
+  //
+  // }
+  //
+  // bbb.prototype=new personone();
+  //
+  // // console.log(bbb.prototype.__proto__===personone.prototype ,'')
 
-  // // Object.assign(b,componentA.prototype)
-
-  // console.log(b,extendFn.prototype,'bbb33')
-
-  // //=====================
-  // function fn(){
-  //   this.a = 1;
-  // };
-  // var obj = new fn();
-  // console.log(obj.a);//1
-  // //=======================
-  // function fn(x){
-  //   this.a = x;
-  // };
-  // var obj = new fn(2);
-  // console.log(obj.a);//2
-  // =====================
-
-  // let a='2019-07-11'
-  // console.log(new Date(a),'a58')
-
-
+  const c={a:1}
+  const b={}
+  const a=Object.assign(b,c)
+  a.b=2
+  c.c=3
+  console.log(a,b,c,'aaa86')
+  
 </script>
 
 
