@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11f8bc77-0e8b-4e46-ba98-688306b0187b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/createRef.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/createRef.js" beforeDir="false" afterPath="$PROJECT_DIR$/testCreateRef.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactCreateRef.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactCreateRef.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react/src/forwardRef.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react/src/forwardRef.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,20 +28,64 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/createRef.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+            <state relative-caret-position="62">
+              <caret line="126" column="15" lean-forward="true" selection-start-line="126" selection-start-column="15" selection-end-line="126" selection-end-column="15" />
+              <folding>
+                <element signature="e#190#231#0" expanded="true" />
+                <element signature="n#!!block;n#defineRefPropWarningGetter#0" />
+                <element signature="n#!!block;n#jsx#0" />
+                <element signature="n#!!block;n#jsxDEV#0" />
+                <element signature="n#!!block;n#createFactory#0" />
+                <element signature="n#!!block;n#cloneAndReplaceKey#0" />
+                <element signature="n#!!block;n#cloneElement#0" />
+                <element signature="n#!!block;n#isValidElement#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testCreateRef.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="456">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/React.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1767">
+              <caret line="93" column="37" selection-start-line="93" selection-start-column="37" selection-end-line="93" selection-end-column="37" />
+              <folding>
+                <element signature="e#190#237#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactCreateRef.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="8" selection-start-line="8" selection-end-line="22" selection-end-column="1" />
+            <state relative-caret-position="361">
+              <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/forwardRef.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="456">
+              <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
+              <folding>
+                <element signature="e#190#266#0" expanded="true" />
+                <element signature="e#494#1713#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -65,10 +109,10 @@
       <find>props</find>
       <find>REACT_ELEMENT_TYPE</find>
       <find>hasValidRef</find>
-      <find>ReactElement</find>
       <find>enqueueSetState</find>
       <find>ctor.prototype.isPureReactComponent</find>
       <find>isPureReactComponent</find>
+      <find>ReactElement</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -77,7 +121,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react/src/React.js" />
         <option value="$PROJECT_DIR$/react16.8.6/scripts/jest/setupEnvironment.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/shared/ReactSymbols.js" />
@@ -86,11 +129,14 @@
         <option value="$PROJECT_DIR$/test.html" />
         <option value="$PROJECT_DIR$/createRef.html" />
         <option value="$PROJECT_DIR$/createRef.js" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/testCreateRef.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react/src/ReactCreateRef.js" />
+        <option value="$PROJECT_DIR$/react16.8.6/packages/react/src/forwardRef.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="797" />
@@ -108,6 +154,32 @@
             <path>
               <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
               <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
+              <item name="react16.8.6" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
+              <item name="react16.8.6" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
+              <item name="react16.8.6" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+              <item name="react" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="reactExplain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="reactExplain" type="462c0819:PsiDirectoryNode" />
+              <item name="react16.8.6" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+              <item name="react" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -159,18 +231,18 @@
       <workItem from="1563153312053" duration="46000" />
       <workItem from="1563183062305" duration="4901000" />
       <workItem from="1563357831090" duration="1083000" />
-      <workItem from="1563620993902" duration="1989000" />
+      <workItem from="1563620993902" duration="5084000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32575000" />
+    <option name="totallyTimeSpent" value="35670000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="797" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="797" extended-state="1" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23903818" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23903818" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -182,7 +254,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3265306" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32798833" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -199,7 +271,6 @@
     <entry file="file://$PROJECT_DIR$/README-react.md" />
     <entry file="file://$PROJECT_DIR$/AUTHORS" />
     <entry file="file://$PROJECT_DIR$/CHANGELOG.md" />
-    <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactHooks.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2110" />
@@ -213,16 +284,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/React.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="93" column="37" selection-start-line="93" selection-start-column="37" selection-end-line="93" selection-end-column="37" />
-          <folding>
-            <element signature="e#190#237#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/scripts/jest/setupEnvironment.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -242,24 +303,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="479">
           <caret line="27" column="11" lean-forward="true" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="120" column="29" selection-start-line="120" selection-start-column="29" selection-end-line="120" selection-end-column="29" />
-          <folding>
-            <element signature="e#190#231#0" expanded="true" />
-            <element signature="n#!!block;n#defineRefPropWarningGetter#0" />
-            <element signature="e#4187#6197#0" />
-            <element signature="n#!!block;n#jsx#0" />
-            <element signature="n#!!block;n#jsxDEV#0" />
-            <element signature="n#!!block;n#createFactory#0" />
-            <element signature="n#!!block;n#cloneAndReplaceKey#0" />
-            <element signature="n#!!block;n#cloneElement#0" />
-            <element signature="n#!!block;n#isValidElement#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -294,17 +337,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/createRef.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="95">
+            <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactCreateRef.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" selection-start-line="8" selection-end-line="22" selection-end-column="1" />
+        <state relative-caret-position="361">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/forwardRef.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
+          <folding>
+            <element signature="e#190#266#0" expanded="true" />
+            <element signature="e#494#1713#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testCreateRef.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/React.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1767">
+          <caret line="93" column="37" selection-start-line="93" selection-start-column="37" selection-end-line="93" selection-end-column="37" />
+          <folding>
+            <element signature="e#190#237#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactElement.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="62">
+          <caret line="126" column="15" lean-forward="true" selection-start-line="126" selection-start-column="15" selection-end-line="126" selection-end-column="15" />
+          <folding>
+            <element signature="e#190#231#0" expanded="true" />
+            <element signature="n#!!block;n#defineRefPropWarningGetter#0" />
+            <element signature="n#!!block;n#jsx#0" />
+            <element signature="n#!!block;n#jsxDEV#0" />
+            <element signature="n#!!block;n#createFactory#0" />
+            <element signature="n#!!block;n#cloneAndReplaceKey#0" />
+            <element signature="n#!!block;n#cloneElement#0" />
+            <element signature="n#!!block;n#isValidElement#0" />
+          </folding>
         </state>
       </provider>
     </entry>

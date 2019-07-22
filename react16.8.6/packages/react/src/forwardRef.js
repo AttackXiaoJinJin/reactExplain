@@ -12,6 +12,7 @@ import warningWithoutStack from 'shared/warningWithoutStack';
 export default function forwardRef<Props, ElementType: React$ElementType>(
   render: (props: Props, ref: React$Ref<ElementType>) => React$Node,
 ) {
+  //__DEV__可不看
   if (__DEV__) {
     if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
       warningWithoutStack(
@@ -47,7 +48,9 @@ export default function forwardRef<Props, ElementType: React$ElementType>(
   }
 
   return {
+    //被forwardRef包裹后，组件内部的$$typeof是REACT_FORWARD_REF_TYPE
     $$typeof: REACT_FORWARD_REF_TYPE,
+    //render即包装的FunctionComponent，ClassComponent是不用forwardRef的
     render,
   };
 }
