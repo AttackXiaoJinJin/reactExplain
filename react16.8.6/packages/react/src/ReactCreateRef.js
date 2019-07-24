@@ -17,6 +17,7 @@ export function createRef(): RefObject {
     current: null,
   };
   if (__DEV__) {
+    //密封的对象,不可添加，删除属性，可以修改属性
     Object.seal(refObject);
   }
   return refObject;
