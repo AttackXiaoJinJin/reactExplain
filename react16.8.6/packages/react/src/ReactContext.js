@@ -16,11 +16,13 @@ import warning from 'shared/warning';
 
 export function createContext<T>(
   defaultValue: T,
+  //使用Object.is()计算新老context的差异
   calculateChangedBits: ?(a: T, b: T) => number,
 ): ReactContext<T> {
   if (calculateChangedBits === undefined) {
     calculateChangedBits = null;
   } else {
+    //不看
     if (__DEV__) {
       warningWithoutStack(
         calculateChangedBits === null ||
@@ -33,23 +35,38 @@ export function createContext<T>(
   }
 
   const context: ReactContext<T> = {
+    //还是那句话，ReactContext中的$$typeof是
+    // 作为createElement中的属性type中的对象进行存储的，并不是ReactElement的$$typeof
     $$typeof: REACT_CONTEXT_TYPE,
     _calculateChangedBits: calculateChangedBits,
+    //作为支持多个并发渲染器的解决方法，我们将一些渲染器分类为主要渲染器，将其他渲染器分类为辅助渲染器。
     // As a workaround to support multiple concurrent renderers, we categorize
-    // some renderers as primary and others as secondary. We only expect
+    // some renderers as primary and others as secondary.
+
+    //我们只希望最多有两个并发渲染器：React Native（主要）和Fabric（次要）;
+    // React DOM（主要）和React ART（次要）。
+    // 辅助渲染器将自己的context的value存储在单独的字段中。
+    // We only expect
     // there to be two concurrent renderers at most: React Native (primary) and
     // Fabric (secondary); React DOM (primary) and React ART (secondary).
     // Secondary renderers store their context values on separate fields.
+
+    //<Provider value={xxx}>中的value就是赋值给_currentValue的
+
+    //也就是说_currentValue和_currentValue2作用是一样的，只是分别给主渲染器和辅助渲染器使用
     _currentValue: defaultValue,
     _currentValue2: defaultValue,
     // Used to track how many concurrent renderers this context currently
     // supports within in a single renderer. Such as parallel server rendering.
+
+    //用来追踪该context的并发渲染器的数量
     _threadCount: 0,
     // These are circular
     Provider: (null: any),
     Consumer: (null: any),
   };
-
+  //const obj={}
+  //obj.provider._obj = obj
   context.Provider = {
     $$typeof: REACT_PROVIDER_TYPE,
     _context: context,
@@ -57,7 +74,7 @@ export function createContext<T>(
 
   let hasWarnedAboutUsingNestedContextConsumers = false;
   let hasWarnedAboutUsingConsumerProvider = false;
-
+  //不看
   if (__DEV__) {
     // A separate object, but proxies back to the original context object for
     // backwards compatibility. It has a different $$typeof, so we can properly
@@ -125,10 +142,20 @@ export function createContext<T>(
     });
     // $FlowFixMe: Flow complains about missing properties because it doesn't understand defineProperty
     context.Consumer = Consumer;
-  } else {
-    context.Consumer = context;
   }
 
+  else {
+    //const obj={}
+    //obj.consumer=obj
+    //也就是Consumber对象指向React.Context对象
+
+    //在<Consumer>进行渲染时，为了保证Consumer拿到最新的值，
+    //直接让Consumer=React.Context，
+    // React.Context中的_currentValue已经被<Provider>的value给赋值了
+    //所以Consumer能立即拿到最新的值
+    context.Consumer = context;
+  }
+  //不看
   if (__DEV__) {
     context._currentRenderer = null;
     context._currentRenderer2 = null;
