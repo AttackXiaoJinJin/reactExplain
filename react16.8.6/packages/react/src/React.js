@@ -10,6 +10,7 @@ import {
   REACT_FRAGMENT_TYPE,
   REACT_PROFILER_TYPE,
   REACT_STRICT_MODE_TYPE,
+  //<Suspense> 是一个常量
   REACT_SUSPENSE_TYPE,
   REACT_SUSPENSE_LIST_TYPE,
 } from 'shared/ReactSymbols';
@@ -69,6 +70,7 @@ const React = {
 
   createContext,
   forwardRef,
+  //React.lazy()
   lazy,
   memo,
 
