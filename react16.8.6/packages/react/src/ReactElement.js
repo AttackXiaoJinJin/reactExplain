@@ -563,6 +563,7 @@ export function cloneElement(element, config, children) {
  * @return {boolean} True if `object` is a ReactElement.
  * @final
  */
+//判断是否为ReactElement
 export function isValidElement(object) {
   return (
     typeof object === 'object' &&

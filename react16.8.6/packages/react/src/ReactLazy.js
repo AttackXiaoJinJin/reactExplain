@@ -9,13 +9,17 @@ import type {LazyComponent, Thenable} from 'shared/ReactLazyComponent';
 
 import {REACT_LAZY_TYPE} from 'shared/ReactSymbols';
 import warning from 'shared/warning';
-
+//是一个function，参数是() => Thenable<T, R>
+//Thenable是一个promise对象，具有.then()
 export function lazy<T, R>(ctor: () => Thenable<T, R>): LazyComponent<T> {
   let lazyType = {
     $$typeof: REACT_LAZY_TYPE,
+    //存进来的方法
     _ctor: ctor,
     // React uses these fields to store the result.
+    //记录Thenable对象所处的状态 pending是-1
     _status: -1,
+    //记录Thenable对象resolved后的result
     _result: null,
   };
 
