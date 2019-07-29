@@ -14,7 +14,9 @@ import warning from 'shared/warning';
 import ReactCurrentDispatcher from './ReactCurrentDispatcher';
 
 function resolveDispatcher() {
+  //在ReactDOM进行渲染的时候，才会调用dispatcher
   const dispatcher = ReactCurrentDispatcher.current;
+  //应该是不正确使用dispatcher时报出的警告
   invariant(
     dispatcher !== null,
     'Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for' +
@@ -68,7 +70,7 @@ export function useContext<T>(
   }
   return dispatcher.useContext(Context, unstable_observedBits);
 }
-
+//[name,setName]=useState('chen')
 export function useState<S>(initialState: (() => S) | S) {
   const dispatcher = resolveDispatcher();
   return dispatcher.useState(initialState);
@@ -87,7 +89,7 @@ export function useRef<T>(initialValue: T): {current: T} {
   const dispatcher = resolveDispatcher();
   return dispatcher.useRef(initialValue);
 }
-
+//和useState一样，都是调用dispatcher上对应的方法
 export function useEffect(
   create: () => (() => void) | void,
   inputs: Array<mixed> | void | null,
