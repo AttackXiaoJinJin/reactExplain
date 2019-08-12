@@ -47,7 +47,7 @@ let didWarnAboutMaps = false;
 
 const userProvidedKeyEscapeRegex = /\/+/g;
 function escapeUserProvidedKey(text) {
-  //将连续多个 / 替换成 &
+  //如果字符串中有连续多个 / 的话，在匹配的字串后再加 /
   return ('' + text).replace(userProvidedKeyEscapeRegex, '$&/');
 }
 //对象池的最大容量为10
@@ -61,7 +61,7 @@ function getPooledTraverseContext(
   mapFunction,
   mapContext,
 ) {
-  //如果对象池内存在child，则出队一个对象，
+  //如果对象池内存在对象，则出队一个对象，
   //并将arguments的值赋给对象属性
   //最后返回该对象
   if (traverseContextPool.length) {
@@ -344,7 +344,11 @@ function mapSingleChildIntoContext(bookKeeping, child, childKey) {
   const {result, keyPrefix, func, context} = bookKeeping;
   //func:(item)=>{return [item,[item,] ]},
   //item即<span>1<span/>
+  //第二个参数bookKeeping.count++很有意思，压根儿没用到，但仍起到计数的作用
   let mappedChild = func.call(context, child, bookKeeping.count++);
+  //如果根据React.Children.map()第二个参数callback，执行仍是一个数组的话，
+  //递归调用mapIntoWithKeyPrefixInternal，继续之前的步骤，
+  //直到是单个ReactElement
   if (Array.isArray(mappedChild)) {
     //mappedChild:[item,[item,] ]
     //result:[]
@@ -376,7 +380,7 @@ function mapSingleChildIntoContext(bookKeeping, child, childKey) {
 //第二次：[item,[item,] ] , [] , .0 , c => c , undefined
 function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
   let escapedPrefix = '';
-  //每次遍历时，使用 / 隔开，有N个/，就有N层
+  //如果字符串中有连续多个 / 的话，在匹配的字串后再加 /
   if (prefix != null) {
     escapedPrefix = escapeUserProvidedKey(prefix) + '/';
   }

@@ -276,7 +276,9 @@ export function requestCurrentTime() {
     return currentEventTime;
   }
   // This is the first update since React yielded. Compute a new start time.
+  //第一次更新的话，是走这边的
   currentEventTime = msToExpirationTime(now());
+  //返回1073741823
   return currentEventTime;
 }
 
