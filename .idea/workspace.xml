@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11f8bc77-0e8b-4e46-ba98-688306b0187b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-dom/src/client/ReactDOM.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-dom/src/client/ReactDOM.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-dom/src/shared/DOMProperty.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-dom/src/shared/DOMProperty.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberExpirationTime.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberExpirationTime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberHostConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberHostConfig.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberReconciler.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberReconciler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/maxSigned31BitInt.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/maxSigned31BitInt.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/shared/ReactRootTags.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/shared/ReactRootTags.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,12 +15,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-dom/src/client/ReactDOM.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="27" column="17" selection-start-line="27" selection-start-column="2" selection-end-line="27" selection-end-column="17" />
+            <state relative-caret-position="-294">
+              <caret line="553" column="41" selection-start-line="553" selection-start-column="9" selection-end-line="553" selection-end-column="41" />
               <folding>
+                <element signature="e#427#526#0" expanded="true" />
                 <element signature="e#2923#5678#0" />
                 <element signature="e#15273#15768#0" />
                 <element signature="e#15836#16251#0" />
@@ -46,17 +39,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberReconciler.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="61" column="49" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="20" />
+            <state relative-caret-position="143">
+              <caret line="359" column="37" selection-start-line="359" selection-start-column="16" selection-end-line="359" selection-end-column="37" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactUpdateQueue.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
+            <state relative-caret-position="293">
+              <caret line="163" column="30" lean-forward="true" selection-start-line="163" selection-start-column="30" selection-end-line="163" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -138,14 +131,12 @@
       <find>isValidElement</find>
       <find>LegacyRoot</find>
       <find>root = container._reactRootContainer = legacyCreateRootFromDOMContainer(</find>
-      <find>getPublicRootInstance</find>
       <find>getPublicInstance</find>
       <find>root.render</find>
       <find>reactwork</find>
       <find>unmount</find>
       <find>.unmount</find>
       <find>updateContainerAtExpirationTime</find>
-      <find>legacyRenderSubtreeIntoContainer</find>
       <find>legacyCreateRootFromDOMContainer</find>
       <find>getReactRootElementInContainer</find>
       <find>unbatchedUpdates</find>
@@ -165,6 +156,8 @@
       <find>getContextForSubtree</find>
       <find>scheduleRootUpdate</find>
       <find>createUpdate</find>
+      <find>getPublicRootInstance</find>
+      <find>legacyRenderSubtreeIntoContainer</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -202,7 +195,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="797" />
@@ -334,18 +327,18 @@
       <workItem from="1564060713693" duration="25940000" />
       <workItem from="1564410059559" duration="30389000" />
       <workItem from="1565457083968" duration="83000" />
-      <workItem from="1565510450014" duration="6287000" />
+      <workItem from="1565510450014" duration="7621000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100344000" />
+    <option name="totallyTimeSpent" value="101678000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="797" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="797" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14144272" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14144272" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -624,24 +617,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-dom/src/client/ReactDOM.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="27" column="17" selection-start-line="27" selection-start-column="2" selection-end-line="27" selection-end-column="17" />
-          <folding>
-            <element signature="e#2923#5678#0" />
-            <element signature="e#15273#15768#0" />
-            <element signature="e#15836#16251#0" />
-            <element signature="e#16691#16814#0" />
-            <element signature="e#18780#19882#0" />
-            <element signature="e#18799#19555#0" />
-            <element signature="e#19984#20730#0" />
-            <element signature="e#20108#20521#0" />
-            <element signature="e#21016#21394#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberSuspenseConfig.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -663,17 +638,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberReconciler.js">
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactUpdateQueue.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="61" column="49" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="20" />
+        <state relative-caret-position="293">
+          <caret line="163" column="30" lean-forward="true" selection-start-line="163" selection-start-column="30" selection-end-line="163" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactUpdateQueue.js">
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberReconciler.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
+        <state relative-caret-position="143">
+          <caret line="359" column="37" selection-start-line="359" selection-start-column="16" selection-end-line="359" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-dom/src/client/ReactDOM.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-294">
+          <caret line="553" column="41" selection-start-line="553" selection-start-column="9" selection-end-line="553" selection-end-column="41" />
+          <folding>
+            <element signature="e#427#526#0" expanded="true" />
+            <element signature="e#2923#5678#0" />
+            <element signature="e#15273#15768#0" />
+            <element signature="e#15836#16251#0" />
+            <element signature="e#16691#16814#0" />
+            <element signature="e#18780#19882#0" />
+            <element signature="e#18799#19555#0" />
+            <element signature="e#19984#20730#0" />
+            <element signature="e#20108#20521#0" />
+            <element signature="e#21016#21394#0" />
+          </folding>
         </state>
       </provider>
     </entry>

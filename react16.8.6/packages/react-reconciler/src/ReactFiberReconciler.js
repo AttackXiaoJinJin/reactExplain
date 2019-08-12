@@ -356,7 +356,7 @@ export {
   flushPassiveEffects,
   IsThisRendererActing,
 };
-
+//获取root实例
 export function getPublicRootInstance(
   container: OpaqueRoot,
 ): React$Component<any, any> | PublicInstance | null {
