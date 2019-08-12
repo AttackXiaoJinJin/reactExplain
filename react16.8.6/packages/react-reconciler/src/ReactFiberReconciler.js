@@ -107,6 +107,7 @@ if (__DEV__) {
 function getContextForSubtree(
   parentComponent: ?React$Component<any, any>,
 ): Object {
+  //root节点的话，就返回空对象
   if (!parentComponent) {
     return emptyContextObject;
   }
@@ -123,7 +124,7 @@ function getContextForSubtree(
 
   return parentContext;
 }
-
+//计划更新Root
 function scheduleRootUpdate(
   current: Fiber,
   element: ReactNodeList,
@@ -148,7 +149,7 @@ function scheduleRootUpdate(
       );
     }
   }
-
+  //创建更新的时间节点
   const update = createUpdate(expirationTime, suspenseConfig);
   // Caution: React DevTools currently depends on this property
   // being called "element".
@@ -168,12 +169,17 @@ function scheduleRootUpdate(
   if (revertPassiveEffectsChange) {
     flushPassiveEffects();
   }
+  //一整个React应用中，会有多次更新，而这多次更新均在更新队列中
   enqueueUpdate(current, update);
+  //进行任务调度
+  //当React进行Update后，就要进行调度
+  //即 根据任务的优先级去调度任务
+  //先执行优先级高的任务，
   scheduleWork(current, expirationTime);
 
   return expirationTime;
 }
-
+//在过期时间内，更新container
 export function updateContainerAtExpirationTime(
   element: ReactNodeList,
   container: OpaqueRoot,
@@ -196,7 +202,7 @@ export function updateContainerAtExpirationTime(
       }
     }
   }
-
+  //由于parentComponent为null,所以返回空对象{}
   const context = getContextForSubtree(parentComponent);
   if (container.context === null) {
     container.context = context;
@@ -293,15 +299,16 @@ function findHostInstanceWithWarning(
   }
   return findHostInstance(component);
 }
-
+//创建React容器
 export function createContainer(
   containerInfo: Container,
   tag: RootTag,
   hydrate: boolean,
 ): OpaqueRoot {
+  //创建FiberRoot
   return createFiberRoot(containerInfo, tag, hydrate);
 }
-
+//更新Container
 export function updateContainer(
   element: ReactNodeList,
   container: OpaqueRoot,
@@ -309,6 +316,7 @@ export function updateContainer(
   callback: ?Function,
 ): ExpirationTime {
   const current = container.current;
+  //1073741823
   const currentTime = requestCurrentTime();
   if (__DEV__) {
     // $FlowExpectedError - jest isn't a global, and isn't recognized outside of tests
@@ -317,6 +325,7 @@ export function updateContainer(
     }
   }
   const suspenseConfig = requestCurrentSuspenseConfig();
+  //计算过期时间，这是React优先级更新非常重要的点
   const expirationTime = computeExpirationForFiber(
     currentTime,
     current,
@@ -351,6 +360,8 @@ export {
 export function getPublicRootInstance(
   container: OpaqueRoot,
 ): React$Component<any, any> | PublicInstance | null {
+  //看到container.current，我就想到了ref（xxx.current）
+  //获取当前节点
   const containerFiber = container.current;
   if (!containerFiber.child) {
     return null;

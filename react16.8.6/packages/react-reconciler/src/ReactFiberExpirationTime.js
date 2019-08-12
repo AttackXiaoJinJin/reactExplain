@@ -29,8 +29,11 @@ const UNIT_SIZE = 10;
 const MAGIC_NUMBER_OFFSET = Batched - 1;
 
 // 1 unit of expiration time represents 10ms.
+//10ms表示一个过期时间
+//MAGIC_NUMBER_OFFSET表示的是整型最大值1073741823
 export function msToExpirationTime(ms: number): ExpirationTime {
   // Always add an offset so that we don't clash with the magic number for NoWork.
+  //总是添加一个偏移量，这样我们就不会与NoWork的神奇数字发生冲突
   return MAGIC_NUMBER_OFFSET - ((ms / UNIT_SIZE) | 0);
 }
 
