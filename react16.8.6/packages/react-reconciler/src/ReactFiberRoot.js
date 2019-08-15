@@ -35,10 +35,14 @@ type BaseFiberRootProperties = {|
   tag: RootTag,
 
   // Any additional information from the host associated with this root.
+  //root节点，也就是ReactDOM.render(<App />, document.getElementById('root'))的第二个参数
   containerInfo: any,
   // Used only by persistent updates.
+  //只有在持久更新中才会用到，也就是不支持增量更新的平台会用到，react-dom不会用到
+  //也就是不更新某一块地方，而是整个应用完全更新
   pendingChildren: any,
   // The currently active root fiber. This is the mutable root of the tree.
+  //当前应用对应的Fiber对象，即Root Fiber
   current: Fiber,
 
   pingCache:
@@ -97,7 +101,9 @@ function FiberRootNode(containerInfo, tag, hydrate) {
   this.tag = tag;
   this.current = null;
   this.containerInfo = containerInfo;
+
   this.pendingChildren = null;
+  //
   this.pingCache = null;
   this.finishedExpirationTime = NoWork;
   this.finishedWork = null;
