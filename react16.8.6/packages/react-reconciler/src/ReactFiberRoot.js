@@ -42,7 +42,10 @@ type BaseFiberRootProperties = {|
   //也就是不更新某一块地方，而是整个应用完全更新
   pendingChildren: any,
   // The currently active root fiber. This is the mutable root of the tree.
-  //当前应用对应的Fiber对象，即Root Fiber
+  //当前应用root节点对应的Fiber对象，即Root Fiber
+  //ReactElement会有一个树结构，同时一个ReactElement对应一个Fiber对象，
+  //所以Fiber也会有树结构
+  //current:Fiber对象 对应的是 root 节点，即整个应用根对象
   current: Fiber,
 
   pingCache:
@@ -50,16 +53,28 @@ type BaseFiberRootProperties = {|
     | Map<Thenable, Set<ExpirationTime>>
     | null,
 
+  //任务有三种，优先级有高低：
+  //（1）没有提交的任务
+  //（2）没有提交的被挂起的任务
+  //（3）没有提交的可能被挂起的任务
+
+  //当前更新对应的过期时间
   finishedExpirationTime: ExpirationTime,
   // A finished work-in-progress HostRoot that's ready to be committed.
+  //已经完成任务的FiberRoot对象，如果你只有一个Root，那么该对象就是这个Root对应的Fiber或null
+  //在commit(提交)阶段只会处理该值对应的任务
   finishedWork: Fiber | null,
   // Timeout handle returned by setTimeout. Used to cancel a pending timeout, if
   // it's superseded by a new one.
+  // 在任务被挂起的时候，通过setTimeout设置的响应内容，
+  // 并且清理之前挂起的任务 还没触发的timeout
   timeoutHandle: TimeoutHandle | NoTimeout,
   // Top context object, used by renderSubtreeIntoContainer
+  //顶层context对象，只有主动调用renderSubtreeIntoContainer才会生效
   context: Object | null,
   pendingContext: Object | null,
   // Determines if we should attempt to hydrate on the initial mount
+  //用来判断 第一次渲染 是否需要融合
   +hydrate: boolean,
   // List of top-level batches. This list indicates whether a commit should be
   // deferred. Also contains completion callbacks.
@@ -68,12 +83,19 @@ type BaseFiberRootProperties = {|
   // Node returned by Scheduler.scheduleCallback
   callbackNode: *,
   // Expiration of the callback associated with this root
+  //跟root有关联的回调函数的时间
   callbackExpirationTime: ExpirationTime,
   // The earliest pending expiration time that exists in the tree
+  //存在root中，最旧的挂起时间
+  //不确定是否挂起的状态（所有任务一开始均是该状态）
   firstPendingTime: ExpirationTime,
   // The latest pending expiration time that exists in the tree
+  //存在root中，最新的挂起时间
+  //不确定是否挂起的状态（所有任务一开始均是该状态）
   lastPendingTime: ExpirationTime,
   // The time at which a suspended component pinged the root to render again
+  //挂起的组件通知root再次渲染的时间
+  //通过一个promise被reslove并且可以重新尝试的优先级
   pingTime: ExpirationTime,
 |};
 
