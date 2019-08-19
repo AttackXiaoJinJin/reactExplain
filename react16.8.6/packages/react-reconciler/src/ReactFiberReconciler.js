@@ -153,6 +153,8 @@ function scheduleRootUpdate(
   const update = createUpdate(expirationTime, suspenseConfig);
   // Caution: React DevTools currently depends on this property
   // being called "element".
+
+  //payload表示更新内容，这里是要更新ReactElement节点，包括其子树
   update.payload = {element};
 
   callback = callback === undefined ? null : callback;

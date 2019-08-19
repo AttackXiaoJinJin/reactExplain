@@ -155,15 +155,22 @@ if (__DEV__) {
     currentlyProcessingQueue = null;
   };
 }
-
+//创建更新队列
 export function createUpdateQueue<State>(baseState: State): UpdateQueue<State> {
   const queue: UpdateQueue<State> = {
+    //应用更新后的state
     baseState,
+    //队列中的第一个update
     firstUpdate: null,
+    //队列中的最后一个update
     lastUpdate: null,
+    //队列中第一个捕获类型的update
     firstCapturedUpdate: null,
+    //队列中最后一个捕获类型的update
     lastCapturedUpdate: null,
+    //第一个side effect
     firstEffect: null,
+    //最后一个side effect
     lastEffect: null,
     firstCapturedEffect: null,
     lastCapturedEffect: null,
@@ -176,6 +183,8 @@ function cloneUpdateQueue<State>(
 ): UpdateQueue<State> {
   const queue: UpdateQueue<State> = {
     baseState: currentQueue.baseState,
+
+    //首、尾之间的update用next串联
     firstUpdate: currentQueue.firstUpdate,
     lastUpdate: currentQueue.lastUpdate,
 
@@ -198,14 +207,30 @@ export function createUpdate(
   suspenseConfig: null | SuspenseConfig,
 ): Update<*> {
   return {
+    //更新的过期时间
     expirationTime,
     suspenseConfig,
 
-    tag: UpdateState,
+    // export const UpdateState = 0;
+    // export const ReplaceState = 1;
+    // export const ForceUpdate = 2;
+    // export const CaptureUpdate = 3;
+
+    //重点提下CaptureUpdate，在React16后有一个ErrorBoundaries功能
+    //即在渲染过程中报错了，可以选择新的渲染状态（提示有错误的状态），来更新页面
+    tag: UpdateState, //0更新 1替换 2强制更新 3快照更新
+
+    //更新内容，比如setState接收的第一个参数
     payload: null,
+
+    //对应的回调，比如setState({}, callback )
     callback: null,
 
+    //指向下一个更新
+    //
     next: null,
+
+    //指向下一个side effect
     nextEffect: null,
   };
 }
@@ -224,8 +249,14 @@ function appendUpdateToQueue<State>(
   }
 }
 
+//每次setState都会update，每次update，都会入updateQueue
 export function enqueueUpdate<State>(fiber: Fiber, update: Update<State>) {
   // Update queues are created lazily.
+  //alternate即workInProgress
+  //fiber即current
+
+  //current到alternate即workInProgress有一个映射关系
+  //所以要保证current和workInProgress的updateQueue是一致的
   const alternate = fiber.alternate;
   let queue1;
   let queue2;
@@ -262,6 +293,7 @@ export function enqueueUpdate<State>(fiber: Fiber, update: Update<State>) {
   }
   if (queue2 === null || queue1 === queue2) {
     // There's only a single queue.
+    //将update放入queue1中
     appendUpdateToQueue(queue1, update);
   } else {
     // There are two queues. We need to append the update to both queues,
