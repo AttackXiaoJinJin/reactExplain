@@ -264,7 +264,7 @@ let spawnedWorkDuringRender: null | Array<ExpirationTime> = null;
 // we want all updates of like priority that occur within the same event to
 // receive the same expiration time. Otherwise we get tearing.
 let currentEventTime: ExpirationTime = NoWork;
-
+//计算当前时间
 export function requestCurrentTime() {
   if ((executionContext & (RenderContext | CommitContext)) !== NoContext) {
     // We're inside React, so it's fine to read the actual time.
@@ -281,7 +281,7 @@ export function requestCurrentTime() {
   //返回1073741823
   return currentEventTime;
 }
-
+//为fiber对象计算expirationTime
 export function computeExpirationForFiber(
   currentTime: ExpirationTime,
   fiber: Fiber,
@@ -317,11 +317,13 @@ export function computeExpirationForFiber(
         break;
       case UserBlockingPriority:
         // TODO: Rename this to computeUserBlockingExpiration
+        //一个是计算交互事件（如点击）的过期时间
         expirationTime = computeInteractiveExpiration(currentTime);
         break;
       case NormalPriority:
       case LowPriority: // TODO: Handle LowPriority
         // TODO: Rename this to... something better.
+        //一个是计算异步更新的过期时间
         expirationTime = computeAsyncExpiration(currentTime);
         break;
       case IdlePriority:
