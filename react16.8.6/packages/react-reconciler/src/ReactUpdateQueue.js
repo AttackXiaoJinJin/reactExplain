@@ -218,7 +218,7 @@ export function createUpdate(
 
     //重点提下CaptureUpdate，在React16后有一个ErrorBoundaries功能
     //即在渲染过程中报错了，可以选择新的渲染状态（提示有错误的状态），来更新页面
-    tag: UpdateState, //0更新 1替换 2强制更新 3快照更新
+    tag: UpdateState, //0更新 1替换 2强制更新 3捕获性的更新
 
     //更新内容，比如setState接收的第一个参数
     payload: null,
@@ -227,14 +227,13 @@ export function createUpdate(
     callback: null,
 
     //指向下一个更新
-    //
     next: null,
 
     //指向下一个side effect
     nextEffect: null,
   };
 }
-
+//入更新队列
 function appendUpdateToQueue<State>(
   queue: UpdateQueue<State>,
   update: Update<State>,
@@ -244,12 +243,15 @@ function appendUpdateToQueue<State>(
     // Queue is empty
     queue.firstUpdate = queue.lastUpdate = update;
   } else {
+    //next指向
     queue.lastUpdate.next = update;
+    //lastUpdate指向
     queue.lastUpdate = update;
   }
 }
 
 //每次setState都会update，每次update，都会入updateQueue
+//current即fiber
 export function enqueueUpdate<State>(fiber: Fiber, update: Update<State>) {
   // Update queues are created lazily.
   //alternate即workInProgress
@@ -258,28 +260,35 @@ export function enqueueUpdate<State>(fiber: Fiber, update: Update<State>) {
   //current到alternate即workInProgress有一个映射关系
   //所以要保证current和workInProgress的updateQueue是一致的
   const alternate = fiber.alternate;
+  //current的队列
   let queue1;
+  //alternate的队列
   let queue2;
+  //如果alternate为空
   if (alternate === null) {
     // There's only one fiber.
     queue1 = fiber.updateQueue;
     queue2 = null;
+    //如果queue1仍为空，则初始化更新队列
     if (queue1 === null) {
       queue1 = fiber.updateQueue = createUpdateQueue(fiber.memoizedState);
     }
   } else {
     // There are two owners.
+    //如果alternate不为空，则取各自的更新队列
     queue1 = fiber.updateQueue;
     queue2 = alternate.updateQueue;
     if (queue1 === null) {
       if (queue2 === null) {
         // Neither fiber has an update queue. Create new ones.
+        //初始化
         queue1 = fiber.updateQueue = createUpdateQueue(fiber.memoizedState);
         queue2 = alternate.updateQueue = createUpdateQueue(
           alternate.memoizedState,
         );
       } else {
         // Only one fiber has an update queue. Clone to create a new one.
+        //如果queue2存在但queue1不存在的话，则根据queue2复制queue1
         queue1 = fiber.updateQueue = cloneUpdateQueue(queue2);
       }
     } else {
@@ -299,11 +308,16 @@ export function enqueueUpdate<State>(fiber: Fiber, update: Update<State>) {
     // There are two queues. We need to append the update to both queues,
     // while accounting for the persistent structure of the list — we don't
     // want the same update to be added multiple times.
+    //react不想多次将同一个的update放入队列中
+    //如果两个都是空队列，则添加update
     if (queue1.lastUpdate === null || queue2.lastUpdate === null) {
       // One of the queues is not empty. We must add the update to both queues.
       appendUpdateToQueue(queue1, update);
       appendUpdateToQueue(queue2, update);
-    } else {
+    }
+    //如果两个都不是空队列，由于两个结构共享，所以只在queue1加入update
+    //在queue2中，将lastUpdate指向update
+    else {
       // Both queues are non-empty. The last update is the same in both lists,
       // because of structural sharing. So, only append to one of the lists.
       appendUpdateToQueue(queue1, update);
