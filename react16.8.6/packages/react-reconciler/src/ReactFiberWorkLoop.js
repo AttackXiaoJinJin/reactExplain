@@ -287,11 +287,12 @@ export function computeExpirationForFiber(
   fiber: Fiber,
   suspenseConfig: null | SuspenseConfig,
 ): ExpirationTime {
+  //可以在ReactTypeOfMode中看到是哪种类型的mode
   const mode = fiber.mode;
   if ((mode & BatchedMode) === NoMode) {
     return Sync;
   }
-
+  //获取当前fiber的优先级
   const priorityLevel = getCurrentPriorityLevel();
   if ((mode & ConcurrentMode) === NoMode) {
     return priorityLevel === ImmediatePriority ? Sync : Batched;
@@ -637,18 +638,20 @@ function resolveLocksOnRoot(root: FiberRoot, expirationTime: ExpirationTime) {
     return false;
   }
 }
-
+//延缓更新
 export function deferredUpdates<A>(fn: () => A): A {
   // TODO: Remove in favor of Scheduler.next
+  //
   return runWithPriority(NormalPriority, fn);
 }
-
+//同步更新
 export function syncUpdates<A, B, C, R>(
   fn: (A, B, C) => R,
   a: A,
   b: B,
   c: C,
 ): R {
+  //fn就是setState
   return runWithPriority(ImmediatePriority, fn.bind(null, a, b, c));
 }
 
@@ -740,6 +743,8 @@ export function flushSync<A, R>(fn: A => R, a: A): R {
   const prevExecutionContext = executionContext;
   executionContext |= BatchedContext;
   try {
+    //syncUpdates 是return runWithPriority(ImmediatePriority, fn.bind(null, a, b, c));
+    //相当于调用了syncUpdates(fn,a)
     return runWithPriority(ImmediatePriority, fn.bind(null, a));
   } finally {
     executionContext = prevExecutionContext;

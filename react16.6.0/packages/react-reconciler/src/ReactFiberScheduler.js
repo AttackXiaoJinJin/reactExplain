@@ -2421,7 +2421,8 @@ function flushSync<A, R>(fn: (a: A) => R, a: A): R {
     performSyncWork();
   }
 }
-
+//事件，比如onClick=(()=>{})的callback就是在interactiveUpdates执行的
+//即isBatchingInteractiveUpdates=true的情况下
 function interactiveUpdates<A, B, R>(fn: (A, B) => R, a: A, b: B): R {
   if (isBatchingInteractiveUpdates) {
     return fn(a, b);

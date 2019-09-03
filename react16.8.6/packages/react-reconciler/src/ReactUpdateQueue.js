@@ -201,7 +201,7 @@ function cloneUpdateQueue<State>(
   };
   return queue;
 }
-
+//创建update对象
 export function createUpdate(
   expirationTime: ExpirationTime,
   suspenseConfig: null | SuspenseConfig,
@@ -218,6 +218,7 @@ export function createUpdate(
 
     //重点提下CaptureUpdate，在React16后有一个ErrorBoundaries功能
     //即在渲染过程中报错了，可以选择新的渲染状态（提示有错误的状态），来更新页面
+    //默认是0即更新
     tag: UpdateState, //0更新 1替换 2强制更新 3捕获性的更新
 
     //更新内容，比如setState接收的第一个参数
