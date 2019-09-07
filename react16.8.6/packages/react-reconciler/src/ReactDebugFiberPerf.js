@@ -226,9 +226,11 @@ export function recordEffect(): void {
 
 export function recordScheduleUpdate(): void {
   if (enableUserTimingAPI) {
+    //提交的时候，设为true
     if (isCommitting) {
       hasScheduledUpdateInCurrentCommit = true;
     }
+    //render和rerender的时候设为true
     if (
       currentPhase !== null &&
       currentPhase !== 'componentWillMount' &&
