@@ -23,7 +23,7 @@
 export function remove(key) {
   key._reactInternalFiber = undefined;
 }
-
+//getInstance
 export function get(key) {
   return key._reactInternalFiber;
 }

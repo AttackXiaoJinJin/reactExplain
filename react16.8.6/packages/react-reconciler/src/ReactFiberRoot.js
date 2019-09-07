@@ -118,14 +118,12 @@ export type FiberRoot = {
   ...BaseFiberRootProperties,
   ...ProfilingOnlyFiberRootProperties,
 };
-
+//新建fiberRoot对象
 function FiberRootNode(containerInfo, tag, hydrate) {
   this.tag = tag;
   this.current = null;
   this.containerInfo = containerInfo;
-
   this.pendingChildren = null;
-  //
   this.pingCache = null;
   this.finishedExpirationTime = NoWork;
   this.finishedWork = null;
@@ -146,18 +144,23 @@ function FiberRootNode(containerInfo, tag, hydrate) {
     this.pendingInteractionMap = new Map();
   }
 }
-
+//初始化fiberRoot和rootFiber
 export function createFiberRoot(
   containerInfo: any,
   tag: RootTag,
   hydrate: boolean,
 ): FiberRoot {
+  //新建fiberRoot对象
   const root: FiberRoot = (new FiberRootNode(containerInfo, tag, hydrate): any);
 
   // Cyclic construction. This cheats the type system right now because
   // stateNode is any.
+  //初始化RootFiber
   const uninitializedFiber = createHostRootFiber(tag);
+  //FiberRoot和RootFiber的关系
+  //FiberRoot.current = RootFiber
   root.current = uninitializedFiber;
+  //RootFiber.stateNode = FiberRoot
   uninitializedFiber.stateNode = root;
 
   return root;

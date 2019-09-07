@@ -287,11 +287,12 @@ export function computeExpirationForFiber(
   fiber: Fiber,
   suspenseConfig: null | SuspenseConfig,
 ): ExpirationTime {
+  //可以在ReactTypeOfMode中看到是哪种类型的mode
   const mode = fiber.mode;
   if ((mode & BatchedMode) === NoMode) {
     return Sync;
   }
-
+  //获取当前fiber的优先级
   const priorityLevel = getCurrentPriorityLevel();
   if ((mode & ConcurrentMode) === NoMode) {
     return priorityLevel === ImmediatePriority ? Sync : Batched;
@@ -360,22 +361,24 @@ export function computeUniqueAsyncExpiration(): ExpirationTime {
   lastUniqueAsyncExpiration = result;
   return result;
 }
-
+//scheduleWork
 export function scheduleUpdateOnFiber(
   fiber: Fiber,
   expirationTime: ExpirationTime,
 ) {
+  //判断是否是无限循环update
   checkForNestedUpdates();
+  //测试环境用的，不看
   warnAboutInvalidUpdatesOnClassComponentsInDEV(fiber);
-
+  //找到rootFiber并遍历更新子节点的expirationTime
   const root = markUpdateTimeFromFiberToRoot(fiber, expirationTime);
   if (root === null) {
     warnAboutUpdateOnUnmountedFiberInDEV(fiber);
     return;
   }
-
+  //NoWork表示无更新操作
   root.pingTime = NoWork;
-
+  //判断是否有高优先级任务打断当前正在执行的任务
   checkForInterruption(fiber, expirationTime);
   recordScheduleUpdate();
 
@@ -440,37 +443,59 @@ export const scheduleWork = scheduleUpdateOnFiber;
 // work without treating it as a typical update that originates from an event;
 // e.g. retrying a Suspense boundary isn't an update, but it does schedule work
 // on a fiber.
+
+//目标fiber会向上寻找rootFiber对象，在寻找的过程中会进行一些操作
 function markUpdateTimeFromFiberToRoot(fiber, expirationTime) {
   // Update the source fiber's expiration time
+  //如果fiber对象的过期时间小于 expirationTime，则更新fiber对象的过期时间
+
+  //也就是说，当前fiber的优先级是小于expirationTime的优先级的，现在要调高fiber的优先级
   if (fiber.expirationTime < expirationTime) {
     fiber.expirationTime = expirationTime;
   }
+  //在enqueueUpdate()中有讲到，与fiber.current是映射关系
   let alternate = fiber.alternate;
+  //同上
   if (alternate !== null && alternate.expirationTime < expirationTime) {
     alternate.expirationTime = expirationTime;
   }
   // Walk the parent path to the root and update the child expiration time.
+  //向上遍历父节点，直到root节点，在遍历的过程中更新子节点的expirationTime
+
+  //fiber的父节点
   let node = fiber.return;
   let root = null;
+  //node=null,表示是没有父节点了，也就是到达了RootFiber，即最大父节点
+  //HostRoot即树的顶端节点root
   if (node === null && fiber.tag === HostRoot) {
+    //RootFiber的stateNode就是FiberRoot
     root = fiber.stateNode;
-  } else {
+  }
+  //没有到达FiberRoot的话，则进行循环
+  else {
     while (node !== null) {
       alternate = node.alternate;
+      //如果父节点的所有子节点中优先级最高的更新时间仍小于expirationTime的话
+      //则提高优先级
       if (node.childExpirationTime < expirationTime) {
+        //重新赋值
         node.childExpirationTime = expirationTime;
+        //alternate是相对于fiber的另一个对象，也要进行更新
         if (
           alternate !== null &&
           alternate.childExpirationTime < expirationTime
         ) {
           alternate.childExpirationTime = expirationTime;
         }
-      } else if (
+      }
+      //别看差了是对应(node.childExpirationTime < expirationTime)的if
+      else if (
         alternate !== null &&
         alternate.childExpirationTime < expirationTime
       ) {
         alternate.childExpirationTime = expirationTime;
       }
+      //如果找到顶端rootFiber，结束循环
       if (node.return === null && node.tag === HostRoot) {
         root = node.stateNode;
         break;
@@ -478,7 +503,7 @@ function markUpdateTimeFromFiberToRoot(fiber, expirationTime) {
       node = node.return;
     }
   }
-
+  //更新该rootFiber的最旧、最新的挂起时间
   if (root !== null) {
     // Update the first and last pending expiration times in this root
     const firstPendingTime = root.firstPendingTime;
@@ -637,18 +662,20 @@ function resolveLocksOnRoot(root: FiberRoot, expirationTime: ExpirationTime) {
     return false;
   }
 }
-
+//延缓更新
 export function deferredUpdates<A>(fn: () => A): A {
   // TODO: Remove in favor of Scheduler.next
+  //
   return runWithPriority(NormalPriority, fn);
 }
-
+//同步更新
 export function syncUpdates<A, B, C, R>(
   fn: (A, B, C) => R,
   a: A,
   b: B,
   c: C,
 ): R {
+  //fn就是setState
   return runWithPriority(ImmediatePriority, fn.bind(null, a, b, c));
 }
 
@@ -740,6 +767,8 @@ export function flushSync<A, R>(fn: A => R, a: A): R {
   const prevExecutionContext = executionContext;
   executionContext |= BatchedContext;
   try {
+    //syncUpdates 是return runWithPriority(ImmediatePriority, fn.bind(null, a, b, c));
+    //相当于调用了syncUpdates(fn,a)
     return runWithPriority(ImmediatePriority, fn.bind(null, a));
   } finally {
     executionContext = prevExecutionContext;
@@ -2222,6 +2251,7 @@ function computeMsUntilSuspenseLoadingDelay(
   return msUntilTimeout;
 }
 
+//防止无限循环地嵌套更新
 function checkForNestedUpdates() {
   if (nestedUpdateCount > NESTED_UPDATE_LIMIT) {
     nestedUpdateCount = 0;
@@ -2272,16 +2302,19 @@ function stopInterruptedWorkLoopTimer() {
   stopWorkLoopTimer(interruptedBy, didCompleteRoot);
   interruptedBy = null;
 }
-
+//判断是否有高优先级任务打断当前正在执行的任务
 function checkForInterruption(
   fiberThatReceivedUpdate: Fiber,
   updateExpirationTime: ExpirationTime,
 ) {
+  //如果任务正在执行，并且异步任务已经执行到一半了，
+  //但是现在需要把执行权交给浏览器，去执行优先级更高的任务
   if (
     enableUserTimingAPI &&
     workInProgressRoot !== null &&
     updateExpirationTime > renderExpirationTime
   ) {
+    //打断当前任务，优先执行新的update
     interruptedBy = fiberThatReceivedUpdate;
   }
 }
