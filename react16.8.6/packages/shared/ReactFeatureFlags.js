@@ -6,7 +6,7 @@
  *
  * @flow strict
  */
-
+//dev即测试环境
 export const enableUserTimingAPI = __DEV__;
 
 // Helps identify side effects in begin-phase lifecycle hooks and setState reducers:
