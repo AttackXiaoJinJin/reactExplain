@@ -223,8 +223,9 @@ export function recordEffect(): void {
     effectCountInCurrentCommit++;
   }
 }
-
+//测试环境
 export function recordScheduleUpdate(): void {
+  //当enableUserTimingAPI=__DEV__的时候
   if (enableUserTimingAPI) {
     //提交的时候，设为true
     if (isCommitting) {

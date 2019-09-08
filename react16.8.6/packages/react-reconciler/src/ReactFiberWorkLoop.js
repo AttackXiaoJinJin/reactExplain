@@ -380,13 +380,18 @@ export function scheduleUpdateOnFiber(
   root.pingTime = NoWork;
   //判断是否有高优先级任务打断当前正在执行的任务
   checkForInterruption(fiber, expirationTime);
+  //报告调度更新，测试环境用的，可不看
   recordScheduleUpdate();
 
   // TODO: computeExpirationForFiber also reads the priority. Pass the
   // priority as an argument to that function and this one.
   const priorityLevel = getCurrentPriorityLevel();
-
+  //1073741823
+  //如果expirationTime等于最大整型值的话
+  //如果是同步任务的过期时间的话
   if (expirationTime === Sync) {
+    //如果还未渲染，update是未分批次的，
+    //也就是第一次渲染前
     if (
       // Check if we're inside unbatchedUpdates
       (executionContext & LegacyUnbatchedContext) !== NoContext &&
@@ -394,27 +399,39 @@ export function scheduleUpdateOnFiber(
       (executionContext & (RenderContext | CommitContext)) === NoContext
     ) {
       // Register pending interactions on the root to avoid losing traced interaction data.
+      //用于收集每次update导致的渲染时间
       schedulePendingInteractions(root, expirationTime);
 
       // This is a legacy edge case. The initial mount of a ReactDOM.render-ed
       // root inside of batchedUpdates should be synchronous, but layout updates
       // should be deferred until the end of the batch.
+      //批量更新时，render是要保持同步的，但布局的更新要延迟到批量更新的末尾才执行
+
+      //初始化root
+      //调用workLoop进行循环单元更新
       let callback = renderRoot(root, Sync, true);
       while (callback !== null) {
         callback = callback(true);
       }
-    } else {
+    }
+    //render后
+    else {
+      //立即执行调度任务
       scheduleCallbackForRoot(root, ImmediatePriority, Sync);
+      //当前没有update时
       if (executionContext === NoContext) {
         // Flush the synchronous work now, wnless we're already working or inside
         // a batch. This is intentionally inside scheduleUpdateOnFiber instead of
         // scheduleCallbackForFiber to preserve the ability to schedule a callback
         // without immediately flushing it. We only do this for user-initated
         // updates, to preserve historical behavior of sync mode.
+        //刷新同步任务队列
         flushSyncCallbackQueue();
       }
     }
-  } else {
+  }
+  //如果是异步任务的话，则立即执行调度任务
+  else {
     scheduleCallbackForRoot(root, priorityLevel, expirationTime);
   }
 
@@ -422,15 +439,21 @@ export function scheduleUpdateOnFiber(
     (executionContext & DiscreteEventContext) !== NoContext &&
     // Only updates at user-blocking priority or greater are considered
     // discrete, even inside a discrete event.
+    // 只有在用户阻止优先级或更高优先级的更新才被视为离散，即使在离散事件中也是如此
     (priorityLevel === UserBlockingPriority ||
       priorityLevel === ImmediatePriority)
   ) {
     // This is the result of a discrete event. Track the lowest priority
     // discrete update per root so we can flush them early, if needed.
+    //这是离散事件的结果。 跟踪每个根的最低优先级离散更新，以便我们可以在需要时尽早清除它们。
+    //如果rootsWithPendingDiscreteUpdates为null，则初始化它
     if (rootsWithPendingDiscreteUpdates === null) {
+      //key是root，value是expirationTime
       rootsWithPendingDiscreteUpdates = new Map([[root, expirationTime]]);
     } else {
+      //获取最新的DiscreteTime
       const lastDiscreteTime = rootsWithPendingDiscreteUpdates.get(root);
+      //更新DiscreteTime
       if (lastDiscreteTime === undefined || lastDiscreteTime > expirationTime) {
         rootsWithPendingDiscreteUpdates.set(root, expirationTime);
       }
@@ -2664,11 +2687,13 @@ function scheduleInteractions(root, expirationTime, interactions) {
     }
   }
 }
-
+//用于收集每次update导致的渲染时间
 function schedulePendingInteractions(root, expirationTime) {
   // This is called when work is scheduled on a root.
   // It associates the current interactions with the newly-scheduled expiration.
   // They will be restored when that expiration is later committed.
+
+
   if (!enableSchedulerTracing) {
     return;
   }
