@@ -321,11 +321,14 @@ function timeoutForPriorityLevel(priorityLevel) {
   }
 }
 
+//返回经过包装处理的task
 function unstable_scheduleCallback(priorityLevel, callback, options) {
   var currentTime = getCurrentTime();
 
   var startTime;
   var timeout;
+
+  //更新startTime（默认是现在）和timeout（默认5s）
   if (typeof options === 'object' && options !== null) {
     var delay = options.delay;
     if (typeof delay === 'number' && delay > 0) {
@@ -338,10 +341,19 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
         ? options.timeout
         : timeoutForPriorityLevel(priorityLevel);
   } else {
+    // Times out immediately
+    // var IMMEDIATE_PRIORITY_TIMEOUT = -1;
+    // Eventually times out
+    // var USER_BLOCKING_PRIORITY = 250;
+    //普通优先级的过期时间是5s
+    // var NORMAL_PRIORITY_TIMEOUT = 5000;
+    //低优先级的过期时间是10s
+    // var LOW_PRIORITY_TIMEOUT = 10000;
+
     timeout = timeoutForPriorityLevel(priorityLevel);
     startTime = currentTime;
   }
-
+  //过期时间是当前时间+5s，也就是默认是5s后，react进行更新
   var expirationTime = startTime + timeout;
 
   var newTask = {
@@ -352,31 +364,40 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
     next: null,
     previous: null,
   };
-
+  //如果开始调度的时间已经错过了
   if (startTime > currentTime) {
     // This is a delayed task.
+    //将延期的callback插入到延期队列中
     insertDelayedTask(newTask, startTime);
+    //如果调度队列的头任务没有，并且延迟调度队列的头任务正好是新任务，
+    //说明所有任务均延期，并且此时的任务是第一个延期任务
     if (firstTask === null && firstDelayedTask === newTask) {
       // All tasks are delayed, and this is the task with the earliest delay.
+      //如果延迟调度开始的flag为true，则取消定时的时间
       if (isHostTimeoutScheduled) {
         // Cancel an existing timeout.
         cancelHostTimeout();
-      } else {
+      }
+      //否则设为true
+      else {
         isHostTimeoutScheduled = true;
       }
       // Schedule a timeout.
       requestHostTimeout(handleTimeout, startTime - currentTime);
     }
-  } else {
+  }
+  //没有延期的话，则按计划插入task
+  else {
     insertScheduledTask(newTask, expirationTime);
     // Schedule a host callback, if needed. If we're already performing work,
     // wait until the next time we yield.
+    //更新调度执行的标志
     if (!isHostCallbackScheduled && !isPerformingWork) {
       isHostCallbackScheduled = true;
       requestHostCallback(flushWork);
     }
   }
-
+  //返回经过包装处理的task
   return newTask;
 }
 
@@ -463,27 +484,34 @@ function unstable_continueExecution() {
 function unstable_getFirstCallbackNode() {
   return firstTask;
 }
-
+//从链表中移除task节点
 function unstable_cancelCallback(task) {
+  //获取callbackNode的next节点
   var next = task.next;
+  //由于链表是双向循环链表，一旦next是null则证明该节点已不存在于链表中
   if (next === null) {
     // Already cancelled.
     return;
   }
-
+  //自己等于自己，说明链表中就这一个callback节点
+  //firstTask/firstDelayedTask应该是类似游标的概念，即正要执行的节点
   if (task === next) {
+    //置为null，即删除callback节点
+    //重置firstTask/firstDelayedTask
     if (task === firstTask) {
       firstTask = null;
     } else if (task === firstDelayedTask) {
       firstDelayedTask = null;
     }
   } else {
+    //将firstTask/firstDelayedTask指向下一节点
     if (task === firstTask) {
       firstTask = next;
     } else if (task === firstDelayedTask) {
       firstDelayedTask = next;
     }
     var previous = task.previous;
+    //熟悉的链表操作，删除已存在的callbackNode
     previous.next = next;
     next.previous = previous;
   }

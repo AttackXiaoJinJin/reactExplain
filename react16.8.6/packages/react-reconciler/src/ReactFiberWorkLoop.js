@@ -550,22 +550,32 @@ function markUpdateTimeFromFiberToRoot(fiber, expirationTime) {
 // should cancel the previous one. It also relies on commitRoot scheduling a
 // callback to render the next level, because that means we don't need a
 // separate callback per expiration time.
+//同步调用callback
+//流程是在root上存取callback和expirationTime，
+// 当新的callback调用时，比较更新expirationTime
 function scheduleCallbackForRoot(
   root: FiberRoot,
   priorityLevel: ReactPriorityLevel,
   expirationTime: ExpirationTime,
 ) {
+  //获取root的回调过期时间
   const existingCallbackExpirationTime = root.callbackExpirationTime;
+  //更新root的回调过期时间
   if (existingCallbackExpirationTime < expirationTime) {
     // New callback has higher priority than the existing one.
+    //当新的expirationTime比已存在的callback的expirationTime优先级更高的时候
     const existingCallbackNode = root.callbackNode;
     if (existingCallbackNode !== null) {
+      //取消已存在的callback（打断）
+      //将已存在的callback节点从链表中移除
       cancelCallback(existingCallbackNode);
     }
+    //更新callbackExpirationTime
     root.callbackExpirationTime = expirationTime;
-
+    //如果是同步任务
     if (expirationTime === Sync) {
       // Sync React callbacks are scheduled on a special internal queue
+      //在临时队列中同步被调度的callback
       root.callbackNode = scheduleSyncCallback(
         runRootCallback.bind(
           null,
@@ -576,12 +586,14 @@ function scheduleCallbackForRoot(
     } else {
       let options = null;
       if (expirationTime !== Never) {
+        //(Sync-2 - expirationTime) * 10-now()
         let timeout = expirationTimeToMs(expirationTime) - now();
         options = {timeout};
       }
-
+      //callbackNode即经过处理包装的新task
       root.callbackNode = scheduleCallback(
         priorityLevel,
+        //bind()的意思是绑定this，xx.bind(y)()这样才算执行
         runRootCallback.bind(
           null,
           root,
@@ -597,15 +609,18 @@ function scheduleCallbackForRoot(
         // Scheduled an async callback, and we're not already working. Add an
         // entry to the flamegraph that shows we're waiting for a callback
         // to fire.
+        //开始调度callback的标志
         startRequestCallbackTimer();
       }
     }
   }
 
   // Associate the current interactions with this new root+priority.
+  //用于收集每次update导致的渲染时间
   schedulePendingInteractions(root, expirationTime);
 }
 
+// null, root, renderRoot.bind(null, root, expirationTime),
 function runRootCallback(root, callback, isSync) {
   const prevCallbackNode = root.callbackNode;
   let continuation = null;
