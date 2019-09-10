@@ -124,7 +124,7 @@ export function runWithPriority<T>(
   const priorityLevel = reactPriorityToSchedulerPriority(reactPriorityLevel);
   return Scheduler_runWithPriority(priorityLevel, fn);
 }
-
+//对callback进行包装处理，并更新调度队列的状态
 export function scheduleCallback(
   reactPriorityLevel: ReactPriorityLevel,
   callback: SchedulerCallback,
@@ -133,22 +133,31 @@ export function scheduleCallback(
   const priorityLevel = reactPriorityToSchedulerPriority(reactPriorityLevel);
   return Scheduler_scheduleCallback(priorityLevel, callback, options);
 }
-
+//入队callback，并返回临时的队列
 export function scheduleSyncCallback(callback: SchedulerCallback) {
   // Push this callback into an internal queue. We'll flush these either in
   // the next tick, or earlier if something calls `flushSyncCallbackQueue`.
+  //在下次调度或调用 刷新同步回调队列 的时候刷新callback队列
+
+  //如果同步队列为空的话，则初始化同步队列，
+  //并在下次调度的一开始就刷新队列
   if (syncQueue === null) {
     syncQueue = [callback];
     // Flush the queue in the next tick, at the earliest.
     immediateQueueCallbackNode = Scheduler_scheduleCallback(
+      //赋予调度立即执行的高权限
       Scheduler_ImmediatePriority,
       flushSyncCallbackQueueImpl,
     );
-  } else {
+  }
+  //如果同步队列不为空的话，则将callback入队
+  else {
     // Push onto existing queue. Don't need to schedule a callback because
     // we already scheduled one when we created the queue.
+    //在入队的时候，不必去调度callback，因为在创建队列的时候就已经调度了
     syncQueue.push(callback);
   }
+  //fake我认为是临时队列的意思
   return fakeCallbackNode;
 }
 
