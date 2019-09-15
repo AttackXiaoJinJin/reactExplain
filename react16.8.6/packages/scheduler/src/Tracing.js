@@ -65,6 +65,9 @@ let threadIDCounter: number = 0;
 // Interactions "stack"–
 // Meaning that newly traced interactions are appended to the previously active set.
 // When an interaction goes out of scope, the previous set (if any) is restored.
+
+ //设置当前跟踪的interactions，也是interactions的栈
+//它是一个集合
 let interactionsRef: InteractionsRef = (null: any);
 
 // Listener(s) to notify when interactions begin and end.

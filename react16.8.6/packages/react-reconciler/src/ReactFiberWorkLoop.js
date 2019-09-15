@@ -399,7 +399,7 @@ export function scheduleUpdateOnFiber(
       (executionContext & (RenderContext | CommitContext)) === NoContext
     ) {
       // Register pending interactions on the root to avoid losing traced interaction data.
-      //用于收集每次update导致的渲染时间
+      //跟踪这些update，并计数、检测它们是否会报错
       schedulePendingInteractions(root, expirationTime);
 
       // This is a legacy edge case. The initial mount of a ReactDOM.render-ed
@@ -616,7 +616,7 @@ function scheduleCallbackForRoot(
   }
 
   // Associate the current interactions with this new root+priority.
-  //用于收集每次update导致的渲染时间
+  //跟踪这些update，并计数、检测它们是否会报错
   schedulePendingInteractions(root, expirationTime);
 }
 
@@ -2303,18 +2303,7 @@ function checkForNestedUpdates() {
     );
   }
 
-  if (__DEV__) {
-    if (nestedPassiveUpdateCount > NESTED_PASSIVE_UPDATE_LIMIT) {
-      nestedPassiveUpdateCount = 0;
-      warning(
-        false,
-        'Maximum update depth exceeded. This can happen when a component ' +
-          "calls setState inside useEffect, but useEffect either doesn't " +
-          'have a dependency array, or one of the dependencies changes on ' +
-          'every render.',
-      );
-    }
-  }
+
 }
 
 function flushRenderPhaseStrictModeWarningsInDEV() {
@@ -2668,16 +2657,20 @@ export function markSpawnedWork(expirationTime: ExpirationTime) {
     spawnedWorkDuringRender.push(expirationTime);
   }
 }
-
+//与schedule的交互
 function scheduleInteractions(root, expirationTime, interactions) {
   if (!enableSchedulerTracing) {
     return;
   }
-
+  //当interactions存在时
   if (interactions.size > 0) {
+    //获取FiberRoot的pendingInteractionMap属性
     const pendingInteractionMap = root.pendingInteractionMap;
+    //获取pendingInteractions的expirationTime
     const pendingInteractions = pendingInteractionMap.get(expirationTime);
+    //如果pendingInteractions不为空的话
     if (pendingInteractions != null) {
+      //遍历并更新还未调度的同步任务的数量
       interactions.forEach(interaction => {
         if (!pendingInteractions.has(interaction)) {
           // Update the pending async work count for previously unscheduled interaction.
@@ -2686,7 +2679,10 @@ function scheduleInteractions(root, expirationTime, interactions) {
 
         pendingInteractions.add(interaction);
       });
-    } else {
+    }
+    //否则初始化pendingInteractionMap
+    //并统计当前调度中同步任务的数量
+    else {
       pendingInteractionMap.set(expirationTime, new Set(interactions));
 
       // Update the pending async work count for the current interactions.
@@ -2694,25 +2690,26 @@ function scheduleInteractions(root, expirationTime, interactions) {
         interaction.__count++;
       });
     }
-
+    //计算并得出线程的id
     const subscriber = __subscriberRef.current;
     if (subscriber !== null) {
+      //这个暂时不看了
       const threadID = computeThreadID(root, expirationTime);
+      //检测这些任务是否会报错
       subscriber.onWorkScheduled(interactions, threadID);
     }
   }
 }
-//用于收集每次update导致的渲染时间
+//跟踪这些update，并计数、检测它们是否会报错
 function schedulePendingInteractions(root, expirationTime) {
   // This is called when work is scheduled on a root.
   // It associates the current interactions with the newly-scheduled expiration.
   // They will be restored when that expiration is later committed.
-
-
+  //当调度开始时就执行，每调度一个update，就更新跟踪栈
   if (!enableSchedulerTracing) {
     return;
   }
-
+  //调度的"交互"
   scheduleInteractions(root, expirationTime, __interactionsRef.current);
 }
 
