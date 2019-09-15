@@ -5,7 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/SchedulerWithReactIntegration.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/SchedulerWithReactIntegration.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Scheduler.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Scheduler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Tracing.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Tracing.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/scheduler/src/TracingSubscriptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/scheduler/src/TracingSubscriptions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,8 +23,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1292">
-              <caret line="68" column="33" selection-start-line="68" selection-start-column="33" selection-end-line="68" selection-end-column="33" />
+            <state relative-caret-position="228">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
@@ -30,24 +32,23 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="608" column="11" selection-start-line="608" selection-start-column="11" selection-end-line="610" selection-end-column="19" />
+            <state relative-caret-position="233">
+              <caret line="364" selection-start-line="364" selection-end-line="364" selection-end-column="38" />
               <folding>
                 <element signature="e#202#242#0" expanded="true" />
                 <element signature="e#3401#3462#0" expanded="true" />
+                <element signature="e#15639#17876#0" />
+                <element signature="e#28663#43012#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberExpirationTime.js">
+        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/scheduler/src/TracingSubscriptions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="36" column="15" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="15" />
-              <folding>
-                <element signature="e#202#274#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="198">
+              <caret line="28" column="23" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -55,8 +56,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/SchedulerWithReactIntegration.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="126" column="12" selection-start-line="126" selection-end-line="127" />
+            <state relative-caret-position="198">
+              <caret line="18" column="27" selection-start-line="18" selection-start-column="2" selection-end-line="18" selection-end-column="27" />
               <folding>
                 <element signature="e#318#357#0" expanded="true" />
               </folding>
@@ -67,8 +68,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Scheduler.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="547" column="27" selection-start-line="547" selection-start-column="2" selection-end-line="547" selection-end-column="27" />
+            <state relative-caret-position="-250">
+              <caret line="358" column="13" selection-start-line="358" selection-start-column="6" selection-end-line="358" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Tracing.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="339">
+              <caret line="69" column="8" lean-forward="true" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactDebugFiberPerf.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="179">
+              <caret line="225" column="6" lean-forward="true" selection-start-line="225" selection-start-column="6" selection-end-line="225" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -85,36 +104,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
+      <find>computeExpirationForFiber</find>
+      <find>markUpdateTimeFromFiberToRoot</find>
+      <find>warnAboutUpdateOnUnmountedFiberInDEV</find>
+      <find>interruptedBy</find>
       <find>checkForInterruption</find>
-      <find>createfiberroot</find>
-      <find>createHostRootFiber</find>
-      <find>FiberRootNode</find>
-      <find>enableUserTimingAPI</find>
-      <find>resetStack</find>
+      <find>recordScheduleUpdate</find>
+      <find>ImmediatePriority</find>
+      <find>UserBlockingPriority</find>
+      <find>NormalPriority</find>
       <find>getCurrentPriorityLevel</find>
-      <find>firstPendingTime</find>
+      <find>ReactPriorityLevel</find>
+      <find>LowPriority</find>
+      <find>Scheduler_getCurrentPriorityLevel</find>
+      <find>__interactionsRef</find>
+      <find>currentPriorityLevel</find>
+      <find>unstable_getCurrentPriorityLevel</find>
+      <find>interactionsRef</find>
+      <find>onWorkScheduled</find>
       <find>scheduleInteractions</find>
       <find>schedulePendingInteractions</find>
-      <find>recordScheduleUpdate</find>
       <find>renderRoot</find>
-      <find>NoContext</find>
-      <find>scheduleCallbackForRoot</find>
-      <find>unstable_cancelCallback</find>
-      <find>firstTask</find>
-      <find>cancelCallback</find>
-      <find>Scheduler_cancelCallback</find>
-      <find>runRootCallback</find>
-      <find>Scheduler_ImmediatePriority</find>
-      <find>scheduleSyncCallback</find>
-      <find>UNIT_SIZE</find>
-      <find>// TODO: Add internal warning</find>
-      <find>Sync</find>
-      <find>Scheduler_scheduleCallback</find>
-      <find>IMMEDIATE_PRIORITY_TIMEOUT</find>
-      <find>getCurrentTime</find>
-      <find>insertDelayedTask</find>
-      <find>unstable_scheduleCallback</find>
       <find>scheduleCallback</find>
+      <find>Scheduler_cancelCallback</find>
+      <find>cancelCallback</find>
+      <find>unstable_cancelCallback</find>
+      <find>flushSyncCallbackQueueImpl</find>
+      <find>Scheduler_scheduleCallback</find>
+      <find>unstable_scheduleCallback</find>
+      <find>scheduleSyncCallback</find>
+      <find>scheduleCallbackForRoot</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -157,9 +176,11 @@
         <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberRoot.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/shared/ReactFeatureFlags.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactDebugFiberPerf.js" />
-        <option value="$PROJECT_DIR$/test.html" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Scheduler.js" />
+        <option value="$PROJECT_DIR$/test.html" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/SchedulerWithReactIntegration.js" />
+        <option value="$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Tracing.js" />
+        <option value="$PROJECT_DIR$/react16.8.6/packages/scheduler/src/TracingSubscriptions.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js" />
       </list>
     </option>
@@ -175,7 +196,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -235,6 +255,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -295,12 +316,15 @@
       <workItem from="1567853625153" duration="13629000" />
       <workItem from="1567962379615" duration="60000" />
       <workItem from="1568041796883" duration="3648000" />
-      <workItem from="1568129166290" duration="3031000" />
+      <workItem from="1568129166290" duration="3759000" />
+      <workItem from="1568167621325" duration="736000" />
+      <workItem from="1568373042105" duration="439000" />
+      <workItem from="1568460377604" duration="11359000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="179114000" />
+    <option name="totallyTimeSpent" value="192376000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
@@ -329,16 +353,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/scripts/jest/setupEnvironment.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="42" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react/src/ReactCurrentOwner.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
@@ -681,13 +695,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactDebugFiberPerf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4009">
-          <caret line="226" column="36" selection-start-line="226" selection-start-column="16" selection-end-line="226" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/shared/ReactFeatureFlags.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -705,23 +712,6 @@
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/scheduler/index.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1292">
-          <caret line="68" column="33" selection-start-line="68" selection-start-column="33" selection-end-line="68" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberExpirationTime.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="36" column="15" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="15" />
-          <folding>
-            <element signature="e#202#274#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/scheduler/src/SchedulerHostConfig.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -729,30 +719,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Scheduler.js">
+    <entry file="file://$PROJECT_DIR$/test.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="547" column="27" selection-start-line="547" selection-start-column="2" selection-end-line="547" selection-end-column="27" />
+        <state relative-caret-position="228">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberExpirationTime.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="36" column="15" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="15" />
+          <folding>
+            <element signature="e#202#274#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactDebugFiberPerf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="225" column="6" lean-forward="true" selection-start-line="225" selection-start-column="6" selection-end-line="225" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Tracing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="69" column="8" lean-forward="true" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/scheduler/src/TracingSubscriptions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="28" column="23" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/SchedulerWithReactIntegration.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="126" column="12" selection-start-line="126" selection-end-line="127" />
+        <state relative-caret-position="198">
+          <caret line="18" column="27" selection-start-line="18" selection-start-column="2" selection-end-line="18" selection-end-column="27" />
           <folding>
             <element signature="e#318#357#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Scheduler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-250">
+          <caret line="358" column="13" selection-start-line="358" selection-start-column="6" selection-end-line="358" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="608" column="11" selection-start-line="608" selection-start-column="11" selection-end-line="610" selection-end-column="19" />
+        <state relative-caret-position="233">
+          <caret line="364" selection-start-line="364" selection-end-line="364" selection-end-column="38" />
           <folding>
             <element signature="e#202#242#0" expanded="true" />
             <element signature="e#3401#3462#0" expanded="true" />
+            <element signature="e#15639#17876#0" />
+            <element signature="e#28663#43012#0" />
           </folding>
         </state>
       </provider>

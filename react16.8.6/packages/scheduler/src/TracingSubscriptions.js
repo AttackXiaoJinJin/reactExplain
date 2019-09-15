@@ -83,14 +83,14 @@ function onInteractionScheduledWorkCompleted(interaction: Interaction): void {
     throw caughtError;
   }
 }
-
+//利用线程去检测同步的update，判断它们是否会报错
 function onWorkScheduled(
   interactions: Set<Interaction>,
   threadID: number,
 ): void {
   let didCatchError = false;
   let caughtError = null;
-
+  //遍历去检测
   subscribers.forEach(subscriber => {
     try {
       subscriber.onWorkScheduled(interactions, threadID);
