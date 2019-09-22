@@ -355,7 +355,7 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
   }
   //过期时间是当前时间+5s，也就是默认是5s后，react进行更新
   var expirationTime = startTime + timeout;
-
+  //封装成新的任务
   var newTask = {
     callback,
     priorityLevel,

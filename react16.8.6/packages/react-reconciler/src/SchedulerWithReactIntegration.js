@@ -173,22 +173,27 @@ export function cancelCallback(callbackNode: mixed) {
     Scheduler_cancelCallback(callbackNode);
   }
 }
-
+//刷新同步任务队列
 export function flushSyncCallbackQueue() {
+  //如果即时节点存在则中断当前节点任务，从链表中移除task节点
   if (immediateQueueCallbackNode !== null) {
     Scheduler_cancelCallback(immediateQueueCallbackNode);
   }
+  //更新同步队列
   flushSyncCallbackQueueImpl();
 }
-
+//更新同步队列
 function flushSyncCallbackQueueImpl() {
+  //如果同步队列未更新过并且同步队列不为空
   if (!isFlushingSyncQueue && syncQueue !== null) {
     // Prevent re-entrancy.
+    //防止重复执行，相当于一把锁
     isFlushingSyncQueue = true;
     let i = 0;
     try {
       const isSync = true;
       const queue = syncQueue;
+      //遍历同步队列，并更新刷新的状态isSync=true
       runWithPriority(ImmediatePriority, () => {
         for (; i < queue.length; i++) {
           let callback = queue[i];
@@ -197,6 +202,7 @@ function flushSyncCallbackQueueImpl() {
           } while (callback !== null);
         }
       });
+      //遍历结束后置为null
       syncQueue = null;
     } catch (error) {
       // If something throws, leave the remaining callbacks on the queue.
