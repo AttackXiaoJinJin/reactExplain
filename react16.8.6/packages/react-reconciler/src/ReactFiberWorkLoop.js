@@ -527,6 +527,7 @@ function markUpdateTimeFromFiberToRoot(fiber, expirationTime) {
     }
   }
   //更新该rootFiber的最旧、最新的挂起时间
+  /*和 16.6.0 的addRootToSchedule相似*/
   if (root !== null) {
     // Update the first and last pending expiration times in this root
     const firstPendingTime = root.firstPendingTime;
@@ -576,6 +577,8 @@ function scheduleCallbackForRoot(
     if (expirationTime === Sync) {
       // Sync React callbacks are scheduled on a special internal queue
       //在临时队列中同步被调度的callback
+      /*16.6.0 performSyncWork()*/
+      /*同步执行 react 代码，会一直执行到结束，无法被打断*/
       root.callbackNode = scheduleSyncCallback(
         runRootCallback.bind(
           null,
@@ -591,6 +594,9 @@ function scheduleCallbackForRoot(
         options = {timeout};
       }
       //callbackNode即经过处理包装的新task
+      /*16.6.0 scheduleCallbackWithExpirationTime*/
+      /*浏览器有空闲的情况下去执行一些普通任务，并且设置 deadline，在 deadline 之前可以执行，
+      * 在 deadline 之后，把执行权交还给浏览器*/
       root.callbackNode = scheduleCallback(
         priorityLevel,
         //bind()的意思是绑定this，xx.bind(y)()这样才算执行
