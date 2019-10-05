@@ -55,19 +55,28 @@ const localCancelAnimationFrame =
 // continues to load in the background. So we also schedule a 'setTimeout' as
 // a fallback.
 // TODO: Need a better heuristic for backgrounded work.
+//最晚执行时间为 100ms
 const ANIMATION_FRAME_TIMEOUT = 100;
 let rAFID;
 let rAFTimeoutID;
+//防止localRequestAnimationFrame长时间（100ms）内没有调用，
+//强制执行 callback 函数
 const requestAnimationFrameWithTimeout = function(callback) {
   // schedule rAF and also a setTimeout
+  //模拟了 window.requestAnimationFrame API
+  /*如果 A 执行了，则取消 B*/
   rAFID = localRequestAnimationFrame(function(timestamp) {
     // cancel the setTimeout
     localClearTimeout(rAFTimeoutID);
     callback(timestamp);
   });
+  //如果超过 100ms 仍未执行的话
+  /*如果 B 执行了，则取消 A*/
   rAFTimeoutID = localSetTimeout(function() {
     // cancel the requestAnimationFrame
+    //取消 localRequestAnimationFrame
     localCancelAnimationFrame(rAFID);
+    //直接调用回调函数
     callback(getCurrentTime());
   }, ANIMATION_FRAME_TIMEOUT);
 };
@@ -160,6 +169,7 @@ if (
   // will adjust this value to a faster fps if we get more frequent animation
   // frames.
   let previousFrameTime = 33;
+  //保持浏览器每秒 30 帧的情况下，每一帧为 33ms
   let activeFrameTime = 33;
   let fpsLocked = false;
 
@@ -232,6 +242,7 @@ if (
   };
 
   // We use the postMessage trick to defer idle work until after the repaint.
+  /*idleTick()*/
   const channel = new MessageChannel();
   const port = channel.port2;
   channel.port1.onmessage = function(event) {
@@ -263,11 +274,16 @@ if (
       }
       // Yielding to the browser will give it a chance to paint, so we can
       // reset this.
+      //判断浏览器是否强制渲染的标志
       needsPaint = false;
     }
   };
 
   const animationTick = function(rafTime) {
+    //如果不为 null 的话，立即请求下一帧重复做这件事
+    //这么做的原因是：调度队列有多个 callback，
+    // 不能保证在一个 callback 完成后，刚好能在下一帧继续执行下一个 callback，
+    //所以在当前 callback 存在的同时，执行下一帧的 callback
     if (scheduledHostCallback !== null) {
       // Eagerly schedule the next animation callback at the beginning of the
       // frame. If the scheduler queue is not empty at the end of the frame, it
@@ -280,16 +296,19 @@ if (
       requestAnimationFrameWithTimeout(animationTick);
     } else {
       // No pending work. Exit.
+      //没有 callback 要被调度，退出
       isAnimationFrameScheduled = false;
       return;
     }
-
+    //用来计算下一帧有多少时间是留给react 去执行调度的
+    //                                 0              33
     let nextFrameTime = rafTime - frameDeadline + activeFrameTime;
     if (
       nextFrameTime < activeFrameTime &&
       previousFrameTime < activeFrameTime &&
       !fpsLocked
     ) {
+      //React 不支持每一帧比 8ms 还要短，即 120 帧
       if (nextFrameTime < 8) {
         // Defensive coding. We don't support higher frame rates than 120hz.
         // If the calculated frame time gets lower than 8, it is probably a bug.
@@ -316,12 +335,16 @@ if (
 
   requestHostCallback = function(callback) {
     if (scheduledHostCallback === null) {
+      //firstCallbackNode 传进来的 callback
       scheduledHostCallback = callback;
+      //如果 react 在帧里面还未超时（即多占用了浏览器的时间）
+      //还未开始调度
       if (!isAnimationFrameScheduled) {
         // If rAF didn't already schedule one, we need to schedule a frame.
         // TODO: If this rAF doesn't materialize because the browser throttles,
         // we might want to still have setTimeout trigger rIC as a backup to
         // ensure that we keep performing work.
+        //开始调度
         isAnimationFrameScheduled = true;
         requestAnimationFrameWithTimeout(animationTick);
       }

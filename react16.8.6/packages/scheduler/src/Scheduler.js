@@ -371,11 +371,14 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
     insertDelayedTask(newTask, startTime);
     //如果调度队列的头任务没有，并且延迟调度队列的头任务正好是新任务，
     //说明所有任务均延期，并且此时的任务是第一个延期任务
+    /*ensureHostCallbackIsScheduled()*/
     if (firstTask === null && firstDelayedTask === newTask) {
       // All tasks are delayed, and this is the task with the earliest delay.
       //如果延迟调度开始的flag为true，则取消定时的时间
+      /*isHostCallbackScheduled*/
       if (isHostTimeoutScheduled) {
         // Cancel an existing timeout.
+        /*cancelHostCallback*/
         cancelHostTimeout();
       }
       //否则设为true
@@ -385,6 +388,7 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
       // Schedule a timeout.
       requestHostTimeout(handleTimeout, startTime - currentTime);
     }
+    //========================================
   }
   //没有延期的话，则按计划插入task
   else {
@@ -411,6 +415,8 @@ function insertScheduledTask(newTask, expirationTime) {
   } else {
     var next = null;
     var task = firstTask;
+    //React对传进来的 callback 进行排序，
+    // 优先级高的排在前面，优先级低的排在后面
     do {
       if (expirationTime < task.expirationTime) {
         // The new task times out before this one.
@@ -419,12 +425,14 @@ function insertScheduledTask(newTask, expirationTime) {
       }
       task = task.next;
     } while (task !== firstTask);
-
+    //优先级最小的话
     if (next === null) {
       // No task with a later timeout was found, which means the new task has
       // the latest timeout in the list.
       next = firstTask;
-    } else if (next === firstTask) {
+    }
+    //优先级最高的话
+    else if (next === firstTask) {
       // The new task has the earliest expiration in the entire list.
       firstTask = newTask;
     }

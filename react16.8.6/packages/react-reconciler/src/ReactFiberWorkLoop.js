@@ -739,13 +739,16 @@ function flushPendingDiscreteUpdates() {
 
 export function batchedUpdates<A, R>(fn: A => R, a: A): R {
   const prevExecutionContext = executionContext;
+  //按位或，executionContext 始终不为 null
   executionContext |= BatchedContext;
   try {
+    //调用回调函数
     return fn(a);
   } finally {
     executionContext = prevExecutionContext;
     if (executionContext === NoContext) {
       // Flush the immediate callbacks that were scheduled during this batch
+      //替代 requestWork 的功能
       flushSyncCallbackQueue();
     }
   }
