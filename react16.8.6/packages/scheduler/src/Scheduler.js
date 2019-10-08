@@ -182,12 +182,15 @@ function handleTimeout(currentTime) {
 
 function flushWork(hasTimeRemaining, initialTime) {
   // Exit right away if we're currently paused
+  //如果 React 没有掌握浏览器的控制权，则不执行调度任务
   if (enableSchedulerDebugging && isSchedulerPaused) {
     return;
   }
 
   // We'll need a host callback the next time work is scheduled.
+  //调度任务执行的标识
   isHostCallbackScheduled = false;
+  //一旦执行则停止
   if (isHostTimeoutScheduled) {
     // We scheduled a timeout but it's no longer needed. Cancel it.
     isHostTimeoutScheduled = false;
@@ -214,6 +217,7 @@ function flushWork(hasTimeRemaining, initialTime) {
       }
     } else {
       // Keep flushing callbacks until we run out of time in the frame.
+      //除非在一帧内执行时间超时，否则一直刷新 callback 队列
       if (firstTask !== null) {
         do {
           flushTask(firstTask, currentTime);

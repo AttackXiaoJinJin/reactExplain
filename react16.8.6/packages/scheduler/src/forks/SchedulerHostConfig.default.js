@@ -63,10 +63,14 @@ let rAFTimeoutID;
 //强制执行 callback 函数
 const requestAnimationFrameWithTimeout = function(callback) {
   // schedule rAF and also a setTimeout
-  //模拟了 window.requestAnimationFrame API
   /*如果 A 执行了，则取消 B*/
+  //就是window.requestAnimationFrame API
+  //如果屏幕刷新率是 30Hz,即一帧是 33ms 的话，那么就是每 33ms 执行一次
+
+  //timestamp表示requestAnimationFrame() 开始去执行回调函数的时刻，是requestAnimationFrame自带的参数
   rAFID = localRequestAnimationFrame(function(timestamp) {
     // cancel the setTimeout
+    //已经比 B 先执行了，就取消 B 的执行
     localClearTimeout(rAFTimeoutID);
     callback(timestamp);
   });
@@ -245,8 +249,10 @@ if (
   /*idleTick()*/
   const channel = new MessageChannel();
   const port = channel.port2;
+  //当调用 port.postMessage(undefined) 就会执行该方法
   channel.port1.onmessage = function(event) {
     isMessageEventScheduled = false;
+    //有调度任务的话
     if (scheduledHostCallback !== null) {
       const currentTime = getCurrentTime();
       const hasTimeRemaining = frameDeadline - currentTime > 0;
@@ -255,6 +261,7 @@ if (
           hasTimeRemaining,
           currentTime,
         );
+        //仍有调度任务的话，继续执行帧调度
         if (hasMoreWork) {
           // Ensure the next frame is scheduled.
           if (!isAnimationFrameScheduled) {
@@ -268,6 +275,8 @@ if (
         // If a scheduler task throws, exit the current browser task so the
         // error can be observed, and post a new task as soon as possible
         // so we can continue where we left off.
+        //如果调度任务因为报错而中断了，React 尽可能退出当前浏览器执行的任务，
+        //继续执行下一个调度任务
         isMessageEventScheduled = true;
         port.postMessage(undefined);
         throw error;
@@ -279,6 +288,7 @@ if (
     }
   };
 
+  //计算每一帧中 react 进行调度任务的时长，并执行该 callback
   const animationTick = function(rafTime) {
     //如果不为 null 的话，立即请求下一帧重复做这件事
     //这么做的原因是：调度队列有多个 callback，
@@ -301,14 +311,18 @@ if (
       return;
     }
     //用来计算下一帧有多少时间是留给react 去执行调度的
-    //                                 0              33
+    //rafTime:requestAnimationFrame执行的时间
+    //frameDeadline:0 ，每一帧执行后，超出的时间
+    //activeFrameTime:33，每一帧的执行事件
     let nextFrameTime = rafTime - frameDeadline + activeFrameTime;
+    //如果调度执行时间没有超过一帧时间
     if (
       nextFrameTime < activeFrameTime &&
       previousFrameTime < activeFrameTime &&
       !fpsLocked
     ) {
       //React 不支持每一帧比 8ms 还要短，即 120 帧
+      //小于 8ms 的话，强制至少有 8ms 来执行调度
       if (nextFrameTime < 8) {
         // Defensive coding. We don't support higher frame rates than 120hz.
         // If the calculated frame time gets lower than 8, it is probably a bug.
@@ -321,18 +335,22 @@ if (
       // running on 120hz display or 90hz VR display.
       // Take the max of the two in case one of them was an anomaly due to
       // missed frame deadlines.
+      //哪个长选哪个
+      //如果上个帧里的调度回调结束得早的话，那么就有多的时间给下个帧的调度时间
       activeFrameTime =
         nextFrameTime < previousFrameTime ? previousFrameTime : nextFrameTime;
     } else {
       previousFrameTime = nextFrameTime;
     }
     frameDeadline = rafTime + activeFrameTime;
+    //通知已经开始帧调度了
     if (!isMessageEventScheduled) {
       isMessageEventScheduled = true;
       port.postMessage(undefined);
     }
   };
 
+  //在每一帧内执行调度任务（callback）
   requestHostCallback = function(callback) {
     if (scheduledHostCallback === null) {
       //firstCallbackNode 传进来的 callback
