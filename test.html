@@ -6,25 +6,36 @@
 </head>
 <body>
 
-<div></div>
+  <span
+    title="鼠标悬浮，显示隐藏内容"
+    style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 128px;display: inline-block;">
+      鼠标悬浮，显示隐藏内容
+  </span>
+
 <script src="moment.js"></script>
 
 <script>
-  let arr={
-    "de_kpi_result":
-      {
-        "periodArr":["20"],
-        "period":"2018-05-01~2018-05-06",
-        "current":{
-          "kpicode":["200001"]
-        },
-        "tongbi":{
-          "kpicode":["200001"]
-        }
-      }
+  const channel = new MessageChannel();
+
+  const port1 = channel.port1;
+
+  const port2 = channel.port2;
+
+  port1.onmessage = function(event) {
+
+    console.log("port111111 " + event.data);
+
   }
 
-  
+  port2.onmessage = function(event) {
+
+    console.log("port2222 " + event.data);
+
+  }
+
+  port1.postMessage("port1发出的");
+
+  port2.postMessage("port2发出的");
 </script>
 
 
