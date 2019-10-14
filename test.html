@@ -15,27 +15,8 @@
 <script src="moment.js"></script>
 
 <script>
-  const channel = new MessageChannel();
+  console.log(moment('2019','YYYY').isoWeek());
 
-  const port1 = channel.port1;
-
-  const port2 = channel.port2;
-
-  port1.onmessage = function(event) {
-
-    console.log("port111111 " + event.data);
-
-  }
-
-  port2.onmessage = function(event) {
-
-    console.log("port2222 " + event.data);
-
-  }
-
-  port1.postMessage("port1发出的");
-
-  port2.postMessage("port2发出的");
 </script>
 
 
