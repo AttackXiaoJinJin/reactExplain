@@ -139,22 +139,29 @@ function flushTask(task, currentTime) {
     }
   }
 }
-
+//检查是否有不过期的任务，并把它们加入到新的调度队列中
 function advanceTimers(currentTime) {
   // Check for tasks that are no longer delayed and add them to the queue.
+  //开始时间已经晚于当前时间了
   if (firstDelayedTask !== null && firstDelayedTask.startTime <= currentTime) {
     do {
       const task = firstDelayedTask;
       const next = task.next;
+      //调度任务队列是一个环状的链表
+      //说明只有一个过期任务，将其置为 null
       if (task === next) {
         firstDelayedTask = null;
-      } else {
+      }
+      //将当前的 task 挤掉
+      else {
         firstDelayedTask = next;
         const previous = task.previous;
         previous.next = next;
         next.previous = previous;
       }
+      //让 task 摆脱与旧的调度队列的依赖
       task.next = task.previous = null;
+      //将 task 插入到新的调度队列中
       insertScheduledTask(task, task.expirationTime);
     } while (
       firstDelayedTask !== null &&
@@ -179,7 +186,9 @@ function handleTimeout(currentTime) {
     }
   }
 }
-
+//const hasTimeRemaining = frameDeadline - currentTime > 0
+//hasTimeRemaining 是每一帧内留给 react 的时间
+//initialTime 即 currentTime
 function flushWork(hasTimeRemaining, initialTime) {
   // Exit right away if we're currently paused
   //如果 React 没有掌握浏览器的控制权，则不执行调度任务
@@ -194,6 +203,7 @@ function flushWork(hasTimeRemaining, initialTime) {
   if (isHostTimeoutScheduled) {
     // We scheduled a timeout but it's no longer needed. Cancel it.
     isHostTimeoutScheduled = false;
+    /*cancelHostCallback*/
     cancelHostTimeout();
   }
 
@@ -206,18 +216,24 @@ function flushWork(hasTimeRemaining, initialTime) {
       // Flush all the expired callbacks without yielding.
       // TODO: Split flushWork into two separate functions instead of using
       // a boolean argument?
+      //一直执行过期的任务，直到到达一个不过期的任务为止
       while (
+        /*firstTask即firstCallbackNode*/
         firstTask !== null &&
+        //如果firstTask.expirationTime一直小于等于currentTime的话，则一直执行flushTask方法
         firstTask.expirationTime <= currentTime &&
         !(enableSchedulerDebugging && isSchedulerPaused)
       ) {
+        /*flushTask即flushFirstCallback*/
         flushTask(firstTask, currentTime);
         currentTime = getCurrentTime();
+        //检查是否有不过期的任务，并把它们加入到新的调度队列中
         advanceTimers(currentTime);
       }
     } else {
       // Keep flushing callbacks until we run out of time in the frame.
       //除非在一帧内执行时间超时，否则一直刷新 callback 队列
+      //仍有时间剩余并且旧调度队列不为空时，将不过期的任务加入到新的调度队列中
       if (firstTask !== null) {
         do {
           flushTask(firstTask, currentTime);
@@ -408,7 +424,7 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
   //返回经过包装处理的task
   return newTask;
 }
-
+//将 newTask 插入到新的调度队列中
 function insertScheduledTask(newTask, expirationTime) {
   // Insert the new task into the list, ordered first by its timeout, then by
   // insertion. So the new task is inserted after any other task the
@@ -440,7 +456,7 @@ function insertScheduledTask(newTask, expirationTime) {
       // The new task has the earliest expiration in the entire list.
       firstTask = newTask;
     }
-
+    //插入 newTask
     var previous = next.previous;
     previous.next = next.previous = newTask;
     newTask.next = next;
