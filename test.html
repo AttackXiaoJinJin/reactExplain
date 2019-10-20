@@ -15,8 +15,23 @@
 <script src="moment.js"></script>
 
 <script>
-  console.log(moment('2019','YYYY').isoWeek());
 
+
+  // { "_id" : ObjectId("5d8f2c2f71bc055ba821a72e"), "proj_code" : "91310105324627168E-xm-000001", "comment_modify" : "5", "member_score" : "31400000", "member_expir_days" : "90", "update_date" : "2019-09-06", "all_cars" : "453","zulin_money" : "6", "createdAt" : ISODate("2019-09-28T09:47:27.036Z"), "updatedAt" : ISODate("2019-09-28T09:47:27.036Z"), "__v" : 0 }
+  // { "_id" : ObjectId("5d9163c5c134e26abfb492d2"), "proj_code" : "91310105324627168E-xm-000001", "comment_modify" : "5", "member_score" : "31400000", "member_expir_days" : "90", "update_date" : "2019-09-25", "all_cars" : "500","zulin_money" : "6", "createdAt" : ISODate("2019-09-30T02:09:09.527Z"), "updatedAt" : ISODate("2019-09-30T02:09:09.527Z"), "__v" : 0 }
+  // { "_id" : ObjectId("5d9f0bd701ab2720feb1bb78"), "comment_modify" : "5", "member_score" : "33744000", "member_expir_days" : "90", "all_cars" : "500", "update_date" : "2019-10-10", "proj_code" : "91310105324627168E-xm-000001","zulin_money" : "6", "createdAt" : ISODate("2019-10-10T10:45:43.422Z"), "updatedAt" : ISODate("2019-10-10T10:46:07.327Z"), "__v" : 0 }
+
+  let date='2019-08-11'
+  const n = moment(date, 'YYYY-MM-DD').format('E')
+  const end_weeknumber = n==='7'?moment(date).isoWeek()+1:moment(date).isoWeek()
+
+  const end_condition = moment(date)
+    .week(+end_weeknumber)
+    .isoWeekday(7)
+    .format('YYYY-MM-DD')
+
+  
+  console.log(end_weeknumber,end_condition,n,)
 </script>
 
 

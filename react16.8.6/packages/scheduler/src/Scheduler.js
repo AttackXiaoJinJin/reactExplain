@@ -56,45 +56,64 @@ var isPerformingWork = false;
 var isHostCallbackScheduled = false;
 var isHostTimeoutScheduled = false;
 
+//将调度任务从调度队列中拿出，并执行；
+//将调度任务生出的子调度任务插入到其后
 function flushTask(task, currentTime) {
   // Remove the task from the list before calling the callback. That way the
   // list is in a consistent state even if the callback throws.
+  // 将过期的任务在调度前从调度队列中移除，以让调度队列的任务均保持不过期（一致）的状态
   const next = task.next;
+  // 如果当前队列中只有一个回调任务，则清空队列
   if (next === task) {
     // This is the only scheduled task. Clear the list.
     firstTask = null;
-  } else {
+  }
+  else {
     // Remove the task from its position in the list.
+    //如果当前任务正好等于firstTask，则firstTask指向下一个回调任务
     if (task === firstTask) {
       firstTask = next;
     }
+    // 将该 task 从调度队列中拿出来
     const previous = task.previous;
     previous.next = next;
     next.previous = previous;
   }
+  // 单独拿出 task，以便安全地执行它
   task.next = task.previous = null;
 
   // Now it's safe to execute the task.
   var callback = task.callback;
+  // 之前的调度优先级
   var previousPriorityLevel = currentPriorityLevel;
+  // 之前的调度任务
   var previousTask = currentTask;
+
+  // 当前任务
   currentPriorityLevel = task.priorityLevel;
   currentTask = task;
+  // 回调任务返回的内容
   var continuationCallback;
   try {
+    // 当前的回调任务是否超时,false 超时，true 没有
     var didUserCallbackTimeout = task.expirationTime <= currentTime;
+    // 执行回调任务，返回的结果由 continuationCallback 保存
     continuationCallback = callback(didUserCallbackTimeout);
   } catch (error) {
     throw error;
   } finally {
+    // 重置任务优先级和任务
     currentPriorityLevel = previousPriorityLevel;
     currentTask = previousTask;
   }
 
   // A callback may return a continuation. The continuation should be scheduled
   // with the same priority and expiration as the just-finished callback.
+  // 调度任务可能会有返回的内容，如果返回的是一个 function，
+  // 该 function 应该和刚刚执行的 callback 一样，有同样的优先级
   if (typeof continuationCallback === 'function') {
     var expirationTime = task.expirationTime;
+    // 将回调任务的结果再拼成一个子回调任务
     var continuationTask = {
       callback: continuationCallback,
       priorityLevel: task.priorityLevel,
@@ -108,13 +127,21 @@ function flushTask(task, currentTime) {
     // almost the same as the code in `scheduleCallback`, except the callback
     // is inserted into the list *before* callbacks of equal timeout instead
     // of after.
+
+    // 如果调度队列为空的话，将子回调任务插入调度队列
     if (firstTask === null) {
       // This is the first callback in the list.
       firstTask = continuationTask.next = continuationTask.previous = continuationTask;
-    } else {
+    }
+    //判断子回调任务的优先级
+    else {
       var nextAfterContinuation = null;
       var t = firstTask;
+      // 如果当前调度优先级小于 firstTask 的优先级的话，
+      // 下一个要执行的调度任务就是 firstTask
+      // ps:但是这个循环感觉不会执行，因为 var t = firstTask;
       do {
+
         if (expirationTime <= t.expirationTime) {
           // This task times out at or after the continuation. We will insert
           // the continuation *before* this task.
@@ -126,12 +153,15 @@ function flushTask(task, currentTime) {
       if (nextAfterContinuation === null) {
         // No equal or lower priority task was found, which means the new task
         // is the lowest priority task in the list.
+        //没有相同或更低的优先级的调度任务找到，意味着新任务就是最低优先级的任务
         nextAfterContinuation = firstTask;
-      } else if (nextAfterContinuation === firstTask) {
+      }
+      // 否则新任务是最高优先级的任务
+      else if (nextAfterContinuation === firstTask) {
         // The new task is the highest priority task in the list.
         firstTask = continuationTask;
       }
-
+      // 将子回调任务插入调度队列中
       const previous = nextAfterContinuation.previous;
       previous.next = nextAfterContinuation.previous = continuationTask;
       continuationTask.next = nextAfterContinuation;
@@ -198,8 +228,10 @@ function flushWork(hasTimeRemaining, initialTime) {
 
   // We'll need a host callback the next time work is scheduled.
   //调度任务执行的标识
+  //调度任务是否执行
   isHostCallbackScheduled = false;
-  //一旦执行则停止
+  //调度任务是否超时
+  //一旦超时,
   if (isHostTimeoutScheduled) {
     // We scheduled a timeout but it's no longer needed. Cancel it.
     isHostTimeoutScheduled = false;
@@ -208,10 +240,12 @@ function flushWork(hasTimeRemaining, initialTime) {
   }
 
   let currentTime = initialTime;
+  // 检查是否有不过期的任务，并把它们加入到新的调度队列中
   advanceTimers(currentTime);
-
+  /*isExecutingCallback 是否正在调用callback*/
   isPerformingWork = true;
   try {
+    // 如果在一帧内执行时间超时，没有时间让 React 执行调度任务的话
     if (!hasTimeRemaining) {
       // Flush all the expired callbacks without yielding.
       // TODO: Split flushWork into two separate functions instead of using
@@ -251,6 +285,7 @@ function flushWork(hasTimeRemaining, initialTime) {
       return true;
     } else {
       if (firstDelayedTask !== null) {
+        //执行延期的任务
         requestHostTimeout(
           handleTimeout,
           firstDelayedTask.startTime - currentTime,
