@@ -840,11 +840,16 @@ export function flushControlled(fn: () => mixed): void {
   }
 }
 
+//重置调度队列,并从新插入的节点开始调度
 function prepareFreshStack(root, expirationTime) {
+  /*属性的详细解释见文章 fiberRoot*/
+  //finishedWork:已经完成任务的FiberRoot对象
   root.finishedWork = null;
+  //finishedExpirationTime:当前更新对应的过期时间
   root.finishedExpirationTime = NoWork;
-
+  //timeout 后 执行的函数
   const timeoutHandle = root.timeoutHandle;
+  //如果该root 之前被挂起过，并且使用 timeout调度过的话，取消timeoutHandle
   if (timeoutHandle !== noTimeout) {
     // The root previous suspended and scheduled a timeout to commit a fallback
     // state. Now that we have additional work, cancel the timeout.
@@ -852,15 +857,21 @@ function prepareFreshStack(root, expirationTime) {
     // $FlowFixMe Complains noTimeout is not a TimeoutID, despite the check above
     cancelTimeout(timeoutHandle);
   }
-
+  //workInProgress:current的引用,current 也就是 root 对应的 fiber 对象
   if (workInProgress !== null) {
+    //root 对应的 fiber 对象的父对象
     let interruptedWork = workInProgress.return;
+    //当 root 并不是 fiber 树的根对象时
     while (interruptedWork !== null) {
       unwindInterruptedWork(interruptedWork);
       interruptedWork = interruptedWork.return;
     }
   }
+  /*重置当前正要处理的节点*/
+  //将当前将要执行的节点设为 root 节点
   workInProgressRoot = root;
+  //复制root.current并赋值给workInProgress
+  //在当前节点上直接做处理的话，会影响页面的渲染
   workInProgress = createWorkInProgress(root.current, null, expirationTime);
   renderExpirationTime = expirationTime;
   workInProgressRootExitStatus = RootIncomplete;
@@ -879,6 +890,9 @@ function prepareFreshStack(root, expirationTime) {
   }
 }
 
+// 1.调用 workLoop 进行循环单元更新
+// 2.捕获错误并进行处理
+// 3.走完流程后，针对不同的结果进行不同的处理===================================
 function renderRoot(
   root: FiberRoot,
   expirationTime: ExpirationTime,
@@ -912,8 +926,17 @@ function renderRoot(
 
   // If the root or expiration time have changed, throw out the existing stack
   // and prepare a fresh one. Otherwise we'll continue where we left off.
+
+  /*nextRoot =》 workInProgressRoot*/
+  /*nextRenderExpirationTime =》 renderExpirationTime*/
+  //workInProgressRoot 指接下来要更新的节点
+  //renderExpirationTime 指接下来更新节点的过期时间
+  //意思就是当前要更新的节点并非是队列中要更新的节点，也就是说被新的高优先级的任务给打断了
   if (root !== workInProgressRoot || expirationTime !== renderExpirationTime) {
+    //重置调度队列,并从root节点(新的高优先级的节点)开始调度
+    /*resetStack <=> prepareFreshStack */
     prepareFreshStack(root, expirationTime);
+    //
     startWorkOnPendingInteractions(root, expirationTime);
   } else if (workInProgressRootExitStatus === RootSuspendedWithDelay) {
     // We could've received an update at a lower priority while we yielded.
@@ -986,36 +1009,53 @@ function renderRoot(
 
     do {
       try {
+        //执行每个节点的更新
         if (isSync) {
           workLoopSync();
         } else {
+          //判断是否需要继续调用performUnitOfWork
           workLoop();
         }
+
         break;
-      } catch (thrownValue) {
+      }
+      //捕获异常，并处理
+      catch (thrownValue)
+      {
         // Reset module-level state that was set during the render phase.
+        //重置状态
         resetContextDependencies();
         resetHooks();
 
         const sourceFiber = workInProgress;
+        /*nextUnitOfWork <=> sourceFiber*/
+        //如果sourceFiber是存在的，那么 React 可以判断错误的原因
+        //如果sourceFiber是不存在的，说明是未知错误
         if (sourceFiber === null || sourceFiber.return === null) {
           // Expected to be working on a non-root fiber. This is a fatal error
           // because there's no ancestor that can handle it; the root is
           // supposed to capture all errors that weren't caught by an error
           // boundary.
+          //重置调度队列,并从root节点(新的高优先级的节点)开始调度
           prepareFreshStack(root, expirationTime);
           executionContext = prevExecutionContext;
+          //抛出错误
           throw thrownValue;
         }
+        //记录error被捕获前，渲染所花费的时间
+        //这样可以避免在渲染挂起(暂停)的情况下，Profiler的时间会不准确
 
+        //Profiler：测量渲染一个 React 应用多久渲染一次以及渲染一次的“代价”。
+        //它的目的是识别出应用中渲染较慢的部分，或是可以使用类似 memoization 优化的部分，并从相关优化中获益。
         if (enableProfilerTimer && sourceFiber.mode & ProfileMode) {
           // Record the time spent rendering before an error was thrown. This
           // avoids inaccurate Profiler durations in the case of a
           // suspended render.
           stopProfilerTimerIfRunningAndRecordDelta(sourceFiber, true);
         }
-
+        //获取父节点
         const returnFiber = sourceFiber.return;
+        //抛出可预期的错误
         throwException(
           root,
           returnFiber,
@@ -1023,35 +1063,43 @@ function renderRoot(
           thrownValue,
           renderExpirationTime,
         );
+        //完成对sourceFiber的渲染，
+        //但是因为已经是报错的，所以不会再渲染sourceFiber的子节点了
         workInProgress = completeUnitOfWork(sourceFiber);
       }
     } while (true);
 
     executionContext = prevExecutionContext;
+    //重置状态
     resetContextDependencies();
     ReactCurrentDispatcher.current = prevDispatcher;
     if (enableSchedulerTracing) {
       __interactionsRef.current = ((prevInteractions: any): Set<Interaction>);
     }
-
+    //如果仍有正在进程里的任务
     if (workInProgress !== null) {
       // There's still work left over. Return a continuation.
+      //停止计时
       stopInterruptedWorkLoopTimer();
       if (expirationTime !== Sync) {
+        //开始调度callback的标志
         startRequestCallbackTimer();
       }
+      //绑定 this
       return renderRoot.bind(null, root, expirationTime);
     }
   }
 
   // We now have a consistent tree. The next step is either to commit it, or, if
   // something suspended, wait to commit it after a timeout.
+  // 至此，保证了 fiber 树的每个节点的状态都是一致的。接下来会执行 commit 步骤/或者是又有新的任务被挂起了，等待挂起结束再去 commit
   stopFinishedWorkLoopTimer();
 
   root.finishedWork = root.current.alternate;
   root.finishedExpirationTime = expirationTime;
-
+  //判断当前节点是否被阻止commit
   const isLocked = resolveLocksOnRoot(root, expirationTime);
+  //如果有，则退出
   if (isLocked) {
     // This root has a lock that prevents it from committing. Exit. If we begin
     // work on the root again, without any intervening updates, it will finish
@@ -1060,14 +1108,16 @@ function renderRoot(
   }
 
   // Set this to null to indicate there's no in-progress render.
+  //将workInProgressRoot以告诉 react 没有正在 render 的进程
   workInProgressRoot = null;
-
+  //根据workInProgressRoot的不同状态来进行不同的操作
   switch (workInProgressRootExitStatus) {
     case RootIncomplete: {
       invariant(false, 'Should have a work-in-progress.');
     }
     // Flow knows about invariant, so it compains if I add a break statement,
     // but eslint doesn't know about invariant, so it complains if I do.
+    //对下面 eslint 注释的解释，可不看
     // eslint-disable-next-line no-fallthrough
     case RootErrored: {
       // An error was thrown. First check if there is lower priority work
@@ -1234,6 +1284,7 @@ function renderRoot(
     }
   }
 }
+//==============================================================
 
 export function markCommitTimeOfFallback() {
   globalMostRecentFallbackTime = now();
@@ -1311,6 +1362,7 @@ function inferTimeFromExpirationTimeWithSuspenseConfig(
   );
 }
 
+//同步的 workLoop，说明是不可以被中断的
 function workLoopSync() {
   // Already timed out, so perform work without checking if we need to yield.
   while (workInProgress !== null) {
@@ -1318,17 +1370,24 @@ function workLoopSync() {
   }
 }
 
+//异步的 workLoop，说明是可以被中断的
+//判断是否需要继续调用performUnitOfWork
 function workLoop() {
   // Perform work until Scheduler asks us to yield
+  /*nextUnitOfWork =》workInProgress*/
+  //未到达根节点时
   while (workInProgress !== null && !shouldYield()) {
     workInProgress = performUnitOfWork(workInProgress);
   }
 }
 
+//从上至下遍历、操作节点，至底层后，再从下至上处理 effact tag
 function performUnitOfWork(unitOfWork: Fiber): Fiber | null {
   // The current, flushed, state of this fiber is the alternate. Ideally
   // nothing should rely on this, but relying on it here means that we don't
   // need an additional field on the work in progress.
+  //current <=> workInProgress
+  //获取当前节点
   const current = unitOfWork.alternate;
 
   startWorkTimer(unitOfWork);
@@ -1337,6 +1396,9 @@ function performUnitOfWork(unitOfWork: Fiber): Fiber | null {
   let next;
   if (enableProfilerTimer && (unitOfWork.mode & ProfileMode) !== NoMode) {
     startProfilerTimer(unitOfWork);
+    //进行节点操作，并创建子节点
+    //current: workInProgress.alternate
+    //unitOfWork: workInProgress
     next = beginWork(current, unitOfWork, renderExpirationTime);
     stopProfilerTimerIfRunningAndRecordDelta(unitOfWork, true);
   } else {
@@ -1344,9 +1406,12 @@ function performUnitOfWork(unitOfWork: Fiber): Fiber | null {
   }
 
   resetCurrentDebugFiberInDEV();
+  //待更新的 props 替换成正在用的 props
   unitOfWork.memoizedProps = unitOfWork.pendingProps;
+  //说明已经更新到了最底层的叶子节点，并且叶子节点的兄弟节点也已经遍历完
   if (next === null) {
     // If this doesn't spawn new work, complete the current work.
+    //当从上到下遍历完成后，completeUnitOfWork 会从下到上
     next = completeUnitOfWork(unitOfWork);
   }
 
@@ -1357,15 +1422,22 @@ function performUnitOfWork(unitOfWork: Fiber): Fiber | null {
 function completeUnitOfWork(unitOfWork: Fiber): Fiber | null {
   // Attempt to complete the current unit of work, then move to the next
   // sibling. If there are no more siblings, return to the parent fiber.
+
+  //从下至上，移动到该节点的兄弟节点，如果一直往上没有兄弟节点，就返回父节点
+  //可想而知，最终会到达 root 节点
   workInProgress = unitOfWork;
   do {
     // The current, flushed, state of this fiber is the alternate. Ideally
     // nothing should rely on this, but relying on it here means that we don't
     // need an additional field on the work in progress.
+
+    //当前节点
     const current = workInProgress.alternate;
+    //父节点
     const returnFiber = workInProgress.return;
 
     // Check if the work completed or if something threw.
+    //判断节点的操作是否完成，还是有异常丢出
     if ((workInProgress.effectTag & Incomplete) === NoEffect) {
       setCurrentDebugFiberInDEV(workInProgress);
       let next;
@@ -2331,9 +2403,10 @@ function stopFinishedWorkLoopTimer() {
   stopWorkLoopTimer(interruptedBy, didCompleteRoot);
   interruptedBy = null;
 }
-
+//停止计时
 function stopInterruptedWorkLoopTimer() {
   // TODO: Track which fiber caused the interruption.
+  /*_didCompleteRoot <=> didCompleteRoot*/
   const didCompleteRoot = false;
   stopWorkLoopTimer(interruptedBy, didCompleteRoot);
   interruptedBy = null;
@@ -2731,6 +2804,7 @@ function startWorkOnPendingInteractions(root, expirationTime) {
   // Determine which interactions this batch of work currently includes, So that
   // we can accurately attribute time spent working on it, And so that cascading
   // work triggered during the render phase will be associated with it.
+  // 确定这批工作当前包括哪些交互，以便我们可以准确地将花费在工作上的时间归因于此，以便在渲染阶段触发的级联工作将与之相关联。
   const interactions: Set<Interaction> = new Set();
   root.pendingInteractionMap.forEach(
     (scheduledInteractions, scheduledExpirationTime) => {

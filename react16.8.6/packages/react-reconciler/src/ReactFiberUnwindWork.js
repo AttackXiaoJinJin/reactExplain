@@ -118,6 +118,7 @@ function unwindWork(
 }
 
 function unwindInterruptedWork(interruptedWork: Fiber) {
+  // react16.8.6/packages/shared/ReactWorkTags.js
   switch (interruptedWork.tag) {
     case ClassComponent: {
       const childContextTypes = interruptedWork.type.childContextTypes;
