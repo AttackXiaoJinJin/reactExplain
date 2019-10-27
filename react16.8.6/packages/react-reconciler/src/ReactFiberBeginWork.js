@@ -2428,6 +2428,7 @@ export function markWorkInProgressReceivedUpdate() {
   didReceiveUpdate = true;
 }
 
+//根据之前设置的childExpirationTime来判断子树是否需要更新
 function bailoutOnAlreadyFinishedWork(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -2447,12 +2448,15 @@ function bailoutOnAlreadyFinishedWork(
 
   // Check if the children have any pending work.
   const childExpirationTime = workInProgress.childExpirationTime;
+  //如果子树不需要更新，则返回 null
   if (childExpirationTime < renderExpirationTime) {
     // The children don't have any work either. We can skip them.
     // TODO: Once we add back resuming, we should check if the children are
     // a work-in-progress set. If so, we need to transfer their effects.
     return null;
-  } else {
+  }
+  //调和子节点
+  else {
     // This fiber doesn't have work, but its subtree does. Clone the child
     // fibers and continue.
     cloneChildFibers(current, workInProgress);
@@ -2522,13 +2526,15 @@ function remountFiber(
   }
 }
 
+//进行节点操作，并创建子节点
+//current: workInProgress.alternate
 function beginWork(
   current: Fiber | null,
   workInProgress: Fiber,
   renderExpirationTime: ExpirationTime,
 ): Fiber | null {
   const updateExpirationTime = workInProgress.expirationTime;
-
+  //测试环境的不用看
   if (__DEV__) {
     if (workInProgress._debugNeedsRemount && current !== null) {
       // This will restart the begin phase with a new fiber.
@@ -2552,19 +2558,25 @@ function beginWork(
     const newProps = workInProgress.pendingProps;
 
     if (
+      //前后 props 是否不相等
       oldProps !== newProps ||
+      //是否有老版本的 context 使用，并且发生了变化
       hasLegacyContextChanged() ||
       // Force a re-render if the implementation changed due to hot reload:
+      //开发环境永远是 false
       (__DEV__ ? workInProgress.type !== current.type : false)
     ) {
       // If props or context changed, mark the fiber as having performed work.
       // This may be unset if the props are determined to be equal later (memo).
+      //判断接收到了更新 update
       didReceiveUpdate = true;
-    } else if (updateExpirationTime < renderExpirationTime) {
+    }
+    else if (updateExpirationTime < renderExpirationTime) {
       didReceiveUpdate = false;
       // This fiber does not have any pending work. Bailout without entering
       // the begin phase. There's still some bookkeeping we that needs to be done
       // in this optimized path, mostly pushing stuff onto the stack.
+      //如果当前节点是未收到更新的,
       switch (workInProgress.tag) {
         case HostRoot:
           pushHostRootContext(workInProgress);
@@ -2731,7 +2743,7 @@ function beginWork(
 
   // Before entering the begin phase, clear the expiration time.
   workInProgress.expirationTime = NoWork;
-
+  //根据节点类型进行更新
   switch (workInProgress.tag) {
     case IndeterminateComponent: {
       return mountIndeterminateComponent(

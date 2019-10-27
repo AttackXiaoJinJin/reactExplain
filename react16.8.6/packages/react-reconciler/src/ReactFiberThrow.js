@@ -187,7 +187,7 @@ function attachPingListener(
     thenable.then(ping, ping);
   }
 }
-
+//异常处理
 function throwException(
   root: FiberRoot,
   returnFiber: Fiber,
@@ -196,10 +196,14 @@ function throwException(
   renderExpirationTime: ExpirationTime,
 ) {
   // The source fiber did not complete.
+  //effectTag 置为 Incomplete
   sourceFiber.effectTag |= Incomplete;
   // Its effect list is no longer valid.
+  //清空 effect 链
   sourceFiber.firstEffect = sourceFiber.lastEffect = null;
 
+  //如果是suspend的情况
+  //value 是一个 promise 对象
   if (
     value !== null &&
     typeof value === 'object' &&
@@ -207,7 +211,7 @@ function throwException(
   ) {
     // This is a thenable.
     const thenable: Thenable = (value: any);
-
+    //不看
     checkForWrongSuspensePriorityInDEV(sourceFiber);
 
     let hasInvisibleParentBoundary = hasSuspenseContext(
@@ -331,6 +335,7 @@ function throwException(
         attachPingListener(root, renderExpirationTime, thenable);
 
         // Since we already have a current fiber, we can eagerly add a retry listener.
+
         let retryCache = workInProgress.memoizedState;
         if (retryCache === null) {
           retryCache = workInProgress.memoizedState = new PossiblyWeakSet();
@@ -349,6 +354,8 @@ function throwException(
           if (enableSchedulerTracing) {
             retry = Schedule_tracing_wrap(retry);
           }
+          /*onResolveOrReject <=> retry*/
+          //绑定 thenable.then 到 retry
           thenable.then(retry, retry);
         }
         workInProgress.effectTag |= ShouldCapture;
@@ -377,8 +384,12 @@ function throwException(
   renderDidError();
   value = createCapturedValue(value, sourceFiber);
   let workInProgress = returnFiber;
+  //非 suspense 的情况
+  //捕捉到一个错误，并向上遍历节点
   do {
+
     switch (workInProgress.tag) {
+
       case HostRoot: {
         const errorInfo = value;
         workInProgress.effectTag |= ShouldCapture;
@@ -391,11 +402,13 @@ function throwException(
         enqueueCapturedUpdate(workInProgress, update);
         return;
       }
+
       case ClassComponent:
         // Capture and retry
         const errorInfo = value;
         const ctor = workInProgress.type;
         const instance = workInProgress.stateNode;
+        //只会对声明了getDerivedStateFromError或 componentDidCatch的组件会进行操作
         if (
           (workInProgress.effectTag & DidCapture) === NoEffect &&
           (typeof ctor.getDerivedStateFromError === 'function' ||
