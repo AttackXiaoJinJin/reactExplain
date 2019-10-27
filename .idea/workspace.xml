@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="11f8bc77-0e8b-4e46-ba98-688306b0187b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberBeginWork.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberBeginWork.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberThrow.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberThrow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberUnwindWork.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberUnwindWork.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactDebugFiberPerf.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactDebugFiberPerf.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="534">
-              <caret line="1015" column="12" selection-start-line="1015" selection-start-column="12" selection-end-line="1015" selection-end-column="12" />
+            <state relative-caret-position="379">
+              <caret line="1066" column="16" selection-start-line="1066" selection-start-column="16" selection-end-line="1066" selection-end-column="16" />
               <folding>
                 <element signature="e#202#242#0" expanded="true" />
                 <element signature="e#3401#3462#0" expanded="true" />
@@ -44,21 +42,13 @@
                 <element signature="e#25915#26298#0" />
                 <element signature="e#26353#27132#0" />
                 <element signature="e#27189#27551#0" />
-                <element signature="e#29649#29725#0" />
-                <element signature="e#29773#30010#0" />
-                <element signature="e#30076#30281#0" />
-                <element signature="e#31580#31720#0" />
-                <element signature="e#32375#32613#0" />
-                <element signature="e#32764#32884#0" />
-                <element signature="e#33012#33747#0" />
-                <element signature="e#33049#33741#0" />
-                <element signature="e#33753#33933#0" />
-                <element signature="e#36593#36680#0" />
-                <element signature="e#36883#37928#0" />
-                <element signature="e#37933#40079#0" />
-                <element signature="e#40084#43061#0" />
-                <element signature="e#43066#43991#0" />
-                <element signature="e#95613#95986#0" />
+                <element signature="e#37535#45082#0" />
+                <element signature="e#37579#37666#0" />
+                <element signature="e#37896#38941#0" />
+                <element signature="e#38946#41092#0" />
+                <element signature="e#41097#44074#0" />
+                <element signature="e#44079#45004#0" />
+                <element signature="e#45009#45078#0" />
               </folding>
             </state>
           </provider>
@@ -67,7 +57,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberBeginWork.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="565">
+            <state relative-caret-position="6346">
               <caret line="2530" column="18" selection-start-line="2530" selection-start-column="9" selection-end-line="2530" selection-end-column="18" />
               <folding>
                 <element signature="e#5308#5661#0" />
@@ -107,11 +97,6 @@
                 <element signature="e#76242#78587#0" />
                 <element signature="e#78666#78946#0" />
                 <element signature="e#78999#79029#0" />
-                <element signature="e#80186#81963#0" />
-                <element signature="e#82091#95325#0" />
-                <element signature="e#82171#82651#0" />
-                <element signature="e#83247#89784#0" />
-                <element signature="e#89794#89829#0" />
               </folding>
             </state>
           </provider>
@@ -120,17 +105,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactChildFiber.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
+            <state relative-caret-position="24909">
               <caret line="1349" lean-forward="true" selection-start-line="1349" selection-end-line="1349" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberThrow.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3676">
-              <caret line="420" column="40" lean-forward="true" selection-start-line="420" selection-start-column="40" selection-end-line="420" selection-end-column="40" />
+            <state relative-caret-position="-3345">
+              <caret line="165" column="7" selection-start-line="165" selection-start-column="7" selection-end-line="165" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -138,8 +123,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactDebugFiberPerf.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
+            <state relative-caret-position="275">
+              <caret line="80" column="10" selection-start-line="80" selection-start-column="10" selection-end-line="80" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -147,7 +132,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberHooks.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
+            <state relative-caret-position="9025">
               <caret line="515" column="5" selection-start-line="515" selection-start-column="5" selection-end-line="515" selection-end-column="5" />
             </state>
           </provider>
@@ -156,7 +141,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberNewContext.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
+            <state relative-caret-position="741">
               <caret line="62" column="14" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
             </state>
           </provider>
@@ -177,7 +162,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiber.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2434">
+            <state relative-caret-position="323">
               <caret line="17" column="20" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="20" />
             </state>
           </provider>
@@ -195,18 +180,11 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>timeoutHandle</find>
-      <find>finishedWork</find>
-      <find>noTimeout</find>
-      <find>WorkTag</find>
-      <find>unwindInterruptedWork</find>
-      <find>startWorkOnPendingInteractions</find>
       <find>requestcurrenttime</find>
       <find>currentEventTime</find>
       <find>alternate</find>
       <find>performUnitOfWork</find>
       <find>number</find>
-      <find>prepareFreshStack</find>
       <find>stopFinishedWorkLoopTimer</find>
       <find>startRequestCallbackTimer</find>
       <find>stopWorkLoopTimer</find>
@@ -222,9 +200,16 @@
       <find>bailoutOnAlreadyFinishedWork</find>
       <find>mountIndeterminateComponent</find>
       <find>beginWork</find>
-      <find>workLoop</find>
       <find>workInProgress</find>
       <find>stopInterruptedWorkLoopTimer</find>
+      <find>rootWithPendingPassiveEffects</find>
+      <find>commitRoot</find>
+      <find>startWorkOnPendingInteractions</find>
+      <find>startWorkLoopTimer</find>
+      <find>resumeTimers</find>
+      <find>flushPassiveEffects</find>
+      <find>workLoop</find>
+      <find>prepareFreshStack</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -264,7 +249,6 @@
         <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberClassComponent.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberRoot.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/shared/ReactFeatureFlags.js" />
-        <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactDebugFiberPerf.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/scheduler/src/Tracing.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/scheduler/src/TracingSubscriptions.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/SchedulerWithReactIntegration.js" />
@@ -280,6 +264,7 @@
         <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberUnwindWork.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberThrow.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberBeginWork.js" />
+        <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactDebugFiberPerf.js" />
         <option value="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js" />
       </list>
     </option>
@@ -291,8 +276,9 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="414" />
     <option name="y" value="23" />
-    <option name="width" value="1680" />
+    <option name="width" value="1266" />
     <option name="height" value="1027" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -301,7 +287,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -331,6 +316,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -425,18 +411,19 @@
       <workItem from="1571723124144" duration="4300000" />
       <workItem from="1571810576658" duration="4522000" />
       <workItem from="1571821895894" duration="1130000" />
-      <workItem from="1571836595711" duration="18055000" />
+      <workItem from="1571836595711" duration="18429000" />
+      <workItem from="1572155742843" duration="4517000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="294081000" />
+    <option name="totallyTimeSpent" value="298972000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
+    <frame x="414" y="23" width="1266" height="1027" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.22128174" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.22096774" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -781,48 +768,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberUnwindWork.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
-          <folding>
-            <element signature="n#!!block;n#unwindWork#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/shared/ReactWorkTags.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="608">
           <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiber.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2434">
-          <caret line="17" column="20" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberNewContext.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="62" column="14" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberHooks.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="515" column="5" selection-start-line="515" selection-start-column="5" selection-end-line="515" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactDebugFiberPerf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
         </state>
       </provider>
     </entry>
@@ -833,23 +782,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberThrow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3676">
-          <caret line="420" column="40" lean-forward="true" selection-start-line="420" selection-start-column="40" selection-end-line="420" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactChildFiber.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="1349" lean-forward="true" selection-start-line="1349" selection-end-line="1349" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberBeginWork.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="565">
+        <state relative-caret-position="6346">
           <caret line="2530" column="18" selection-start-line="2530" selection-start-column="9" selection-end-line="2530" selection-end-column="18" />
           <folding>
             <element signature="e#5308#5661#0" />
@@ -889,19 +824,59 @@
             <element signature="e#76242#78587#0" />
             <element signature="e#78666#78946#0" />
             <element signature="e#78999#79029#0" />
-            <element signature="e#80186#81963#0" />
-            <element signature="e#82091#95325#0" />
-            <element signature="e#82171#82651#0" />
-            <element signature="e#83247#89784#0" />
-            <element signature="e#89794#89829#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactChildFiber.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24909">
+          <caret line="1349" lean-forward="true" selection-start-line="1349" selection-end-line="1349" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberHooks.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9025">
+          <caret line="515" column="5" selection-start-line="515" selection-start-column="5" selection-end-line="515" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberNewContext.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="741">
+          <caret line="62" column="14" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberUnwindWork.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
+          <folding>
+            <element signature="n#!!block;n#unwindWork#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiber.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactDebugFiberPerf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="80" column="10" selection-start-line="80" selection-start-column="10" selection-end-line="80" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="534">
-          <caret line="1015" column="12" selection-start-line="1015" selection-start-column="12" selection-end-line="1015" selection-end-column="12" />
+        <state relative-caret-position="379">
+          <caret line="1066" column="16" selection-start-line="1066" selection-start-column="16" selection-end-line="1066" selection-end-column="16" />
           <folding>
             <element signature="e#202#242#0" expanded="true" />
             <element signature="e#3401#3462#0" expanded="true" />
@@ -922,22 +897,21 @@
             <element signature="e#25915#26298#0" />
             <element signature="e#26353#27132#0" />
             <element signature="e#27189#27551#0" />
-            <element signature="e#29649#29725#0" />
-            <element signature="e#29773#30010#0" />
-            <element signature="e#30076#30281#0" />
-            <element signature="e#31580#31720#0" />
-            <element signature="e#32375#32613#0" />
-            <element signature="e#32764#32884#0" />
-            <element signature="e#33012#33747#0" />
-            <element signature="e#33049#33741#0" />
-            <element signature="e#33753#33933#0" />
-            <element signature="e#36593#36680#0" />
-            <element signature="e#36883#37928#0" />
-            <element signature="e#37933#40079#0" />
-            <element signature="e#40084#43061#0" />
-            <element signature="e#43066#43991#0" />
-            <element signature="e#95613#95986#0" />
+            <element signature="e#37535#45082#0" />
+            <element signature="e#37579#37666#0" />
+            <element signature="e#37896#38941#0" />
+            <element signature="e#38946#41092#0" />
+            <element signature="e#41097#44074#0" />
+            <element signature="e#44079#45004#0" />
+            <element signature="e#45009#45078#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberThrow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3345">
+          <caret line="165" column="7" selection-start-line="165" selection-start-column="7" selection-end-line="165" selection-end-column="7" />
         </state>
       </provider>
     </entry>

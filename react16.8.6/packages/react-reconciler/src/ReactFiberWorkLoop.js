@@ -921,7 +921,7 @@ function renderRoot(
     // batch.commit() API.
     return commitRoot.bind(null, root);
   }
-
+  // 听说是useEffect的调用
   flushPassiveEffects();
 
   // If the root or expiration time have changed, throw out the existing stack
@@ -936,9 +936,11 @@ function renderRoot(
     //重置调度队列,并从root节点(新的高优先级的节点)开始调度
     /*resetStack <=> prepareFreshStack */
     prepareFreshStack(root, expirationTime);
-    //
+    //将调度优先级高的interaction加入到interactions中
     startWorkOnPendingInteractions(root, expirationTime);
-  } else if (workInProgressRootExitStatus === RootSuspendedWithDelay) {
+  }
+  //应该是当已经接收一个低优先级的要更新的节点时所进行的操作
+  else if (workInProgressRootExitStatus === RootSuspendedWithDelay) {
     // We could've received an update at a lower priority while we yielded.
     // We're suspended in a delayed state. Once we complete this render we're
     // just going to try to recover at the last pending time anyway so we might
@@ -978,15 +980,19 @@ function renderRoot(
       prevInteractions = __interactionsRef.current;
       __interactionsRef.current = root.memoizedInteractions;
     }
-
+    //绑定 currentFiber，也标志着开始执行 workloop
     startWorkLoopTimer(workInProgress);
 
     // TODO: Fork renderRoot into renderRootSync and renderRootAsync
+    //如果是同步的话
     if (isSync) {
+      //如果更新时间是异步的话
       if (expirationTime !== Sync) {
         // An async update expired. There may be other expired updates on
         // this root. We should render all the expired work in a
         // single batch.
+
+        //将所有过期的时间分批次处理
         const currentTime = requestCurrentTime();
         if (currentTime < expirationTime) {
           // Restart at the current time.
@@ -1004,6 +1010,8 @@ function renderRoot(
     } else {
       // Since we know we're in a React event, we can clear the current
       // event time. The next update will compute a new event time.
+
+      //清除currentEventTime
       currentEventTime = NoWork;
     }
 
@@ -2794,7 +2802,7 @@ function schedulePendingInteractions(root, expirationTime) {
   //调度的"交互"
   scheduleInteractions(root, expirationTime, __interactionsRef.current);
 }
-
+//将调度优先级高的interaction加入到interactions中
 function startWorkOnPendingInteractions(root, expirationTime) {
   // This is called when new work is started on a root.
   if (!enableSchedulerTracing) {

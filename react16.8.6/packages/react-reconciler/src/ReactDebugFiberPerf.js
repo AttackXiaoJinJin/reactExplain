@@ -357,7 +357,7 @@ export function stopPhaseTimer(): void {
     currentPhaseFiber = null;
   }
 }
-
+//绑定currentFiber
 export function startWorkLoopTimer(nextUnitOfWork: Fiber | null): void {
   if (enableUserTimingAPI) {
     currentFiber = nextUnitOfWork;
