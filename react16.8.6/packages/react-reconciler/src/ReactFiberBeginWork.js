@@ -2429,11 +2429,14 @@ export function markWorkInProgressReceivedUpdate() {
 }
 
 //根据之前设置的childExpirationTime来判断子树是否需要更新
+
+//跳过该节点及所有子节点的更新
 function bailoutOnAlreadyFinishedWork(
   current: Fiber | null,
   workInProgress: Fiber,
   renderExpirationTime: ExpirationTime,
 ): Fiber | null {
+  //不看
   cancelWorkTimer(workInProgress);
 
   if (current !== null) {
@@ -2447,18 +2450,28 @@ function bailoutOnAlreadyFinishedWork(
   }
 
   // Check if the children have any pending work.
+  //expirationTime 表示该节点是否有更新，如果该节点有更新，可能会影响子节点的更新
+  //如果expirationTime和childExpirationTime都没有，则子树是不需要更新的
+
+  //由于子孙节点造成的更新
   const childExpirationTime = workInProgress.childExpirationTime;
   //如果子树不需要更新，则返回 null
+
+  //childExpirationTime的一个好处就是快捷地知道子树有没有更新，从而跳过没有更新的子树
+  //如果childExpirationTime为空，react 还需要遍历子树来判断是否更新
   if (childExpirationTime < renderExpirationTime) {
     // The children don't have any work either. We can skip them.
     // TODO: Once we add back resuming, we should check if the children are
     // a work-in-progress set. If so, we need to transfer their effects.
+
+    //跳过整个子树的更新渲染，这是一个非常大的优化
     return null;
   }
   //调和子节点
   else {
     // This fiber doesn't have work, but its subtree does. Clone the child
     // fibers and continue.
+    //该节点不需要更新，子节点也不需要更新，所以只要复制子节点过来即可
     cloneChildFibers(current, workInProgress);
     return workInProgress.child;
   }
@@ -2526,35 +2539,27 @@ function remountFiber(
   }
 }
 
-//进行节点操作，并创建子节点
+//判断fiber有无更新，有更新则进行相应的组件更新，无更新则复制节点
 //current: workInProgress.alternate
 function beginWork(
   current: Fiber | null,
+  //workInProgress创建的子节点也是workInProgress
   workInProgress: Fiber,
+  //标记 该次渲染中，优先级最高的点
   renderExpirationTime: ExpirationTime,
 ): Fiber | null {
-  const updateExpirationTime = workInProgress.expirationTime;
-  //测试环境的不用看
-  if (__DEV__) {
-    if (workInProgress._debugNeedsRemount && current !== null) {
-      // This will restart the begin phase with a new fiber.
-      return remountFiber(
-        current,
-        workInProgress,
-        createFiberFromTypeAndProps(
-          workInProgress.type,
-          workInProgress.key,
-          workInProgress.pendingProps,
-          workInProgress._debugOwner || null,
-          workInProgress.mode,
-          workInProgress.expirationTime,
-        ),
-      );
-    }
-  }
+  //只有当调用 react.domRender的时候，rootFiber的expirationTime才有值，rootFiber 才会更新
 
+  //获取 fiber 对象上更新的过期时间
+  const updateExpirationTime = workInProgress.expirationTime;
+
+
+  //判断是不是第一次渲染
+  //如果不是第一次渲染
   if (current !== null) {
+    //上一次渲染完成后的props,即 oldProps
     const oldProps = current.memoizedProps;
+    //新的变动带来的props，即newProps
     const newProps = workInProgress.pendingProps;
 
     if (
@@ -2571,12 +2576,13 @@ function beginWork(
       //判断接收到了更新 update
       didReceiveUpdate = true;
     }
+    //有更新，但是优先级不高，在本次渲染过程中不需要执行，设为 false
     else if (updateExpirationTime < renderExpirationTime) {
       didReceiveUpdate = false;
       // This fiber does not have any pending work. Bailout without entering
       // the begin phase. There's still some bookkeeping we that needs to be done
       // in this optimized path, mostly pushing stuff onto the stack.
-      //如果当前节点是未收到更新的,
+      //根据workInProgress的tag，进行相应组件的更新
       switch (workInProgress.tag) {
         case HostRoot:
           pushHostRootContext(workInProgress);
@@ -2731,6 +2737,7 @@ function beginWork(
           }
           break;
       }
+      //跳过该节点及所有子节点的更新
       return bailoutOnAlreadyFinishedWork(
         current,
         workInProgress,
@@ -2743,7 +2750,8 @@ function beginWork(
 
   // Before entering the begin phase, clear the expiration time.
   workInProgress.expirationTime = NoWork;
-  //根据节点类型进行更新
+  //如果节点是有更新的
+  //根据节点类型进行组件的更新
   switch (workInProgress.tag) {
     case IndeterminateComponent: {
       return mountIndeterminateComponent(
@@ -2763,6 +2771,7 @@ function beginWork(
         renderExpirationTime,
       );
     }
+    //FunctionComponent的更新
     case FunctionComponent: {
       const Component = workInProgress.type;
       const unresolvedProps = workInProgress.pendingProps;
@@ -2778,6 +2787,7 @@ function beginWork(
         renderExpirationTime,
       );
     }
+    //ClassComponent的更新
     case ClassComponent: {
       const Component = workInProgress.type;
       const unresolvedProps = workInProgress.pendingProps;
