@@ -1384,12 +1384,15 @@ function workLoop() {
   // Perform work until Scheduler asks us to yield
   /*nextUnitOfWork =》workInProgress*/
   //未到达根节点时
+
+  //有workInProgress.child的时候，一直循环，直到所有节点更新完毕
   while (workInProgress !== null && !shouldYield()) {
     workInProgress = performUnitOfWork(workInProgress);
   }
 }
 
-//从上至下遍历、操作节点，至底层后，再从下至上处理 effact tag
+//从上至下遍历、操作节点，至底层后，再从下至上，根据 effectTag，对节点进行一些处理
+//unitOfWork 即 workInProgress，是一个 fiber 对象
 function performUnitOfWork(unitOfWork: Fiber): Fiber | null {
   // The current, flushed, state of this fiber is the alternate. Ideally
   // nothing should rely on this, but relying on it here means that we don't
@@ -1397,8 +1400,9 @@ function performUnitOfWork(unitOfWork: Fiber): Fiber | null {
   //current <=> workInProgress
   //获取当前节点
   const current = unitOfWork.alternate;
-
+  //在unitOfWork上做个标记，不看
   startWorkTimer(unitOfWork);
+  //dev 环境，不看
   setCurrentDebugFiberInDEV(unitOfWork);
 
   let next;
@@ -1407,19 +1411,22 @@ function performUnitOfWork(unitOfWork: Fiber): Fiber | null {
     //进行节点操作，并创建子节点
     //current: workInProgress.alternate
     //unitOfWork: workInProgress
+
+    //workInProgress.child
+    //判断节点有无更新，有更新则进行相应的组件更新，无更新则复制节点
     next = beginWork(current, unitOfWork, renderExpirationTime);
     stopProfilerTimerIfRunningAndRecordDelta(unitOfWork, true);
   } else {
     next = beginWork(current, unitOfWork, renderExpirationTime);
   }
-
+  //不看
   resetCurrentDebugFiberInDEV();
-  //待更新的 props 替换成正在用的 props
+  //将待更新的 props 替换成正在用的 props
   unitOfWork.memoizedProps = unitOfWork.pendingProps;
   //说明已经更新到了最底层的叶子节点，并且叶子节点的兄弟节点也已经遍历完
   if (next === null) {
     // If this doesn't spawn new work, complete the current work.
-    //当从上到下遍历完成后，completeUnitOfWork 会从下到上
+    //当从上到下遍历完成后，completeUnitOfWork 会从下到上根据effectTag进行一些处理
     next = completeUnitOfWork(unitOfWork);
   }
 
