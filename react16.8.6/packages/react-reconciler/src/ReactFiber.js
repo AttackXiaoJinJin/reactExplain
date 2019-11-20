@@ -405,6 +405,8 @@ function FiberNode(
 //    is faster.
 // 5) It should be easy to port this to a C struct and keep a C implementation
 //    compatible.
+
+//pendingProps就是 props.children
 const createFiber = function(
   tag: WorkTag,
   pendingProps: mixed,
@@ -417,6 +419,7 @@ const createFiber = function(
 
 function shouldConstruct(Component: Function) {
   const prototype = Component.prototype;
+  //return true
   return !!(prototype && prototype.isReactComponent);
 }
 
@@ -652,7 +655,7 @@ export function createFiberFromTypeAndProps(
   expirationTime: ExpirationTime,
 ): Fiber {
   let fiber;
-
+  //附一个默认值
   let fiberTag = IndeterminateComponent;
   // The resolved type is set if we know what the final type will be. I.e. it's not lazy.
   let resolvedType = type;
@@ -668,8 +671,10 @@ export function createFiberFromTypeAndProps(
       }
     }
   } else if (typeof type === 'string') {
+    //<div></div>
     fiberTag = HostComponent;
   } else {
+    //创建 react 的内置组件
     getTag: switch (type) {
       case REACT_FRAGMENT_TYPE:
         return createFiberFromFragment(
@@ -698,6 +703,8 @@ export function createFiberFromTypeAndProps(
           key,
         );
       default: {
+        //React.createRef,React.createContext返回的均为 object
+        //根据不同的类型，赋 fibertag
         if (typeof type === 'object' && type !== null) {
           switch (type.$$typeof) {
             case REACT_PROVIDER_TYPE:
@@ -734,23 +741,8 @@ export function createFiberFromTypeAndProps(
           }
         }
         let info = '';
-        if (__DEV__) {
-          if (
-            type === undefined ||
-            (typeof type === 'object' &&
-              type !== null &&
-              Object.keys(type).length === 0)
-          ) {
-            info +=
-              ' You likely forgot to export your component from the file ' +
-              "it's defined in, or you might have mixed up default and " +
-              'named imports.';
-          }
-          const ownerName = owner ? getComponentName(owner.type) : null;
-          if (ownerName) {
-            info += '\n\nCheck the render method of `' + ownerName + '`.';
-          }
-        }
+        //删除了 dev 代码
+        //如果走到这里，说明 type 不是 React 内置的类型，报警告
         invariant(
           false,
           'Element type is invalid: expected a string (for built-in ' +
@@ -762,7 +754,7 @@ export function createFiberFromTypeAndProps(
       }
     }
   }
-
+  //创建 fiber 对象
   fiber = createFiber(fiberTag, pendingProps, key, mode);
   fiber.elementType = type;
   fiber.type = resolvedType;
@@ -783,6 +775,7 @@ export function createFiberFromElement(
   const type = element.type;
   const key = element.key;
   const pendingProps = element.props;
+  //通过type和 props 来创建 fiber
   const fiber = createFiberFromTypeAndProps(
     type,
     key,
@@ -797,7 +790,7 @@ export function createFiberFromElement(
   }
   return fiber;
 }
-
+//创建Fragment类型的 fiber 节点
 export function createFiberFromFragment(
   elements: ReactFragment,
   mode: TypeOfMode,
