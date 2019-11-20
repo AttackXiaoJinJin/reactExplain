@@ -365,17 +365,7 @@ export function renderWithHooks(
   renderExpirationTime = nextRenderExpirationTime;
   currentlyRenderingFiber = workInProgress;
   nextCurrentHook = current !== null ? current.memoizedState : null;
-
-  if (__DEV__) {
-    hookTypesDev =
-      current !== null
-        ? ((current._debugHookTypes: any): Array<HookType>)
-        : null;
-    hookTypesUpdateIndexDev = -1;
-    // Used for hot reloading:
-    ignorePreviousDependencies =
-      current !== null && current.type !== workInProgress.type;
-  }
+  //删除了 dev 代码
 
   // The following should have already been reset
   // currentHook = null;
@@ -396,26 +386,16 @@ export function renderWithHooks(
   // Using nextCurrentHook to differentiate between mount/update only works if at least one stateful hook is used.
   // Non-stateful hooks (e.g. context) don't get added to memoizedState,
   // so nextCurrentHook would be null during updates and mounts.
-  if (__DEV__) {
-    if (nextCurrentHook !== null) {
-      ReactCurrentDispatcher.current = HooksDispatcherOnUpdateInDEV;
-    } else if (hookTypesDev !== null) {
-      // This dispatcher handles an edge case where a component is updating,
-      // but no stateful hooks have been used.
-      // We want to match the production code behavior (which will use HooksDispatcherOnMount),
-      // but with the extra DEV validation to ensure hooks ordering hasn't changed.
-      // This dispatcher does that.
-      ReactCurrentDispatcher.current = HooksDispatcherOnMountWithHookTypesInDEV;
-    } else {
-      ReactCurrentDispatcher.current = HooksDispatcherOnMountInDEV;
-    }
-  } else {
+
+  //删除了 dev 代码
+
+
     ReactCurrentDispatcher.current =
       nextCurrentHook === null
         ? HooksDispatcherOnMount
         : HooksDispatcherOnUpdate;
-  }
 
+  //workInProgress.type
   let children = Component(props, refOrContext);
 
   if (didScheduleRenderPhaseUpdate) {
@@ -451,8 +431,9 @@ export function renderWithHooks(
   // at the beginning of the render phase and there's no re-entrancy.
   ReactCurrentDispatcher.current = ContextOnlyDispatcher;
 
+  //fiber 对象
   const renderedWork: Fiber = (currentlyRenderingFiber: any);
-
+  //为属性赋值
   renderedWork.memoizedState = firstWorkInProgressHook;
   renderedWork.expirationTime = remainingExpirationTime;
   renderedWork.updateQueue = (componentUpdateQueue: any);
@@ -467,6 +448,7 @@ export function renderWithHooks(
   const didRenderTooFewHooks =
     currentHook !== null && currentHook.next !== null;
 
+  //重置
   renderExpirationTime = NoWork;
   currentlyRenderingFiber = null;
 

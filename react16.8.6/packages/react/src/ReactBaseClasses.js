@@ -34,6 +34,7 @@ function Component(props, context, updater) {
   this.updater = updater || ReactNoopUpdateQueue;
 }
 //原型上赋了一个flag
+/*这也是为什么要继承 Component 的原因，因为 React要根据这个来判断是否是 React 组件*/
 Component.prototype.isReactComponent = {};
 
 /** 使用setState来改变Component内部的变量

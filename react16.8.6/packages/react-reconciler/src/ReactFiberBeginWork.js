@@ -203,6 +203,9 @@ if (__DEV__) {
   didWarnAboutTailOptions = {};
 }
 
+//1、根据 props。children 生成 Fiber 树
+//2、判断Fiber 对象是否可以复用
+//3、列表根据 key 优化
 export function reconcileChildren(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -214,6 +217,10 @@ export function reconcileChildren(
     // won't update its child set by applying minimal side-effects. Instead,
     // we will add them all to the child before it gets rendered. That means
     // we can optimize this reconciliation pass by not tracking side-effects.
+
+    //因为是第一次渲染，所以不存在current.child，所以第二个参数传的 null
+    //React第一次渲染的顺序是先父节点，再是子节点
+
     workInProgress.child = mountChildFibers(
       workInProgress,
       null,
@@ -594,6 +601,7 @@ function markRef(current: Fiber | null, workInProgress: Fiber) {
   }
 }
 
+//更新 functionComponent
 function updateFunctionComponent(
   current,
   workInProgress,
@@ -601,69 +609,28 @@ function updateFunctionComponent(
   nextProps: any,
   renderExpirationTime,
 ) {
-  if (__DEV__) {
-    if (workInProgress.type !== workInProgress.elementType) {
-      // Lazy component props can't be validated in createElement
-      // because they're only guaranteed to be resolved here.
-      const innerPropTypes = Component.propTypes;
-      if (innerPropTypes) {
-        checkPropTypes(
-          innerPropTypes,
-          nextProps, // Resolved props
-          'prop',
-          getComponentName(Component),
-          getCurrentFiberStackInDev,
-        );
-      }
-    }
-  }
-
+  //删掉了 dev 代码
+  //后面讲 context 的时候再作说明
   const unmaskedContext = getUnmaskedContext(workInProgress, Component, true);
   const context = getMaskedContext(workInProgress, unmaskedContext);
 
   let nextChildren;
+  //做update 标记可不看
   prepareToReadContext(workInProgress, renderExpirationTime);
   prepareToReadEventComponents(workInProgress);
-  if (__DEV__) {
-    ReactCurrentOwner.current = workInProgress;
-    setCurrentPhase('render');
-    nextChildren = renderWithHooks(
-      current,
-      workInProgress,
-      Component,
-      nextProps,
-      context,
-      renderExpirationTime,
-    );
-    if (
-      debugRenderPhaseSideEffects ||
-      (debugRenderPhaseSideEffectsForStrictMode &&
-        workInProgress.mode & StrictMode)
-    ) {
-      // Only double-render components with Hooks
-      if (workInProgress.memoizedState !== null) {
-        nextChildren = renderWithHooks(
-          current,
-          workInProgress,
-          Component,
-          nextProps,
-          context,
-          renderExpirationTime,
-        );
-      }
-    }
-    setCurrentPhase(null);
-  } else {
-    nextChildren = renderWithHooks(
-      current,
-      workInProgress,
-      Component,
-      nextProps,
-      context,
-      renderExpirationTime,
-    );
-  }
+  //删掉了 dev 代码
 
+  //render 方法
+    nextChildren = renderWithHooks(
+      current,
+      workInProgress,
+      Component,
+      nextProps,
+      context,
+      renderExpirationTime,
+    );
+
+  //更新上的优化
   if (current !== null && !didReceiveUpdate) {
     bailoutHooks(current, workInProgress, renderExpirationTime);
     return bailoutOnAlreadyFinishedWork(
@@ -674,7 +641,9 @@ function updateFunctionComponent(
   }
 
   // React DevTools reads this flag.
+  //表明当前组件在渲染的过程中有被更新到
   workInProgress.effectTag |= PerformedWork;
+  //将 ReactElement 变成 fiber对象，并更新，生成对应 DOM 的实例，并挂载到真正的 DOM 节点上
   reconcileChildren(
     current,
     workInProgress,
@@ -2773,7 +2742,9 @@ function beginWork(
     }
     //FunctionComponent的更新
     case FunctionComponent: {
+      //React 组件的类型，FunctionComponent的类型是 function，ClassComponent的类型是 class
       const Component = workInProgress.type;
+      //下次渲染待更新的 props
       const unresolvedProps = workInProgress.pendingProps;
       const resolvedProps =
         workInProgress.elementType === Component
