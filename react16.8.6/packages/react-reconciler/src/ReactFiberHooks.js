@@ -178,6 +178,7 @@ let sideEffectTag: SideEffectTag = 0;
 // completes without re-rendering.
 
 // Whether an update was scheduled during the currently executing render pass.
+//判断在执行 render的过程中是否有预定的更新
 let didScheduleRenderPhaseUpdate: boolean = false;
 // Lazily created map of render-phase updates
 let renderPhaseUpdates: Map<
@@ -353,7 +354,7 @@ function areHookInputsEqual(
   }
   return true;
 }
-
+//渲染的过程中，对里面用到的 hook函数做一些操作
 export function renderWithHooks(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -363,7 +364,9 @@ export function renderWithHooks(
   nextRenderExpirationTime: ExpirationTime,
 ): any {
   renderExpirationTime = nextRenderExpirationTime;
+  //当前正要渲染的 fiber 对象
   currentlyRenderingFiber = workInProgress;
+  //第一次的 state 状态
   nextCurrentHook = current !== null ? current.memoizedState : null;
   //删除了 dev 代码
 
@@ -389,24 +392,32 @@ export function renderWithHooks(
 
   //删除了 dev 代码
 
+    //第一次渲染调用HooksDispatcherOnMount
+    //多次渲染调用HooksDispatcherOnUpdate
 
+    //用来存放 useState、useEffect 等 hook 函数的对象
     ReactCurrentDispatcher.current =
       nextCurrentHook === null
         ? HooksDispatcherOnMount
         : HooksDispatcherOnUpdate;
 
-  //workInProgress.type
+  //workInProgress.type，这里能当做 function 使用，说明 type 是 function
   let children = Component(props, refOrContext);
+  //判断在执行 render的过程中是否有预定的更新
 
+  //当有更新要渲染时
   if (didScheduleRenderPhaseUpdate) {
     do {
+      //置为 false 说明该循环只会执行一次
       didScheduleRenderPhaseUpdate = false;
+      //重新渲染时fiber 的节点数
       numberOfReRenders += 1;
 
       // Start over from the beginning of the list
+      //记录 state，以便重新执行这个 FunctionComponent 内部的几个 useState 函数
       nextCurrentHook = current !== null ? current.memoizedState : null;
       nextWorkInProgressHook = firstWorkInProgressHook;
-
+      //释放当前 state
       currentHook = null;
       workInProgressHook = null;
       componentUpdateQueue = null;
@@ -415,7 +426,7 @@ export function renderWithHooks(
         // Also validate hook order for cascading updates.
         hookTypesUpdateIndexDev = -1;
       }
-
+      //HooksDispatcherOnUpdate
       ReactCurrentDispatcher.current = __DEV__
         ? HooksDispatcherOnUpdateInDEV
         : HooksDispatcherOnUpdate;
@@ -431,7 +442,7 @@ export function renderWithHooks(
   // at the beginning of the render phase and there's no re-entrancy.
   ReactCurrentDispatcher.current = ContextOnlyDispatcher;
 
-  //fiber 对象
+  //定义新的 fiber 对象
   const renderedWork: Fiber = (currentlyRenderingFiber: any);
   //为属性赋值
   renderedWork.memoizedState = firstWorkInProgressHook;
@@ -481,7 +492,7 @@ export function renderWithHooks(
 
   return children;
 }
-
+//跳过hooks更新
 export function bailoutHooks(
   current: Fiber,
   workInProgress: Fiber,
@@ -489,6 +500,7 @@ export function bailoutHooks(
 ) {
   workInProgress.updateQueue = current.updateQueue;
   workInProgress.effectTag &= ~(PassiveEffect | UpdateEffect);
+  //置为NoWork 不更新
   if (current.expirationTime <= expirationTime) {
     current.expirationTime = NoWork;
   }

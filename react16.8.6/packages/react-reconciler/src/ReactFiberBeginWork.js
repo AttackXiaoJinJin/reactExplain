@@ -203,7 +203,7 @@ if (__DEV__) {
   didWarnAboutTailOptions = {};
 }
 
-//1、根据 props。children 生成 Fiber 树
+//1、根据 props.children 生成 Fiber 树
 //2、判断Fiber 对象是否可以复用
 //3、列表根据 key 优化
 export function reconcileChildren(
@@ -602,6 +602,9 @@ function markRef(current: Fiber | null, workInProgress: Fiber) {
 }
 
 //更新 functionComponent
+//current：workInProgress.alternate
+//Component：workInProgress.type
+//resolvedProps：workInProgress.pendingProps
 function updateFunctionComponent(
   current,
   workInProgress,
@@ -620,7 +623,7 @@ function updateFunctionComponent(
   prepareToReadEventComponents(workInProgress);
   //删掉了 dev 代码
 
-  //render 方法
+  //在渲染的过程中，对里面用到的 hooks 函数做一些操作
     nextChildren = renderWithHooks(
       current,
       workInProgress,
@@ -630,7 +633,8 @@ function updateFunctionComponent(
       renderExpirationTime,
     );
 
-  //更新上的优化
+  //如果不是第一次渲染，并且没有接收到更新的话
+  //didReceiveUpdate:更新上的优化
   if (current !== null && !didReceiveUpdate) {
     bailoutHooks(current, workInProgress, renderExpirationTime);
     return bailoutOnAlreadyFinishedWork(
@@ -2746,14 +2750,21 @@ function beginWork(
       const Component = workInProgress.type;
       //下次渲染待更新的 props
       const unresolvedProps = workInProgress.pendingProps;
+      // pendingProps
       const resolvedProps =
         workInProgress.elementType === Component
           ? unresolvedProps
           : resolveDefaultProps(Component, unresolvedProps);
+      //更新 FunctionComponent
+      //可以看到大部分是workInProgress的属性
+      //之所以定义变量再传进去，是为了“冻结”workInProgress的属性，防止在 function 里会改变workInProgress的属性
       return updateFunctionComponent(
+        //workInProgress.alternate
         current,
         workInProgress,
+        //workInProgress.type
         Component,
+        //workInProgress.pendingProps
         resolvedProps,
         renderExpirationTime,
       );
