@@ -243,7 +243,7 @@ function warnOnFunctionType() {
 
 //是否跟踪副作用
 function ChildReconciler(shouldTrackSideEffects) {
-
+  //为要删除的子节点们做Deletion标记
   function deleteChild(returnFiber: Fiber, childToDelete: Fiber): void {
     if (!shouldTrackSideEffects) {
       // Noop.
@@ -254,9 +254,14 @@ function ChildReconciler(shouldTrackSideEffects) {
     // deletions, so we can just append the deletion to the list. The remaining
     // effects aren't added until the complete phase. Once we implement
     // resuming, this may not be true.
+    //fiber 链表的 effect 除了是deletions外，都是空的，可以根据这个进行删除
+
+    //标记副作用，以便在 commit 阶段进行删除
     const last = returnFiber.lastEffect;
+    //做标记
     if (last !== null) {
       //要删除的节点(fiber)
+
       last.nextEffect = childToDelete;
       returnFiber.lastEffect = childToDelete;
     } else {
@@ -269,6 +274,7 @@ function ChildReconciler(shouldTrackSideEffects) {
     childToDelete.effectTag = Deletion;
   }
 
+  //删除旧节点
   function deleteRemainingChildren(
     returnFiber: Fiber,
     currentFirstChild: Fiber | null,
@@ -282,10 +288,12 @@ function ChildReconciler(shouldTrackSideEffects) {
 
     // TODO: For the shouldClone case, this could be micro-optimized a bit by
     // assuming that after the first child we've already added everything.
+    //从当前节点的第一个子节点开始，进行删除操作
     let childToDelete = currentFirstChild;
-    //循环寻找兄弟节点，并删除它们下面的 child
+    //删除目标节点的所有子节点，并循环寻找兄弟节点,删除它们的子节点
     while (childToDelete !== null) {
       deleteChild(returnFiber, childToDelete);
+
       childToDelete = childToDelete.sibling;
     }
     return null;
@@ -1131,6 +1139,7 @@ function ChildReconciler(shouldTrackSideEffects) {
     return created;
   }
 
+  //
   function reconcileSingleElement(
     returnFiber: Fiber,
     //旧
