@@ -114,25 +114,7 @@ function coerceRef(
     typeof mixedRef !== 'function' &&
     typeof mixedRef !== 'object'
   ) {
-    if (__DEV__) {
-      if (returnFiber.mode & StrictMode) {
-        const componentName = getComponentName(returnFiber.type) || 'Component';
-        if (!didWarnAboutStringRefInStrictMode[componentName]) {
-          warningWithoutStack(
-            false,
-            'A string ref, "%s", has been found within a strict mode tree. ' +
-            'String refs are a source of potential bugs and should be avoided. ' +
-            'We recommend using createRef() instead.' +
-            '\n%s' +
-            '\n\nLearn more about using refs safely here:' +
-            '\nhttps://fb.me/react-strict-mode-string-ref',
-            mixedRef,
-            getStackByFiberInDevAndProd(returnFiber),
-          );
-          didWarnAboutStringRefInStrictMode[componentName] = true;
-        }
-      }
-    }
+    //删除了 dev 代码
 
     if (element._owner) {
       const owner: ?Fiber = (element._owner: any);
@@ -243,7 +225,7 @@ function warnOnFunctionType() {
 
 //是否跟踪副作用
 function ChildReconciler(shouldTrackSideEffects) {
-
+  //为要删除的子节点们做Deletion标记
   function deleteChild(returnFiber: Fiber, childToDelete: Fiber): void {
     if (!shouldTrackSideEffects) {
       // Noop.
@@ -254,9 +236,14 @@ function ChildReconciler(shouldTrackSideEffects) {
     // deletions, so we can just append the deletion to the list. The remaining
     // effects aren't added until the complete phase. Once we implement
     // resuming, this may not be true.
+    //fiber 链表的 effect 除了是deletions外，都是空的，可以根据这个进行删除
+
+    //标记副作用，以便在 commit 阶段进行删除
     const last = returnFiber.lastEffect;
+    //做标记
     if (last !== null) {
       //要删除的节点(fiber)
+
       last.nextEffect = childToDelete;
       returnFiber.lastEffect = childToDelete;
     } else {
@@ -269,6 +256,7 @@ function ChildReconciler(shouldTrackSideEffects) {
     childToDelete.effectTag = Deletion;
   }
 
+  //删除旧节点
   function deleteRemainingChildren(
     returnFiber: Fiber,
     currentFirstChild: Fiber | null,
@@ -282,10 +270,12 @@ function ChildReconciler(shouldTrackSideEffects) {
 
     // TODO: For the shouldClone case, this could be micro-optimized a bit by
     // assuming that after the first child we've already added everything.
+    //从当前节点的第一个子节点开始，进行删除操作
     let childToDelete = currentFirstChild;
-    //循环寻找兄弟节点，并删除它们下面的 child
+    //删除目标节点的所有子节点，并循环寻找兄弟节点,删除它们的子节点
     while (childToDelete !== null) {
       deleteChild(returnFiber, childToDelete);
+
       childToDelete = childToDelete.sibling;
     }
     return null;
@@ -311,7 +301,7 @@ function ChildReconciler(shouldTrackSideEffects) {
     }
     return existingChildren;
   }
-
+  //复制 fiber 节点，并重置 index 和 sibling
   function useFiber(
     fiber: Fiber,
     pendingProps: mixed,
@@ -319,6 +309,8 @@ function ChildReconciler(shouldTrackSideEffects) {
   ): Fiber {
     // We currently set sibling to null and index to 0 here because it is easy
     // to forget to do before returning it. E.g. for the single child case.
+    //为防止忘记，提前将 index 置为 0，兄弟节点置为 null
+    //通过 doubleBuffer 重用未更新的 fiber 对象
     const clone = createWorkInProgress(fiber, pendingProps, expirationTime);
     clone.index = 0;
     clone.sibling = null;
@@ -1131,6 +1123,7 @@ function ChildReconciler(shouldTrackSideEffects) {
     return created;
   }
 
+  //
   function reconcileSingleElement(
     returnFiber: Fiber,
     //旧
@@ -1146,7 +1139,10 @@ function ChildReconciler(shouldTrackSideEffects) {
       // TODO: If key === null and child.key === null, then this only applies to
       // the first item in the list.
       //key 相同的话复用节点
+      //ReactElement里面的key，也就是开发过程中加的 key，如<div key={'a'}></div>
+      //所以当有多个相同 element 放在同一组时，React 建议设置 key，方便不产生更新的节点能复用
       if (child.key === key) {
+        //如果节点类型未改变的话
         if (
           child.tag === Fragment
             ? element.type === REACT_FRAGMENT_TYPE
@@ -1159,6 +1155,8 @@ function ChildReconciler(shouldTrackSideEffects) {
           //复用 child，删除它的兄弟节点
           //因为旧节点它有兄弟节点，新节点只有它一个
           deleteRemainingChildren(returnFiber, child.sibling);
+          //复制 fiber 节点，并重置 index 和 sibling
+          //existing就是复用的节点
           const existing = useFiber(
             child,
             element.type === REACT_FRAGMENT_TYPE
@@ -1166,12 +1164,12 @@ function ChildReconciler(shouldTrackSideEffects) {
               : element.props,
             expirationTime,
           );
+          //设置 ref 属性
           existing.ref = coerceRef(returnFiber, child, element);
+          //父节点
           existing.return = returnFiber;
-          if (__DEV__) {
-            existing._debugSource = element._source;
-            existing._debugOwner = element._owner;
-          }
+          //删除了 dev 代码
+
           return existing;
         } else {
           deleteRemainingChildren(returnFiber, child);
@@ -1182,8 +1180,10 @@ function ChildReconciler(shouldTrackSideEffects) {
       }
       child = child.sibling;
     }
+    //上面是子节点不为 null 的情况，能执行到这边说明之前是 null，现在要新建
     //创建新的节点
     if (element.type === REACT_FRAGMENT_TYPE) {
+      //创建Fragment类型的 fiber 节点
       const created = createFiberFromFragment(
         element.props.children,
         returnFiber.mode,
@@ -1193,6 +1193,7 @@ function ChildReconciler(shouldTrackSideEffects) {
       created.return = returnFiber;
       return created;
     } else {
+      //创建Element类型的 fiber 节点
       const created = createFiberFromElement(
         element,
         returnFiber.mode,
