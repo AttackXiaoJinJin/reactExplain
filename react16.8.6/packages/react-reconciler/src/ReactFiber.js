@@ -379,17 +379,7 @@ function FiberNode(
     this.treeBaseDuration = 0;
   }
 
-  if (__DEV__) {
-    this._debugID = debugCounter++;
-    this._debugSource = null;
-    this._debugOwner = null;
-    this._debugIsCurrentlyTiming = false;
-    this._debugNeedsRemount = false;
-    this._debugHookTypes = null;
-    if (!hasBadMapPolyfill && typeof Object.preventExtensions === 'function') {
-      Object.preventExtensions(this);
-    }
-  }
+  //删除了 dev 代码
 }
 
 // This is a constructor function, rather than a POJO constructor, still
@@ -447,6 +437,7 @@ export function resolveLazyComponentTag(Component: Function): WorkTag {
 }
 
 // This is used to create an alternate fiber to do work on.
+//通过 doubleBuffer 重用未更新的 fiber 对象
 export function createWorkInProgress(
   current: Fiber,
   pendingProps: any,
@@ -459,6 +450,9 @@ export function createWorkInProgress(
     // node that we're free to reuse. This is lazily created to avoid allocating
     // extra objects for things that are never updated. It also allow us to
     // reclaim the extra memory if needed.
+
+    //因为一棵 fiber 树顶多有两个版本，所以当某一 fiber 节点不更新时，在更新 fiber 树的时候，
+    //不会去重新创建跟之前一样的 fiber 节点，而是从另一个版本的 fiber 树上重用它
     workInProgress = createFiber(
       current.tag,
       pendingProps,
@@ -469,13 +463,7 @@ export function createWorkInProgress(
     workInProgress.type = current.type;
     workInProgress.stateNode = current.stateNode;
 
-    if (__DEV__) {
-      // DEV-only fields
-      workInProgress._debugID = current._debugID;
-      workInProgress._debugSource = current._debugSource;
-      workInProgress._debugOwner = current._debugOwner;
-      workInProgress._debugHookTypes = current._debugHookTypes;
-    }
+    //删除了 dev 代码
 
     workInProgress.alternate = current;
     current.alternate = workInProgress;
@@ -531,24 +519,7 @@ export function createWorkInProgress(
     workInProgress.treeBaseDuration = current.treeBaseDuration;
   }
 
-  if (__DEV__) {
-    workInProgress._debugNeedsRemount = current._debugNeedsRemount;
-    switch (workInProgress.tag) {
-      case IndeterminateComponent:
-      case FunctionComponent:
-      case SimpleMemoComponent:
-        workInProgress.type = resolveFunctionForHotReloading(current.type);
-        break;
-      case ClassComponent:
-        workInProgress.type = resolveClassForHotReloading(current.type);
-        break;
-      case ForwardRef:
-        workInProgress.type = resolveForwardRefForHotReloading(current.type);
-        break;
-      default:
-        break;
-    }
-  }
+  //删除了 dev 代码
 
   return workInProgress;
 }
@@ -762,7 +733,7 @@ export function createFiberFromTypeAndProps(
 
   return fiber;
 }
-
+//创建Element类型的 fiber 节点
 export function createFiberFromElement(
   element: ReactElement,
   mode: TypeOfMode,
