@@ -849,7 +849,7 @@ export function createFiberFromSuspenseList(
   fiber.expirationTime = expirationTime;
   return fiber;
 }
-
+//创建文本类型的 fiber
 export function createFiberFromText(
   content: string,
   mode: TypeOfMode,

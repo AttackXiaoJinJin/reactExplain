@@ -102,7 +102,7 @@ if (__DEV__) {
 }
 
 const isArray = Array.isArray;
-
+//设置正确的 ref
 function coerceRef(
   returnFiber: Fiber,
   current: Fiber | null,
@@ -1087,7 +1087,7 @@ function ChildReconciler(shouldTrackSideEffects) {
 
     return resultingFirstChild;
   }
-
+  //复用或创建文本节点
   function reconcileSingleTextNode(
     returnFiber: Fiber,
     currentFirstChild: Fiber | null,
@@ -1106,6 +1106,7 @@ function ChildReconciler(shouldTrackSideEffects) {
       deleteRemainingChildren(returnFiber, currentFirstChild.sibling);
       //复用
       const existing = useFiber(currentFirstChild, textContent, expirationTime);
+      //指定父节点
       existing.return = returnFiber;
       return existing;
     }
@@ -1123,7 +1124,8 @@ function ChildReconciler(shouldTrackSideEffects) {
     return created;
   }
 
-  //
+  //当子节点不为 null，则复用子节点并删除其兄弟节点；
+  //当子节点为 null，则创建新的 fiber 节点
   function reconcileSingleElement(
     returnFiber: Fiber,
     //旧
@@ -1141,6 +1143,10 @@ function ChildReconciler(shouldTrackSideEffects) {
       //key 相同的话复用节点
       //ReactElement里面的key，也就是开发过程中加的 key，如<div key={'a'}></div>
       //所以当有多个相同 element 放在同一组时，React 建议设置 key，方便不产生更新的节点能复用
+      //但是我自己试验了下，发现打印出的 ReactElement 的 key('a') 和_owner 下fiber 节点的 key(null) 是不一样的，
+      //而且设置 ReactElement 的 key 不影响 fiber 对象的 key 值一直为 null
+
+      //所以这边 fiber.key 和 ReactElement.key 相等的情况,大多数应为 null===null
       if (child.key === key) {
         //如果节点类型未改变的话
         if (
@@ -1164,7 +1170,7 @@ function ChildReconciler(shouldTrackSideEffects) {
               : element.props,
             expirationTime,
           );
-          //设置 ref 属性
+          //设置正确的 ref
           existing.ref = coerceRef(returnFiber, child, element);
           //父节点
           existing.return = returnFiber;
