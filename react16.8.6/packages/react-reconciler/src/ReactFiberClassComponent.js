@@ -531,17 +531,18 @@ function checkClassInstance(workInProgress: Fiber, ctor: any, newProps: any) {
     }
   }
 }
-
+//初始化 class 实例，即初始化workInProgress和instance
 function adoptClassInstance(workInProgress: Fiber, instance: any): void {
   instance.updater = classComponentUpdater;
   workInProgress.stateNode = instance;
   // The instance needs access to the fiber so that it can schedule updates
+  //ReactInstanceMap.set(instance, workInProgress)
   setInstance(instance, workInProgress);
   if (__DEV__) {
     instance._reactInternalInstance = fakeInternalInstance;
   }
 }
-
+//构建 class 实例
 function constructClassInstance(
   workInProgress: Fiber,
   ctor: any,
@@ -552,50 +553,8 @@ function constructClassInstance(
   let unmaskedContext = emptyContextObject;
   let context = null;
   const contextType = ctor.contextType;
-
-  if (__DEV__) {
-    if ('contextType' in ctor) {
-      let isValid =
-        // Allow null for conditional declaration
-        contextType === null ||
-        (contextType !== undefined &&
-          contextType.$$typeof === REACT_CONTEXT_TYPE &&
-          contextType._context === undefined); // Not a <Context.Consumer>
-
-      if (!isValid && !didWarnAboutInvalidateContextType.has(ctor)) {
-        didWarnAboutInvalidateContextType.add(ctor);
-
-        let addendum = '';
-        if (contextType === undefined) {
-          addendum =
-            ' However, it is set to undefined. ' +
-            'This can be caused by a typo or by mixing up named and default imports. ' +
-            'This can also happen due to a circular dependency, so ' +
-            'try moving the createContext() call to a separate file.';
-        } else if (typeof contextType !== 'object') {
-          addendum = ' However, it is set to a ' + typeof contextType + '.';
-        } else if (contextType.$$typeof === REACT_PROVIDER_TYPE) {
-          addendum = ' Did you accidentally pass the Context.Provider instead?';
-        } else if (contextType._context !== undefined) {
-          // <Context.Consumer>
-          addendum = ' Did you accidentally pass the Context.Consumer instead?';
-        } else {
-          addendum =
-            ' However, it is set to an object with keys {' +
-            Object.keys(contextType).join(', ') +
-            '}.';
-        }
-        warningWithoutStack(
-          false,
-          '%s defines an invalid contextType. ' +
-            'contextType should point to the Context object returned by React.createContext().%s',
-          getComponentName(ctor) || 'Component',
-          addendum,
-        );
-      }
-    }
-  }
-
+  //删除了 dev 代码
+  //=============context 部分可跳过====================================================
   if (typeof contextType === 'object' && contextType !== null) {
     context = readContext((contextType: any));
   } else {
@@ -607,112 +566,26 @@ function constructClassInstance(
       ? getMaskedContext(workInProgress, unmaskedContext)
       : emptyContextObject;
   }
+  //==========================================================================
 
   // Instantiate twice to help detect side-effects.
-  if (__DEV__) {
-    if (
-      debugRenderPhaseSideEffects ||
-      (debugRenderPhaseSideEffectsForStrictMode &&
-        workInProgress.mode & StrictMode)
-    ) {
-      new ctor(props, context); // eslint-disable-line no-new
-    }
-  }
-
+  //删除了 dev 代码
+  //ctor即workInProgress.type，也就是定义classComponet的类
   const instance = new ctor(props, context);
+  // instance.state 即开发层面的 this.state
+  // 注意这个写法，连等赋值
   const state = (workInProgress.memoizedState =
     instance.state !== null && instance.state !== undefined
       ? instance.state
       : null);
+  // 初始化 class 实例，即初始化workInProgress和instance
   adoptClassInstance(workInProgress, instance);
 
-  if (__DEV__) {
-    if (typeof ctor.getDerivedStateFromProps === 'function' && state === null) {
-      const componentName = getComponentName(ctor) || 'Component';
-      if (!didWarnAboutUninitializedState.has(componentName)) {
-        didWarnAboutUninitializedState.add(componentName);
-        warningWithoutStack(
-          false,
-          '`%s` uses `getDerivedStateFromProps` but its initial state is ' +
-            '%s. This is not recommended. Instead, define the initial state by ' +
-            'assigning an object to `this.state` in the constructor of `%s`. ' +
-            'This ensures that `getDerivedStateFromProps` arguments have a consistent shape.',
-          componentName,
-          instance.state === null ? 'null' : 'undefined',
-          componentName,
-        );
-      }
-    }
-
-    // If new component APIs are defined, "unsafe" lifecycles won't be called.
-    // Warn about these lifecycles if they are present.
-    // Don't warn about react-lifecycles-compat polyfilled methods though.
-    if (
-      typeof ctor.getDerivedStateFromProps === 'function' ||
-      typeof instance.getSnapshotBeforeUpdate === 'function'
-    ) {
-      let foundWillMountName = null;
-      let foundWillReceivePropsName = null;
-      let foundWillUpdateName = null;
-      if (
-        typeof instance.componentWillMount === 'function' &&
-        instance.componentWillMount.__suppressDeprecationWarning !== true
-      ) {
-        foundWillMountName = 'componentWillMount';
-      } else if (typeof instance.UNSAFE_componentWillMount === 'function') {
-        foundWillMountName = 'UNSAFE_componentWillMount';
-      }
-      if (
-        typeof instance.componentWillReceiveProps === 'function' &&
-        instance.componentWillReceiveProps.__suppressDeprecationWarning !== true
-      ) {
-        foundWillReceivePropsName = 'componentWillReceiveProps';
-      } else if (
-        typeof instance.UNSAFE_componentWillReceiveProps === 'function'
-      ) {
-        foundWillReceivePropsName = 'UNSAFE_componentWillReceiveProps';
-      }
-      if (
-        typeof instance.componentWillUpdate === 'function' &&
-        instance.componentWillUpdate.__suppressDeprecationWarning !== true
-      ) {
-        foundWillUpdateName = 'componentWillUpdate';
-      } else if (typeof instance.UNSAFE_componentWillUpdate === 'function') {
-        foundWillUpdateName = 'UNSAFE_componentWillUpdate';
-      }
-      if (
-        foundWillMountName !== null ||
-        foundWillReceivePropsName !== null ||
-        foundWillUpdateName !== null
-      ) {
-        const componentName = getComponentName(ctor) || 'Component';
-        const newApiName =
-          typeof ctor.getDerivedStateFromProps === 'function'
-            ? 'getDerivedStateFromProps()'
-            : 'getSnapshotBeforeUpdate()';
-        if (!didWarnAboutLegacyLifecyclesAndDerivedState.has(componentName)) {
-          didWarnAboutLegacyLifecyclesAndDerivedState.add(componentName);
-          warningWithoutStack(
-            false,
-            'Unsafe legacy lifecycles will not be called for components using new component APIs.\n\n' +
-              '%s uses %s but also contains the following legacy lifecycles:%s%s%s\n\n' +
-              'The above lifecycles should be removed. Learn more about this warning here:\n' +
-              'https://fb.me/react-async-component-lifecycle-hooks',
-            componentName,
-            newApiName,
-            foundWillMountName !== null ? `\n  ${foundWillMountName}` : '',
-            foundWillReceivePropsName !== null
-              ? `\n  ${foundWillReceivePropsName}`
-              : '',
-            foundWillUpdateName !== null ? `\n  ${foundWillUpdateName}` : '',
-          );
-        }
-      }
-    }
-  }
+  //删除了 dev 代码
 
   // Cache unmasked context so we can avoid recreating masked context unless necessary.
   // ReactFiberContext usually updates this cache but can't for newly-created instances.
+  //context 相关，可跳过
   if (isLegacyContextConsumer) {
     cacheContext(workInProgress, unmaskedContext, context);
   }
@@ -783,9 +656,11 @@ function callComponentWillReceiveProps(
 }
 
 // Invokes the mount life-cycles on a previously never rendered instance.
+//在未挂载的 class实例上调用挂载生命周期
 function mountClassInstance(
   workInProgress: Fiber,
   ctor: any,
+  //nextProps,待更新的 props
   newProps: any,
   renderExpirationTime: ExpirationTime,
 ): void {
@@ -797,7 +672,7 @@ function mountClassInstance(
   instance.props = newProps;
   instance.state = workInProgress.memoizedState;
   instance.refs = emptyRefsObject;
-
+  //=========context 相关，可跳过==================================
   const contextType = ctor.contextType;
   if (typeof contextType === 'object' && contextType !== null) {
     instance.context = readContext(contextType);
@@ -805,44 +680,14 @@ function mountClassInstance(
     const unmaskedContext = getUnmaskedContext(workInProgress, ctor, true);
     instance.context = getMaskedContext(workInProgress, unmaskedContext);
   }
+  //=============================================
 
-  if (__DEV__) {
-    if (instance.state === newProps) {
-      const componentName = getComponentName(ctor) || 'Component';
-      if (!didWarnAboutDirectlyAssigningPropsToState.has(componentName)) {
-        didWarnAboutDirectlyAssigningPropsToState.add(componentName);
-        warningWithoutStack(
-          false,
-          '%s: It is not recommended to assign props directly to state ' +
-            "because updates to props won't be reflected in state. " +
-            'In most cases, it is better to use props directly.',
-          componentName,
-        );
-      }
-    }
+  //删除了 dev 分支
 
-    if (workInProgress.mode & StrictMode) {
-      ReactStrictModeWarnings.recordUnsafeLifecycleWarnings(
-        workInProgress,
-        instance,
-      );
-
-      ReactStrictModeWarnings.recordLegacyContextWarning(
-        workInProgress,
-        instance,
-      );
-    }
-
-    if (warnAboutDeprecatedLifecycles) {
-      ReactStrictModeWarnings.recordDeprecationWarnings(
-        workInProgress,
-        instance,
-      );
-    }
-  }
-
+  //更新 update队列
   let updateQueue = workInProgress.updateQueue;
   if (updateQueue !== null) {
+    //里面还更新了 state
     processUpdateQueue(
       workInProgress,
       updateQueue,
@@ -850,9 +695,10 @@ function mountClassInstance(
       instance,
       renderExpirationTime,
     );
+    //因为 state 更新了，所以instance的state也要更新
     instance.state = workInProgress.memoizedState;
   }
-
+  //getDerivedStateFromProps是 React 新的生命周期的方法
   const getDerivedStateFromProps = ctor.getDerivedStateFromProps;
   if (typeof getDerivedStateFromProps === 'function') {
     applyDerivedStateFromProps(
@@ -866,6 +712,8 @@ function mountClassInstance(
 
   // In order to support react-lifecycles-compat polyfilled components,
   // Unsafe lifecycles should not be invoked for components using the new APIs.
+  //判断是否要调用 componentWillMount
+  //第一次渲染的话，是要调用componentWillMount的
   if (
     typeof ctor.getDerivedStateFromProps !== 'function' &&
     typeof instance.getSnapshotBeforeUpdate !== 'function' &&
@@ -875,6 +723,8 @@ function mountClassInstance(
     callComponentWillMount(workInProgress, instance);
     // If we had additional state updates during this life-cycle, let's
     // process them now.
+    //在ComponentWillMount中是有可能执行 setState 的，
+    // 所以 React 也要及时更新state 并更新到instance上
     updateQueue = workInProgress.updateQueue;
     if (updateQueue !== null) {
       processUpdateQueue(
@@ -887,7 +737,7 @@ function mountClassInstance(
       instance.state = workInProgress.memoizedState;
     }
   }
-
+  //等到真正渲染到 DOM 上去的时候，再去调用componentDidMount
   if (typeof instance.componentDidMount === 'function') {
     workInProgress.effectTag |= Update;
   }

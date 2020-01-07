@@ -665,23 +665,8 @@ function updateClassComponent(
   nextProps,
   renderExpirationTime: ExpirationTime,
 ) {
-  if (__DEV__) {
-    if (workInProgress.type !== workInProgress.elementType) {
-      // Lazy component props can't be validated in createElement
-      // because they're only guaranteed to be resolved here.
-      const innerPropTypes = Component.propTypes;
-      if (innerPropTypes) {
-        checkPropTypes(
-          innerPropTypes,
-          nextProps, // Resolved props
-          'prop',
-          getComponentName(Component),
-          getCurrentFiberStackInDev,
-        );
-      }
-    }
-  }
-
+  //删除了 dev 代码
+  //=============context 相关代码，可跳过=========================================================
   // Push context providers early to prevent context stack mismatches.
   // During mounting we don't know the child context yet as the instance doesn't exist.
   // We will invalidate the child context in finishClassComponent() right after rendering.
@@ -693,10 +678,16 @@ function updateClassComponent(
     hasContext = false;
   }
   prepareToReadContext(workInProgress, renderExpirationTime);
-
+  //=====================================================================
+  // 此处的stateNode指的是ClassComponent对应的Class实例。
+  // FunctionComponent没有实例，所以stateNode值为null
   const instance = workInProgress.stateNode;
   let shouldUpdate;
+  //未创建实例
   if (instance === null) {
+    //current和workInProgress是doubleBuffer的关系，
+    //所以如果current不为 null，说明虽然未创建实例，但是已经挂起了
+    //这种情况视为第一次渲染
     if (current !== null) {
       // An class component without an instance only mounts if it suspended
       // inside a non- concurrent tree, in an inconsistent state. We want to
@@ -708,12 +699,14 @@ function updateClassComponent(
       workInProgress.effectTag |= Placement;
     }
     // In the initial pass we might need to construct the instance.
+    //构建 class 实例
     constructClassInstance(
       workInProgress,
       Component,
       nextProps,
       renderExpirationTime,
     );
+    //挂载 class 实例
     mountClassInstance(
       workInProgress,
       Component,
@@ -721,7 +714,9 @@ function updateClassComponent(
       renderExpirationTime,
     );
     shouldUpdate = true;
-  } else if (current === null) {
+  }
+  //app已经执行，但是报错了，但是已经创建了 class 实例
+  else if (current === null) {
     // In a resume, we'll already have an instance we can reuse.
     shouldUpdate = resumeMountClassInstance(
       workInProgress,

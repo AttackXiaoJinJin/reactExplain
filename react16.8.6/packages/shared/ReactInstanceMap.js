@@ -31,7 +31,8 @@ export function get(key) {
 export function has(key) {
   return key._reactInternalFiber !== undefined;
 }
-
+//通过instance即this能找到workInProgress
 export function set(key, value) {
+  //即 instance._reactInternalFiber=workInProgress
   key._reactInternalFiber = value;
 }

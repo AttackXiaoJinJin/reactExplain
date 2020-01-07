@@ -376,7 +376,7 @@ export function enqueueCapturedUpdate<State>(
     workInProgressQueue.lastCapturedUpdate = update;
   }
 }
-
+//保证workInProgress上的update队列是 queue 的副本
 function ensureWorkInProgressQueueIsAClone<State>(
   workInProgress: Fiber,
   queue: UpdateQueue<State>,
@@ -391,7 +391,7 @@ function ensureWorkInProgressQueueIsAClone<State>(
   }
   return queue;
 }
-
+//获取最新的state
 function getStateFromUpdate<State>(
   workInProgress: Fiber,
   queue: UpdateQueue<State>,
@@ -401,24 +401,14 @@ function getStateFromUpdate<State>(
   instance: any,
 ): any {
   switch (update.tag) {
+    //返回执行payload后的 state
     case ReplaceState: {
       const payload = update.payload;
       if (typeof payload === 'function') {
         // Updater function
-        if (__DEV__) {
-          enterDisallowedContextReadInDEV();
-          if (
-            debugRenderPhaseSideEffects ||
-            (debugRenderPhaseSideEffectsForStrictMode &&
-              workInProgress.mode & StrictMode)
-          ) {
-            payload.call(instance, prevState, nextProps);
-          }
-        }
+        //删除了 dev 代码
         const nextState = payload.call(instance, prevState, nextProps);
-        if (__DEV__) {
-          exitDisallowedContextReadInDEV();
-        }
+        //删除了 dev 代码
         return nextState;
       }
       // State object
@@ -426,37 +416,34 @@ function getStateFromUpdate<State>(
     }
     case CaptureUpdate: {
       workInProgress.effectTag =
+        //~ 的意思是获取除了ShouldCapture的所有属性,也就是获取了DidCapture
+        //因此最后仍是获取了DidCapture
         (workInProgress.effectTag & ~ShouldCapture) | DidCapture;
     }
     // Intentional fallthrough
+    //通过 setState 传入的属性
     case UpdateState: {
       const payload = update.payload;
       let partialState;
+      //如果payload是 function 就获取执行payload后得到的 state
       if (typeof payload === 'function') {
         // Updater function
-        if (__DEV__) {
-          enterDisallowedContextReadInDEV();
-          if (
-            debugRenderPhaseSideEffects ||
-            (debugRenderPhaseSideEffectsForStrictMode &&
-              workInProgress.mode & StrictMode)
-          ) {
-            payload.call(instance, prevState, nextProps);
-          }
-        }
+        //删除了 dev 代码
         partialState = payload.call(instance, prevState, nextProps);
-        if (__DEV__) {
-          exitDisallowedContextReadInDEV();
-        }
-      } else {
+        //删除了 dev 代码
+      }
+      //否则就直接赋值给 state
+      else {
         // Partial state object
         partialState = payload;
       }
+      //如果partialState没有值，则视为没有更新 state
       if (partialState === null || partialState === undefined) {
         // Null and undefined are treated as no-ops.
         return prevState;
       }
       // Merge the partial state and the previous state.
+      //如果partialState有值的话，需要和未更新的部分 state 属性进行合并
       return Object.assign({}, prevState, partialState);
     }
     case ForceUpdate: {
@@ -466,7 +453,7 @@ function getStateFromUpdate<State>(
   }
   return prevState;
 }
-
+//更新 update 队列，并更新 state
 export function processUpdateQueue<State>(
   workInProgress: Fiber,
   queue: UpdateQueue<State>,
@@ -475,7 +462,7 @@ export function processUpdateQueue<State>(
   renderExpirationTime: ExpirationTime,
 ): void {
   hasForceUpdate = false;
-
+   //保证workInProgress上的update队列是 queue 的副本
   queue = ensureWorkInProgressQueueIsAClone(workInProgress, queue);
 
   if (__DEV__) {
@@ -483,31 +470,41 @@ export function processUpdateQueue<State>(
   }
 
   // These values may change as we process the queue.
+  //当执行更新队列的时候，这些属性可能会动态改变
   let newBaseState = queue.baseState;
   let newFirstUpdate = null;
   let newExpirationTime = NoWork;
 
   // Iterate through the list of updates to compute the result.
+  //队列中的第一个 update元素
   let update = queue.firstUpdate;
   let resultState = newBaseState;
+  //如果有update元素的话
   while (update !== null) {
     const updateExpirationTime = update.expirationTime;
+    //当更新队列的第一个 update元素 的更新优先级低于renderExpirationTime的时候
     if (updateExpirationTime < renderExpirationTime) {
       // This update does not have sufficient priority. Skip it.
+      //不执行该 update元素 的更新
       if (newFirstUpdate === null) {
         // This is the first skipped update. It will be the first update in
         // the new list.
+        //本次没有更新的 update元素，会优先放到下一次去判断要不要更新
         newFirstUpdate = update;
         // Since this is the first update that was skipped, the current result
         // is the new base state.
+        //如果 update元素 被跳过的话，base state也会改变，所以要及时更新newBaseState
         newBaseState = resultState;
       }
       // Since this update will remain in the list, update the remaining
       // expiration time.
+      //该 update元素 被跳过，仍留在队列中，所以它仍有expirationTime，需要被更新
       if (newExpirationTime < updateExpirationTime) {
         newExpirationTime = updateExpirationTime;
       }
-    } else {
+    }
+    //该update元素 会被执行更新的话
+    else {
       // This update does have sufficient priority.
 
       // Mark the event time of this update as relevant to this render pass.
@@ -519,6 +516,8 @@ export function processUpdateQueue<State>(
       markRenderEventTimeAndConfig(updateExpirationTime, update.suspenseConfig);
 
       // Process it and compute a new result.
+      //执行 update 并计算出一个新的结果
+      //获取最新的 state
       resultState = getStateFromUpdate(
         workInProgress,
         queue,
@@ -527,11 +526,15 @@ export function processUpdateQueue<State>(
         props,
         instance,
       );
+      //callback 也就是 this.setState({xx:yy},()=>{})的回调函数()=>{}
       const callback = update.callback;
+      //当 callback 不为 null 时，在 setState 更新完后，是要执行 callback 的
+      //所以要设置相关的属性来“提醒”
       if (callback !== null) {
         workInProgress.effectTag |= Callback;
         // Set this to null, in case it was mutated during an aborted render.
         update.nextEffect = null;
+        //链表的插入操作
         if (queue.lastEffect === null) {
           queue.firstEffect = queue.lastEffect = update;
         } else {
@@ -541,10 +544,13 @@ export function processUpdateQueue<State>(
       }
     }
     // Continue to the next update.
+    //跳到下一个 update 元素，循环
     update = update.next;
   }
 
+  //======逻辑同上，不再赘述===============================================
   // Separately, iterate though the list of captured updates.
+  //CapturedUpdate是啥？
   let newFirstCapturedUpdate = null;
   update = queue.firstCapturedUpdate;
   while (update !== null) {
@@ -592,6 +598,7 @@ export function processUpdateQueue<State>(
     }
     update = update.next;
   }
+  //======================================================
 
   if (newFirstUpdate === null) {
     queue.lastUpdate = null;
@@ -606,7 +613,7 @@ export function processUpdateQueue<State>(
     // state is the same as the result state.
     newBaseState = resultState;
   }
-
+  //最后更新 queue 上的属性
   queue.baseState = newBaseState;
   queue.firstUpdate = newFirstUpdate;
   queue.firstCapturedUpdate = newFirstCapturedUpdate;
@@ -618,6 +625,9 @@ export function processUpdateQueue<State>(
   // dealt with the props. Context in components that specify
   // shouldComponentUpdate is tricky; but we'll have to account for
   // that regardless.
+
+  //因为执行了 update 队列的部分更新，
+  // 那么 update 队列的expirationTime将由保留下来的 update 元素的最高优先级的 expirationTime 决定
   workInProgress.expirationTime = newExpirationTime;
   workInProgress.memoizedState = resultState;
 
