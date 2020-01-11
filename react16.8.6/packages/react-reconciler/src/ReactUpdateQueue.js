@@ -177,7 +177,7 @@ export function createUpdateQueue<State>(baseState: State): UpdateQueue<State> {
   };
   return queue;
 }
-
+//创建更新队列的副本
 function cloneUpdateQueue<State>(
   currentQueue: UpdateQueue<State>,
 ): UpdateQueue<State> {
@@ -461,6 +461,7 @@ export function processUpdateQueue<State>(
   instance: any,
   renderExpirationTime: ExpirationTime,
 ): void {
+  //并不是强制的更新
   hasForceUpdate = false;
    //保证workInProgress上的update队列是 queue 的副本
   queue = ensureWorkInProgressQueueIsAClone(workInProgress, queue);
@@ -470,17 +471,18 @@ export function processUpdateQueue<State>(
   }
 
   // These values may change as we process the queue.
-  //当执行更新队列的时候，这些属性可能会动态改变
+  //当执行更新队列的时候，这些属性可能会动态改变,所以先创建副本变量
   let newBaseState = queue.baseState;
   let newFirstUpdate = null;
   let newExpirationTime = NoWork;
 
   // Iterate through the list of updates to compute the result.
-  //队列中的第一个 update元素
+  //获取队列中的第一个 update元素，来判断它是否需要更新
   let update = queue.firstUpdate;
   let resultState = newBaseState;
-  //如果有update元素的话
+  //如果有update的话
   while (update !== null) {
+    //获取该 update 的优先级，判断是否需要执行 update
     const updateExpirationTime = update.expirationTime;
     //当更新队列的第一个 update元素 的更新优先级低于renderExpirationTime的时候
     if (updateExpirationTime < renderExpirationTime) {
@@ -513,6 +515,7 @@ export function processUpdateQueue<State>(
       // TODO: We should skip this update if it was already committed but currently
       // we have no way of detecting the difference between a committed and suspended
       // update here.
+      //可跳过
       markRenderEventTimeAndConfig(updateExpirationTime, update.suspenseConfig);
 
       // Process it and compute a new result.
@@ -550,7 +553,7 @@ export function processUpdateQueue<State>(
 
   //======逻辑同上，不再赘述===============================================
   // Separately, iterate though the list of captured updates.
-  //CapturedUpdate是啥？
+  //应该是捕获错误阶段的更新
   let newFirstCapturedUpdate = null;
   update = queue.firstCapturedUpdate;
   while (update !== null) {
@@ -599,7 +602,7 @@ export function processUpdateQueue<State>(
     update = update.next;
   }
   //======================================================
-
+  //这边主要是执行完 update 后，更新 queue 上的相关属性
   if (newFirstUpdate === null) {
     queue.lastUpdate = null;
   }
@@ -626,7 +629,7 @@ export function processUpdateQueue<State>(
   // shouldComponentUpdate is tricky; but we'll have to account for
   // that regardless.
 
-  //因为执行了 update 队列的部分更新，
+  // 由于执行了 update 队列的部分更新，
   // 那么 update 队列的expirationTime将由保留下来的 update 元素的最高优先级的 expirationTime 决定
   workInProgress.expirationTime = newExpirationTime;
   workInProgress.memoizedState = resultState;
@@ -645,7 +648,7 @@ function callCallback(callback, context) {
   );
   callback.call(context);
 }
-
+//设置 hasForceUpdate 为 false
 export function resetHasForceUpdateBeforeProcessing() {
   hasForceUpdate = false;
 }

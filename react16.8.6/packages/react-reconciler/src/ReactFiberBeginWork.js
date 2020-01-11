@@ -268,6 +268,7 @@ function forceUnmountCurrentAndReconcile(
   // pass null in place of where we usually pass the current child set. This has
   // the effect of remounting all children regardless of whether their their
   // identity matches.
+
   workInProgress.child = reconcileChildFibers(
     workInProgress,
     null,
@@ -657,7 +658,7 @@ function updateFunctionComponent(
   );
   return workInProgress.child;
 }
-
+//更新ClassComponent
 function updateClassComponent(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -683,11 +684,12 @@ function updateClassComponent(
   // FunctionComponent没有实例，所以stateNode值为null
   const instance = workInProgress.stateNode;
   let shouldUpdate;
-  //未创建实例
+  //当未创建实例的时候
   if (instance === null) {
     //current和workInProgress是doubleBuffer的关系，
-    //所以如果current不为 null，说明虽然未创建实例，但是已经挂起了
-    //这种情况视为第一次渲染
+    //React会先创建workInProgress，在渲染结束后，会把workInProgress复制给 current，此时渲染结束
+
+    //渲染了但是没有实例的情况，比如报错时
     if (current !== null) {
       // An class component without an instance only mounts if it suspended
       // inside a non- concurrent tree, in an inconsistent state. We want to
@@ -706,7 +708,7 @@ function updateClassComponent(
       nextProps,
       renderExpirationTime,
     );
-    //挂载 class 实例
+    //在未render的 class 实例上调用挂载生命周期
     mountClassInstance(
       workInProgress,
       Component,
@@ -715,16 +717,21 @@ function updateClassComponent(
     );
     shouldUpdate = true;
   }
-  //app已经执行，但是报错了，但是已经创建了 class 实例
+  //第一次渲染
   else if (current === null) {
     // In a resume, we'll already have an instance we can reuse.
+    //复用 class 实例，更新 props/state，
+    // 调用生命周期（componentWillMount,componentDidMount），返回 shouldUpdate
     shouldUpdate = resumeMountClassInstance(
       workInProgress,
       Component,
       nextProps,
       renderExpirationTime,
     );
-  } else {
+  }
+  //instance!==null&&current!==null
+  //当已经创建实例并且不是第一次渲染的话，调用更新的生命周期方法为componentWillUpdate,componentDidUpdate(),
+  else {
     shouldUpdate = updateClassInstance(
       current,
       workInProgress,
@@ -733,6 +740,7 @@ function updateClassComponent(
       renderExpirationTime,
     );
   }
+  //判断是否执行 render，并返回 render 下的第一个 child
   const nextUnitOfWork = finishClassComponent(
     current,
     workInProgress,
@@ -741,18 +749,9 @@ function updateClassComponent(
     hasContext,
     renderExpirationTime,
   );
-  if (__DEV__) {
-    let inst = workInProgress.stateNode;
-    if (inst.props !== nextProps) {
-      warning(
-        didWarnAboutReassigningProps,
-        'It looks like %s is reassigning its own `this.props` while rendering. ' +
-          'This is not supported and can lead to confusing bugs.',
-        getComponentName(workInProgress.type) || 'a component',
-      );
-      didWarnAboutReassigningProps = true;
-    }
-  }
+  //删除了 dev 代码
+
+
   return nextUnitOfWork;
 }
 
@@ -765,16 +764,18 @@ function finishClassComponent(
   renderExpirationTime: ExpirationTime,
 ) {
   // Refs should update even if shouldComponentUpdate returns false
+  //无论是否更新 props/state，都必须更新 ref 指向
   markRef(current, workInProgress);
-
+  //判断是否有错误捕获
   const didCaptureError = (workInProgress.effectTag & DidCapture) !== NoEffect;
-
+  //当不需要更新/更新完毕，并且没有出现 error 的时候
+  //
   if (!shouldUpdate && !didCaptureError) {
     // Context providers should defer to sCU for rendering
     if (hasContext) {
       invalidateContextProvider(workInProgress, Component, false);
     }
-
+    //跳过该class 上的节点及所有子节点的更新,即跳过调用 render 方法
     return bailoutOnAlreadyFinishedWork(
       current,
       workInProgress,
@@ -787,6 +788,8 @@ function finishClassComponent(
   // Rerender
   ReactCurrentOwner.current = workInProgress;
   let nextChildren;
+  //getDerivedStateFromError是生命周期api，作用是捕获 render error，详情请看：
+  //https://zh-hans.reactjs.org/docs/react-component.html#static-getderivedstatefromerror
   if (
     didCaptureError &&
     typeof Component.getDerivedStateFromError !== 'function'
@@ -796,23 +799,18 @@ function finishClassComponent(
     // re-render a fallback. This is temporary until we migrate everyone to
     // the new API.
     // TODO: Warn in a future release.
+    //如果出现 error 但是开发者没有调用getDerivedStateFromError的话，就中断渲染
     nextChildren = null;
 
     if (enableProfilerTimer) {
       stopProfilerTimerIfRunning(workInProgress);
     }
-  } else {
+  }
+  //否则重新渲染
+  else {
+    //删除了 dev 代码
     if (__DEV__) {
-      setCurrentPhase('render');
-      nextChildren = instance.render();
-      if (
-        debugRenderPhaseSideEffects ||
-        (debugRenderPhaseSideEffectsForStrictMode &&
-          workInProgress.mode & StrictMode)
-      ) {
-        instance.render();
-      }
-      setCurrentPhase(null);
+
     } else {
       nextChildren = instance.render();
     }
@@ -825,6 +823,7 @@ function finishClassComponent(
     // the existing children. Conceptually, the normal children and the children
     // that are shown on error are two different sets, so we shouldn't reuse
     // normal children even if their identities match.
+    //强制重新计算 children，因为当出错时，是渲染到节点上的 props/state 出现了问题，所以不能复用，必须重新 render
     forceUnmountCurrentAndReconcile(
       current,
       workInProgress,
@@ -848,7 +847,7 @@ function finishClassComponent(
   if (hasContext) {
     invalidateContextProvider(workInProgress, Component, true);
   }
-
+  //返回 render 下的第一个节点
   return workInProgress.child;
 }
 
