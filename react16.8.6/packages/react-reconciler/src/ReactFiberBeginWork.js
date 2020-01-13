@@ -243,7 +243,7 @@ export function reconcileChildren(
     );
   }
 }
-
+// 强制重新计算 children
 function forceUnmountCurrentAndReconcile(
   current: Fiber,
   workInProgress: Fiber,
@@ -258,6 +258,9 @@ function forceUnmountCurrentAndReconcile(
   // To do this, we're going to go through the reconcile algorithm twice. In
   // the first pass, we schedule a deletion for all the current children by
   // passing null.
+
+  //关于reconcileChildFibers()的讲解，请看「React源码解析之FunctionComponent（上）」
+  //https://juejin.im/post/5ddbe114e51d45231e010c75
   workInProgress.child = reconcileChildFibers(
     workInProgress,
     current.child,
@@ -720,7 +723,7 @@ function updateClassComponent(
   //第一次渲染
   else if (current === null) {
     // In a resume, we'll already have an instance we can reuse.
-    //复用 class 实例，更新 props/state，
+    //此时 instance 已经创建，复用 class 实例，更新 props/state，
     // 调用生命周期（componentWillMount,componentDidMount），返回 shouldUpdate
     shouldUpdate = resumeMountClassInstance(
       workInProgress,
@@ -730,7 +733,7 @@ function updateClassComponent(
     );
   }
   //instance!==null&&current!==null
-  //当已经创建实例并且不是第一次渲染的话，调用更新的生命周期方法为componentWillUpdate,componentDidUpdate(),
+  //当已经创建实例并且不是第一次渲染的话，调用更新的生命周期方法为componentWillUpdate,componentDidUpdate()
   else {
     shouldUpdate = updateClassInstance(
       current,
@@ -754,7 +757,7 @@ function updateClassComponent(
 
   return nextUnitOfWork;
 }
-
+//判断是否执行 render，并返回 render 下的第一个 child
 function finishClassComponent(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -769,7 +772,6 @@ function finishClassComponent(
   //判断是否有错误捕获
   const didCaptureError = (workInProgress.effectTag & DidCapture) !== NoEffect;
   //当不需要更新/更新完毕，并且没有出现 error 的时候
-  //
   if (!shouldUpdate && !didCaptureError) {
     // Context providers should defer to sCU for rendering
     if (hasContext) {
@@ -831,6 +833,7 @@ function finishClassComponent(
       renderExpirationTime,
     );
   } else {
+    // 将 ReactElement 变成fiber对象，并更新，生成对应 DOM 的实例，并挂载到真正的 DOM 节点上
     reconcileChildren(
       current,
       workInProgress,

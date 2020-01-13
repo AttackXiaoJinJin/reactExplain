@@ -277,7 +277,7 @@ const classComponentUpdater = {
     scheduleWork(fiber, expirationTime);
   },
 };
-//检查是否要执行shouldComponentUpdate()方法
+//检查是否有 props/state 的更新，也是判断是否需要执行 shouldComponentUpdate() 的方法
 function checkShouldComponentUpdate(
   workInProgress,
   ctor,
@@ -288,6 +288,7 @@ function checkShouldComponentUpdate(
   nextContext,
 ) {
   const instance = workInProgress.stateNode;
+  //如果有调用`shouldComponentUpdate()`的话，则返回执行该方法的结果
   if (typeof instance.shouldComponentUpdate === 'function') {
     startPhaseTimer(workInProgress, 'shouldComponentUpdate');
     const shouldUpdate = instance.shouldComponentUpdate(
@@ -631,20 +632,7 @@ function callComponentWillReceiveProps(
   stopPhaseTimer();
 
   if (instance.state !== oldState) {
-    if (__DEV__) {
-      const componentName =
-        getComponentName(workInProgress.type) || 'Component';
-      if (!didWarnAboutStateAssignmentForComponent.has(componentName)) {
-        didWarnAboutStateAssignmentForComponent.add(componentName);
-        warningWithoutStack(
-          false,
-          '%s.componentWillReceiveProps(): Assigning directly to ' +
-            "this.state is deprecated (except inside a component's " +
-            'constructor). Use setState instead.',
-          componentName,
-        );
-      }
-    }
+    //删除了 dev 代码
     classComponentUpdater.enqueueReplaceState(instance, instance.state, null);
   }
 }
@@ -744,11 +732,13 @@ function resumeMountClassInstance(
   newProps: any,
   renderExpirationTime: ExpirationTime,
 ): boolean {
+  //获取 ClassComponent 实例
   const instance = workInProgress.stateNode;
-
+  //获取已有的 props
   const oldProps = workInProgress.memoizedProps;
+  //初始化 类实例 的 props
   instance.props = oldProps;
-  //=====可跳过 context 相关代码=========================================
+  //=====可跳过 context 相关代码====================================================
   const oldContext = instance.context;
   const contextType = ctor.contextType;
   let nextContext;
@@ -762,9 +752,11 @@ function resumeMountClassInstance(
     );
     nextContext = getMaskedContext(workInProgress, nextLegacyUnmaskedContext);
   }
-  //==================================================
+  //============================================================================
 
   const getDerivedStateFromProps = ctor.getDerivedStateFromProps;
+  //从开发角度上看，只要有调用getDerivedStateFromProps()或getSnapshotBeforeUpdate()
+  //其中一个生命周期API，变量 hasNewLifecycles 就为 true
   const hasNewLifecycles =
     typeof getDerivedStateFromProps === 'function' ||
     typeof instance.getSnapshotBeforeUpdate === 'function';
@@ -775,7 +767,8 @@ function resumeMountClassInstance(
 
   // In order to support react-lifecycles-compat polyfilled components,
   // Unsafe lifecycles should not be invoked for components using the new APIs.
-  //如果没有用新的生命周期的方法，则执行componentWillReceiveProps方法
+  //如果没有用新的生命周期的方法，则执行componentWillReceiveProps()
+  //也就是说，如果有getDerivedStateFromProps()或getSnapshotBeforeUpdate()，就不调用componentWillReceiveProps方法了
   if (
     !hasNewLifecycles &&
     (typeof instance.UNSAFE_componentWillReceiveProps === 'function' ||
@@ -792,7 +785,8 @@ function resumeMountClassInstance(
   }
   //设置 hasForceUpdate 为 false
   resetHasForceUpdateBeforeProcessing();
-  //====与mountClassInstance中的callComponentWillMount的下面逻辑相同，不再赘述================================
+  //====更新 updateQueue，获取新 state，与mountClassInstance中的callComponentWillMount的下面逻辑相同，不再赘述================================
+
   const oldState = workInProgress.memoizedState;
   let newState = (instance.state = oldState);
   let updateQueue = workInProgress.updateQueue;
@@ -821,9 +815,12 @@ function resumeMountClassInstance(
     if (typeof instance.componentDidMount === 'function') {
       workInProgress.effectTag |= Update;
     }
+    //即 shouldUpdate 为 false
     return false;
   }
-
+  //有调用getDerivedStateFromProps()的话，则执行对应的applyDerivedStateFromProps
+  //componentWillReceiveProps()与「getDerivedStateFromProps()/getSnapshotBeforeUpdate()」是互斥关系
+  //这边能执行，说明componentWillReceiveProps()就不执行
   if (typeof getDerivedStateFromProps === 'function') {
     applyDerivedStateFromProps(
       workInProgress,
@@ -846,7 +843,7 @@ function resumeMountClassInstance(
       newState,
       nextContext,
     );
-  //当有更新的时候，执行相应的生命周期方法
+  //当有更新的时候，执行相应的生命周期方法——componentWillMount()和componentDidMount()
   if (shouldUpdate) {
     // In order to support react-lifecycles-compat polyfilled components,
     // Unsafe lifecycles should not be invoked for components using the new APIs.
@@ -870,22 +867,27 @@ function resumeMountClassInstance(
   } else {
     // If an update was already in progress, we should schedule an Update
     // effect even though we're bailing out, so that cWU/cDU are called.
+    //有一个疑问——为什么不需要 update，还要执行componentDidMount方法来更新？
+    //没明白注释写的cWU/cDU是啥意思
     if (typeof instance.componentDidMount === 'function') {
       workInProgress.effectTag |= Update;
     }
 
     // If shouldComponentUpdate returned false, we should still update the
     // memoized state to indicate that this work can be reused.
+    //即使不需要 update，也会更新原有的 props/state,以保证复用
+    //也没明白为啥
     workInProgress.memoizedProps = newProps;
     workInProgress.memoizedState = newState;
   }
 
   // Update the existing instance's state, props, and context pointers even
   // if shouldComponentUpdate returns false.
+  //更新相关属性为最新的 props/state，无论是否有 update
   instance.props = newProps;
   instance.state = newState;
   instance.context = nextContext;
-
+  //boolean
   return shouldUpdate;
 }
 
@@ -965,6 +967,10 @@ function updateClassInstance(
   ) {
     // If an update was already in progress, we should schedule an Update
     // effect even though we're bailing out, so that cWU/cDU are called.
+
+    //注意这里与 resumeMountClassInstance() 不一样
+    //updateClassInstance()：componentDidUpdate/getSnapshotBeforeUpdate
+    //resumeMountClassInstance()：componentDidMount
     if (typeof instance.componentDidUpdate === 'function') {
       if (
         oldProps !== current.memoizedProps ||
@@ -1009,6 +1015,9 @@ function updateClassInstance(
   if (shouldUpdate) {
     // In order to support react-lifecycles-compat polyfilled components,
     // Unsafe lifecycles should not be invoked for components using the new APIs.
+    //此处也与resumeMountClassInstance() 不同
+    //updateClassInstance()：componentWillUpdate/componentDidUpdate/getSnapshotBeforeUpdate
+    //resumeMountClassInstance()：componentWillMount/componentDidMount
     if (
       !hasNewLifecycles &&
       (typeof instance.UNSAFE_componentWillUpdate === 'function' ||
