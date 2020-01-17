@@ -1186,13 +1186,15 @@ function mountIncompleteClassComponent(
     renderExpirationTime,
   );
 }
-
+//进一步明确 FunctionComponent 以何种方式更新
 function mountIndeterminateComponent(
   _current,
   workInProgress,
   Component,
   renderExpirationTime,
 ) {
+  //只有在第一次渲染的时候，才会调用mountIndeterminateComponent()，此时_current应该为 null
+  //出现_current不为 null 的情况，一般是第一次渲染的时候捕获到 error 了，此时就需要重置_current和workInProgress
   if (_current !== null) {
     // An indeterminate component only mounts if it suspended inside a non-
     // concurrent tree, in an inconsistent state. We want to treat it like
@@ -1205,46 +1207,24 @@ function mountIndeterminateComponent(
   }
 
   const props = workInProgress.pendingProps;
+  //=========context 可跳过===========================================================
   const unmaskedContext = getUnmaskedContext(workInProgress, Component, false);
   const context = getMaskedContext(workInProgress, unmaskedContext);
 
   prepareToReadContext(workInProgress, renderExpirationTime);
   prepareToReadEventComponents(workInProgress);
+  //=======================================================================
+
   let value;
 
   if (__DEV__) {
-    if (
-      Component.prototype &&
-      typeof Component.prototype.render === 'function'
-    ) {
-      const componentName = getComponentName(Component) || 'Unknown';
-
-      if (!didWarnAboutBadClass[componentName]) {
-        warningWithoutStack(
-          false,
-          "The <%s /> component appears to have a render method, but doesn't extend React.Component. " +
-            'This is likely to cause errors. Change %s to extend React.Component instead.',
-          componentName,
-          componentName,
-        );
-        didWarnAboutBadClass[componentName] = true;
-      }
-    }
-
-    if (workInProgress.mode & StrictMode) {
-      ReactStrictModeWarnings.recordLegacyContextWarning(workInProgress, null);
-    }
-
-    ReactCurrentOwner.current = workInProgress;
-    value = renderWithHooks(
-      null,
-      workInProgress,
-      Component,
-      props,
-      context,
-      renderExpirationTime,
-    );
+    //删除了 dev 代码
   } else {
+    //因为FunctionComponent一开始是处于indeterminateComponent的状态下的，所以会涉及到 hooks
+    //渲染的过程中，对里面用到的 hook函数做一些操作
+
+    //renderWithHooks的解析请看 React源码解析之FunctionComponent（上）：
+    //https://juejin.im/post/5ddbe114e51d45231e010c75
     value = renderWithHooks(
       null,
       workInProgress,
@@ -1257,39 +1237,31 @@ function mountIndeterminateComponent(
   // React DevTools reads this flag.
   workInProgress.effectTag |= PerformedWork;
 
+  //确认是否是 ClassComponent，因为只有ClassComponent有 render() 方法
+
+  //关键是这个判断条件
+  //如果这个条件成立的话，就表明可以在 FunctionComponent 中使用 ClassComponent 的 API ！!
   if (
     typeof value === 'object' &&
     value !== null &&
     typeof value.render === 'function' &&
     value.$$typeof === undefined
   ) {
-    if (__DEV__) {
-      const componentName = getComponentName(Component) || 'Unknown';
-      if (!didWarnAboutModulePatternComponent[componentName]) {
-        warningWithoutStack(
-          false,
-          'The <%s /> component appears to be a function component that returns a class instance. ' +
-            'Change %s to a class that extends React.Component instead. ' +
-            "If you can't use a class try assigning the prototype on the function as a workaround. " +
-            "`%s.prototype = React.Component.prototype`. Don't use an arrow function since it " +
-            'cannot be called with `new` by React.',
-          componentName,
-          componentName,
-          componentName,
-        );
-        didWarnAboutModulePatternComponent[componentName] = true;
-      }
-    }
+    //删除了 dev 代码
 
     // Proceed under the assumption that this is a class instance
     workInProgress.tag = ClassComponent;
 
     // Throw out any hooks that were used.
+    // 重置 hooks 状态，也就是不使用 hooks
     resetHooks();
 
     // Push context providers early to prevent context stack mismatches.
     // During mounting we don't know the child context yet as the instance doesn't exist.
     // We will invalidate the child context in finishClassComponent() right after rendering.
+
+    //下面的这些 function 在 updateClassComponent() 中都有解析过，就不再赘述了
+    //https://juejin.im/post/5e1bc74ee51d45020837e8f4
     let hasContext = false;
     if (isLegacyContextProvider(Component)) {
       hasContext = true;
@@ -1321,28 +1293,15 @@ function mountIndeterminateComponent(
       hasContext,
       renderExpirationTime,
     );
-  } else {
+  }
+  //否则就是 FunctionComponent
+  else {
     // Proceed under the assumption that this is a function component
+    //正式赋予 tag 为 FunctionComponent，将按照FunctionComponent的流程更新组件
     workInProgress.tag = FunctionComponent;
-    if (__DEV__) {
-      if (
-        debugRenderPhaseSideEffects ||
-        (debugRenderPhaseSideEffectsForStrictMode &&
-          workInProgress.mode & StrictMode)
-      ) {
-        // Only double-render components with Hooks
-        if (workInProgress.memoizedState !== null) {
-          value = renderWithHooks(
-            null,
-            workInProgress,
-            Component,
-            props,
-            context,
-            renderExpirationTime,
-          );
-        }
-      }
-    }
+    //删除了 dev 代码
+    //reconcileChildren的解析请看：React源码解析之FunctionComponent（上）
+    //https://juejin.im/post/5ddbe114e51d45231e010c75
     reconcileChildren(null, workInProgress, value, renderExpirationTime);
     if (__DEV__) {
       validateFunctionComponentInDev(workInProgress, Component);
@@ -2725,6 +2684,7 @@ function beginWork(
   //根据节点类型进行组件的更新
   switch (workInProgress.tag) {
     case IndeterminateComponent: {
+      // 进一步明确 FunctionComponent 以何种方式更新
       return mountIndeterminateComponent(
         current,
         workInProgress,

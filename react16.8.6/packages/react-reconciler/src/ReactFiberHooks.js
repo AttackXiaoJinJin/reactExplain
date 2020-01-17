@@ -505,7 +505,7 @@ export function bailoutHooks(
     current.expirationTime = NoWork;
   }
 }
-
+// 重置 hooks 状态
 export function resetHooks(): void {
   // We can assume the previous dispatcher is always this one, since we set it
   // at the beginning of the render phase and there's no re-entrancy.
@@ -523,12 +523,7 @@ export function resetHooks(): void {
   workInProgressHook = null;
   nextWorkInProgressHook = null;
 
-  if (__DEV__) {
-    hookTypesDev = null;
-    hookTypesUpdateIndexDev = -1;
-
-    currentHookNameInDev = null;
-  }
+  //删除了 dev 代码
 
   remainingExpirationTime = NoWork;
   componentUpdateQueue = null;
