@@ -616,7 +616,7 @@ export function createHostRootFiber(tag: RootTag): Fiber {
 
   return createFiber(HostRoot, null, null, mode);
 }
-
+//通过type和 props 来创建 fiber
 export function createFiberFromTypeAndProps(
   type: any, // React$ElementType
   key: null | string,
@@ -627,6 +627,7 @@ export function createFiberFromTypeAndProps(
 ): Fiber {
   let fiber;
   //附一个默认值
+  //只有 FunctionComponent 没有再次设 fiberTag，所以它的默认 tag 就是 IndeterminateComponent
   let fiberTag = IndeterminateComponent;
   // The resolved type is set if we know what the final type will be. I.e. it's not lazy.
   let resolvedType = type;
