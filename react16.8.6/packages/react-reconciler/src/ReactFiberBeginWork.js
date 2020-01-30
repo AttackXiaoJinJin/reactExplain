@@ -206,6 +206,8 @@ if (__DEV__) {
 //1、根据 props.children 生成 Fiber 树
 //2、判断Fiber 对象是否可以复用
 //3、列表根据 key 优化
+
+//将 ReactElement 变成 fiber对象，并更新，生成对应 DOM 的实例，并挂载到真正的 DOM 节点上
 export function reconcileChildren(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -594,7 +596,7 @@ function updateProfiler(
   );
   return workInProgress.child;
 }
-
+//标记 ref
 function markRef(current: Fiber | null, workInProgress: Fiber) {
   const ref = workInProgress.ref;
   if (
@@ -869,18 +871,25 @@ function pushHostRootContext(workInProgress) {
   pushHostContainer(workInProgress, root.containerInfo);
 }
 
+//更新 HostRoot 组件
 function updateHostRoot(current, workInProgress, renderExpirationTime) {
+  //=======context相关的可跳过===================================
   pushHostRootContext(workInProgress);
+  //===========================================================
   const updateQueue = workInProgress.updateQueue;
+  //报错，没有更新队列的话应该跳出，意思就是没有跳出，仍然执行updateHostRoot方法
   invariant(
     updateQueue !== null,
     'If the root does not have an updateQueue, we should have already ' +
       'bailed out. This error is likely caused by a bug in React. Please ' +
       'file an issue.',
   );
+
   const nextProps = workInProgress.pendingProps;
   const prevState = workInProgress.memoizedState;
+  //要更新的 ReactElement 节点，包括其子树
   const prevChildren = prevState !== null ? prevState.element : null;
+  //更新 update 队列，并更新 state
   processUpdateQueue(
     workInProgress,
     updateQueue,
@@ -892,6 +901,8 @@ function updateHostRoot(current, workInProgress, renderExpirationTime) {
   // Caution: React DevTools currently depends on this property
   // being called "element".
   const nextChildren = nextState.element;
+
+  //state 相同，则跳过更新
   if (nextChildren === prevChildren) {
     // If the state is the same as before, that's a bailout because we had
     // no work that expires at this time.
@@ -902,7 +913,10 @@ function updateHostRoot(current, workInProgress, renderExpirationTime) {
       renderExpirationTime,
     );
   }
+
   const root: FiberRoot = workInProgress.stateNode;
+
+  //如果是第一次渲染的话
   if (
     (current === null || current.child === null) &&
     root.hydrate &&
@@ -928,7 +942,9 @@ function updateHostRoot(current, workInProgress, renderExpirationTime) {
       nextChildren,
       renderExpirationTime,
     );
-  } else {
+  }
+  //不是第一次渲染的话
+  else {
     // Otherwise reset hydration state in case we aborted and resumed another
     // root.
     reconcileChildren(
@@ -942,9 +958,11 @@ function updateHostRoot(current, workInProgress, renderExpirationTime) {
   return workInProgress.child;
 }
 
+//更新 DOM 标签
 function updateHostComponent(current, workInProgress, renderExpirationTime) {
+  //===暂时跳过 context
   pushHostContext(workInProgress);
-
+  //判断能否复用服务端渲染的节点
   if (current === null) {
     tryToClaimNextHydratableInstance(workInProgress);
   }
@@ -954,23 +972,32 @@ function updateHostComponent(current, workInProgress, renderExpirationTime) {
   const prevProps = current !== null ? current.memoizedProps : null;
 
   let nextChildren = nextProps.children;
+  //判断该节点是否是文本节点
   const isDirectTextChild = shouldSetTextContent(type, nextProps);
-
+  //如果是文本节点的话（即里面不再嵌套其他类型的节点）
   if (isDirectTextChild) {
     // We special case a direct text child of a host node. This is a common
     // case. We won't handle it as a reified child. We will instead handle
     // this in the host environment that also have access to this prop. That
     // avoids allocating another HostText fiber and traversing it.
+    //不必渲染子节点，直接显示其文本即可
     nextChildren = null;
-  } else if (prevProps !== null && shouldSetTextContent(type, prevProps)) {
+  }
+  //如果之前节点不为空且为文本节点，但现在更新为其他类型的节点的话
+  else if (prevProps !== null && shouldSetTextContent(type, prevProps)) {
     // If we're switching from a direct text child to a normal child, or to
     // empty, we need to schedule the text content to be reset.
+    //重置文本节点
     workInProgress.effectTag |= ContentReset;
   }
-
+  //只有 HostComponent 和 ClassComponent 有使用该方法
+  //因为只有这两个 Component 能拿到 DOM 实例
   markRef(current, workInProgress);
 
   // Check the host config to see if the children are offscreen/hidden.
+  //如果该节点上设置了 hidden 属性，并且是异步渲染(ConcurrentMode)的话，那么它将最后更新
+
+  //关于 ConcurrentMode 模式，请参考：https://zh-hans.reactjs.org/docs/concurrent-mode-intro.html
   if (
     workInProgress.mode & ConcurrentMode &&
     renderExpirationTime !== Never &&
@@ -980,10 +1007,11 @@ function updateHostComponent(current, workInProgress, renderExpirationTime) {
       markSpawnedWork(Never);
     }
     // Schedule this fiber to re-render at offscreen priority. Then bailout.
+    //优先级最低，即最后更新
     workInProgress.expirationTime = workInProgress.childExpirationTime = Never;
     return null;
   }
-
+  //将 ReactElement 变成 fiber对象，并更新，生成对应 DOM 的实例，并挂载到真正的 DOM 节点上
   reconcileChildren(
     current,
     workInProgress,
@@ -993,12 +1021,14 @@ function updateHostComponent(current, workInProgress, renderExpirationTime) {
   return workInProgress.child;
 }
 
+//更新 host 文本节点
 function updateHostText(current, workInProgress) {
   if (current === null) {
     tryToClaimNextHydratableInstance(workInProgress);
   }
   // Nothing to do here. This is terminal. We'll do the completion step
   // immediately after.
+  //没有对 DOM 进行操作的地方，直接渲染出来即可
   return null;
 }
 
@@ -2746,8 +2776,10 @@ function beginWork(
     case HostRoot:
       return updateHostRoot(current, workInProgress, renderExpirationTime);
     case HostComponent:
+      //更新 DOM 标签
       return updateHostComponent(current, workInProgress, renderExpirationTime);
     case HostText:
+      //更新文本节点
       return updateHostText(current, workInProgress);
     case SuspenseComponent:
       return updateSuspenseComponent(

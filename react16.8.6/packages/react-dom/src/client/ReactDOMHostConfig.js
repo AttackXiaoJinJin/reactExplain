@@ -303,7 +303,7 @@ export function prepareUpdate(
     rootContainerInstance,
   );
 }
-
+//判断是否是文本节点
 export function shouldSetTextContent(type: string, props: Props): boolean {
   return (
     type === 'textarea' ||
