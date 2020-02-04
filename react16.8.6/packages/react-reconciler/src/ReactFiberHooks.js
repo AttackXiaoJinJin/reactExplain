@@ -358,9 +358,9 @@ function areHookInputsEqual(
 export function renderWithHooks(
   current: Fiber | null,
   workInProgress: Fiber,
-  Component: any,
+  Component: any, //render
   props: any,
-  refOrContext: any,
+  refOrContext: any, //ref
   nextRenderExpirationTime: ExpirationTime,
 ): any {
   renderExpirationTime = nextRenderExpirationTime;
