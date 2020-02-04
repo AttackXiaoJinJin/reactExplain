@@ -282,6 +282,7 @@ function forceUnmountCurrentAndReconcile(
   );
 }
 
+//更新被React.forwardRef包裹的 FunctionComponent
 function updateForwardRef(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -293,60 +294,40 @@ function updateForwardRef(
   // hasn't yet mounted. This happens after the first render suspends.
   // We'll need to figure out if this is fine or can cause issues.
 
-  if (__DEV__) {
-    if (workInProgress.type !== workInProgress.elementType) {
-      // Lazy component props can't be validated in createElement
-      // because they're only guaranteed to be resolved here.
-      const innerPropTypes = Component.propTypes;
-      if (innerPropTypes) {
-        checkPropTypes(
-          innerPropTypes,
-          nextProps, // Resolved props
-          'prop',
-          getComponentName(Component),
-          getCurrentFiberStackInDev,
-        );
-      }
-    }
-  }
+  //删除了 dev 代码
 
+  //Component:{
+  //   $$typeof: REACT_FORWARD_REF_TYPE,
+  //   render,
+  // }
+
+  //FunctionComponent
   const render = Component.render;
+  // 开发层面上不允许FunctionComponent，但你打印 props 的话是有的，
+  // 因为是 React 只允许内部通过 props 传进来 ref
   const ref = workInProgress.ref;
 
   // The rest is a fork of updateFunctionComponent
   let nextChildren;
+  //context 相关的可跳过
   prepareToReadContext(workInProgress, renderExpirationTime);
   prepareToReadEventComponents(workInProgress);
   if (__DEV__) {
-    ReactCurrentOwner.current = workInProgress;
-    setCurrentPhase('render');
-    nextChildren = renderWithHooks(
-      current,
-      workInProgress,
-      render,
-      nextProps,
-      ref,
-      renderExpirationTime,
-    );
-    if (
-      debugRenderPhaseSideEffects ||
-      (debugRenderPhaseSideEffectsForStrictMode &&
-        workInProgress.mode & StrictMode)
-    ) {
-      // Only double-render components with Hooks
-      if (workInProgress.memoizedState !== null) {
-        nextChildren = renderWithHooks(
-          current,
-          workInProgress,
-          render,
-          nextProps,
-          ref,
-          renderExpirationTime,
-        );
-      }
-    }
-    setCurrentPhase(null);
+    //删除了 dev 代码
   } else {
+    //渲染的过程中，对里面用到的 hook函数做一些操作
+    //关于renderWithHooks的讲解，请看：https://www.jianshu.com/p/959498695e83
+
+    //注意：在updateFunctionComponent()中传的参数不是 ref，
+    //而是 context：nextChildren = renderWithHooks(
+    //   current,
+    //   workInProgress,
+    //   Component,
+    //   nextProps,
+    //   传的是 context 而不是 ref
+    //   context,
+    //   renderExpirationTime,
+    // );
     nextChildren = renderWithHooks(
       current,
       workInProgress,
@@ -355,10 +336,16 @@ function updateForwardRef(
       ref,
       renderExpirationTime,
     );
+    //renderWithHooks 内部通过let children = Component(props, refOrContext)来更新 ref 或 context
   }
 
+  //如果 props 相同，并且 ref 也相同的话，就不需要更新
   if (current !== null && !didReceiveUpdate) {
+    //跳过hooks更新
+    //关于bailoutHooks的讲解，请看：https://www.jianshu.com/p/959498695e83
     bailoutHooks(current, workInProgress, renderExpirationTime);
+    //跳过该节点及所有子节点的更新
+    //关于bailoutOnAlreadyFinishedWork的讲解，请看：https://www.jianshu.com/p/06b18db8b5d4
     return bailoutOnAlreadyFinishedWork(
       current,
       workInProgress,
@@ -368,6 +355,8 @@ function updateForwardRef(
 
   // React DevTools reads this flag.
   workInProgress.effectTag |= PerformedWork;
+  //将 ReactElement 变成 fiber对象，并更新，生成对应 DOM 的实例，并挂载到真正的 DOM 节点上
+  //关于reconcileChildren的讲解，请看：https://www.jianshu.com/p/959498695e83
   reconcileChildren(
     current,
     workInProgress,
