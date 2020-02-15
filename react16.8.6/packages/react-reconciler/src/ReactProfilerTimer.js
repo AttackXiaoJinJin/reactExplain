@@ -38,14 +38,15 @@ function recordCommitTime(): void {
   }
   commitTime = now();
 }
-
+//启动分析器的timer，并赋成当前时间
 function startProfilerTimer(fiber: Fiber): void {
+  //如果不能启动分析器的timer的话，就 return
   if (!enableProfilerTimer) {
     return;
   }
-
+  //分析器的开始时间
   profilerStartTime = now();
-
+  //如果 fiber 节点的实际开始时间 < 0 的话，则赋成当前时间
   if (((fiber.actualStartTime: any): number) < 0) {
     fiber.actualStartTime = now();
   }
@@ -58,20 +59,26 @@ function stopProfilerTimerIfRunning(fiber: Fiber): void {
   profilerStartTime = -1;
 }
 
+//记录分析器的timer的work 时间，并停止timer
 function stopProfilerTimerIfRunningAndRecordDelta(
   fiber: Fiber,
   overrideBaseTime: boolean,
 ): void {
+  //如果不能启动分析器的定时器的话，就 return
   if (!enableProfilerTimer) {
     return;
   }
-
+  //如果分析器的开始时间>=0的话
   if (profilerStartTime >= 0) {
+    //获取运行的时间间隔
     const elapsedTime = now() - profilerStartTime;
+    //累计实际 work 时间间隔
     fiber.actualDuration += elapsedTime;
     if (overrideBaseTime) {
+      //记录时间间隔
       fiber.selfBaseDuration = elapsedTime;
     }
+    //上述操作完成后，将分析器的timer的开始时间重置为-1
     profilerStartTime = -1;
   }
 }
