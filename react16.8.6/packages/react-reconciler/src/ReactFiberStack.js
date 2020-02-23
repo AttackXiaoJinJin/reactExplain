@@ -37,26 +37,21 @@ function isEmpty(): boolean {
 
 function pop<T>(cursor: StackCursor<T>, fiber: Fiber): void {
   if (index < 0) {
-    if (__DEV__) {
-      warningWithoutStack(false, 'Unexpected pop.');
-    }
+    //删除了 dev 代码
+
     return;
   }
 
-  if (__DEV__) {
-    if (fiber !== fiberStack[index]) {
-      warningWithoutStack(false, 'Unexpected Fiber popped.');
-    }
-  }
+  //删除了 dev 代码
 
+  //将栈中指定位置的 value 赋值给 cursor.current
   cursor.current = valueStack[index];
-
+  //置 null
   valueStack[index] = null;
 
-  if (__DEV__) {
-    fiberStack[index] = null;
-  }
+  //删除了 dev 代码
 
+  //出栈，从后往前
   index--;
 }
 

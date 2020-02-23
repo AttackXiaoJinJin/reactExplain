@@ -25,6 +25,7 @@ function assertValidProps(tag: string, props: ?Object) {
     return;
   }
   // Note the use of `==` which checks for null or undefined.
+  //不能包含 children 的 DOM 节点，如<br/>、<input/>等
   if (voidElementTags[tag]) {
     invariant(
       props.children == null && props.dangerouslySetInnerHTML == null,
@@ -47,17 +48,7 @@ function assertValidProps(tag: string, props: ?Object) {
         'for more information.',
     );
   }
-  if (__DEV__) {
-    warning(
-      props.suppressContentEditableWarning ||
-        !props.contentEditable ||
-        props.children == null,
-      'A component is `contentEditable` and contains `children` managed by ' +
-        'React. It is now your responsibility to guarantee that none of ' +
-        'those nodes are unexpectedly modified or duplicated. This is ' +
-        'probably not intentional.',
-    );
-  }
+  //删除了 dev 代码
   invariant(
     props.style == null || typeof props.style === 'object',
     'The `style` prop expects a mapping from style properties to values, ' +

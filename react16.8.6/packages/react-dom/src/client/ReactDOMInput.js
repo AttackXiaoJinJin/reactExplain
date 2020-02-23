@@ -56,10 +56,11 @@ function isControlled(props) {
  * See http://www.w3.org/TR/2012/WD-html5-20121025/the-input-element.html
  */
 
+//浅拷贝value/checked等属性
 export function getHostProps(element: Element, props: Object) {
   const node = ((element: any): InputWithWrapperState);
   const checked = props.checked;
-
+  //浅拷贝
   const hostProps = Object.assign({}, props, {
     defaultChecked: undefined,
     defaultValue: undefined,
@@ -71,56 +72,23 @@ export function getHostProps(element: Element, props: Object) {
 }
 
 export function initWrapperState(element: Element, props: Object) {
-  if (__DEV__) {
-    ReactControlledValuePropTypes.checkPropTypes('input', props);
-
-    if (
-      props.checked !== undefined &&
-      props.defaultChecked !== undefined &&
-      !didWarnCheckedDefaultChecked
-    ) {
-      warning(
-        false,
-        '%s contains an input of type %s with both checked and defaultChecked props. ' +
-          'Input elements must be either controlled or uncontrolled ' +
-          '(specify either the checked prop, or the defaultChecked prop, but not ' +
-          'both). Decide between using a controlled or uncontrolled input ' +
-          'element and remove one of these props. More info: ' +
-          'https://fb.me/react-controlled-components',
-        getCurrentFiberOwnerNameInDevOrNull() || 'A component',
-        props.type,
-      );
-      didWarnCheckedDefaultChecked = true;
-    }
-    if (
-      props.value !== undefined &&
-      props.defaultValue !== undefined &&
-      !didWarnValueDefaultValue
-    ) {
-      warning(
-        false,
-        '%s contains an input of type %s with both value and defaultValue props. ' +
-          'Input elements must be either controlled or uncontrolled ' +
-          '(specify either the value prop, or the defaultValue prop, but not ' +
-          'both). Decide between using a controlled or uncontrolled input ' +
-          'element and remove one of these props. More info: ' +
-          'https://fb.me/react-controlled-components',
-        getCurrentFiberOwnerNameInDevOrNull() || 'A component',
-        props.type,
-      );
-      didWarnValueDefaultValue = true;
-    }
-  }
+  //删除了 dev 代码
 
   const node = ((element: any): InputWithWrapperState);
+  //Input 的默认值
   const defaultValue = props.defaultValue == null ? '' : props.defaultValue;
-
+  //在 input 对应的 DOM 节点上新建_wrapperState属性
   node._wrapperState = {
+    //input 有 radio/checkbox 类型，checked 即判断单/多选框是否被选中
     initialChecked:
       props.checked != null ? props.checked : props.defaultChecked,
+    //input 的初始值，优先选择 value，其次 defaultValue
     initialValue: getToStringValue(
       props.value != null ? props.value : defaultValue,
     ),
+    //radio/checkbox
+    //如果type 为 radio/checkbox 的话，看 checked 有没有被选中
+    //如果是其他 type 的话,则看 value 是否有值
     controlled: isControlled(props),
   };
 }

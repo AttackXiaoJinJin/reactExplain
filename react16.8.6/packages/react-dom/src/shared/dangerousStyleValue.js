@@ -33,11 +33,13 @@ function dangerousStyleValue(name, value, isCustomProperty) {
   }
 
   if (
+    //-webkit-transform/-moz-transform/-ms-transform
     !isCustomProperty &&
     typeof value === 'number' &&
     value !== 0 &&
     !(isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name])
   ) {
+    //将 React上的 style 里的对象的值转成 px
     return value + 'px'; // Presumes implicit 'px' suffix for unitless numbers
   }
 

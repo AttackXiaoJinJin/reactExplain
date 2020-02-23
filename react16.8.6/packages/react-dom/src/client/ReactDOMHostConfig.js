@@ -122,6 +122,7 @@ let eventsEnabled: ?boolean = null;
 let selectionInformation: ?mixed = null;
 
 function shouldAutoFocusHostComponent(type: string, props: Props): boolean {
+  //可以 foucus 的节点返回autoFocus的值，否则返回 false
   switch (type) {
     case 'button':
     case 'input':
@@ -225,21 +226,7 @@ export function createInstance(
 ): Instance {
   let parentNamespace: string;
   if (__DEV__) {
-    // TODO: take namespace into account when validating.
-    const hostContextDev = ((hostContext: any): HostContextDev);
-    validateDOMNesting(type, null, hostContextDev.ancestorInfo);
-    if (
-      typeof props.children === 'string' ||
-      typeof props.children === 'number'
-    ) {
-      const string = '' + props.children;
-      const ownAncestorInfo = updatedAncestorInfo(
-        hostContextDev.ancestorInfo,
-        type,
-      );
-      validateDOMNesting(null, string, ownAncestorInfo);
-    }
-    parentNamespace = hostContextDev.namespace;
+    //删除了 dev 代码
   } else {
     parentNamespace = ((hostContext: any): HostContextProd);
   }
@@ -249,7 +236,9 @@ export function createInstance(
     rootContainerInstance,
     parentNamespace,
   );
+  //创建指向 fiber 对象的属性，方便从DOM 实例上获取 fiber 对象
   precacheFiberNode(internalInstanceHandle, domElement);
+  //创建指向 props 的属性，方便从 DOM 实例上获取 props
   updateFiberProps(domElement, props);
   return domElement;
 }
@@ -269,9 +258,10 @@ export function finalizeInitialChildren(
   hostContext: HostContext,
 ): boolean {
   setInitialProperties(domElement, type, props, rootContainerInstance);
+  //判断该节点是否需要自动聚焦
   return shouldAutoFocusHostComponent(type, props);
 }
-
+//返回需要更新的 props 的集合
 export function prepareUpdate(
   domElement: Instance,
   type: string,
@@ -280,21 +270,10 @@ export function prepareUpdate(
   rootContainerInstance: Container,
   hostContext: HostContext,
 ): null | Array<mixed> {
-  if (__DEV__) {
-    const hostContextDev = ((hostContext: any): HostContextDev);
-    if (
-      typeof newProps.children !== typeof oldProps.children &&
-      (typeof newProps.children === 'string' ||
-        typeof newProps.children === 'number')
-    ) {
-      const string = '' + newProps.children;
-      const ownAncestorInfo = updatedAncestorInfo(
-        hostContextDev.ancestorInfo,
-        type,
-      );
-      validateDOMNesting(null, string, ownAncestorInfo);
-    }
-  }
+  //删除了 dev 代码
+
+  //计算出新老 props 的差异
+  //return updatepayload:Array
   return diffProperties(
     domElement,
     type,
@@ -320,29 +299,19 @@ export function shouldSetTextContent(type: string, props: Props): boolean {
 export function shouldDeprioritizeSubtree(type: string, props: Props): boolean {
   return !!props.hidden;
 }
-
+//创建文本节点的实例
 export function createTextInstance(
   text: string,
   rootContainerInstance: Container,
   hostContext: HostContext,
   internalInstanceHandle: Object,
 ): TextInstance {
-  if (__DEV__) {
-    const hostContextDev = ((hostContext: any): HostContextDev);
-    validateDOMNesting(null, text, hostContextDev.ancestorInfo);
-    if (enableFlareAPI) {
-      const eventData = hostContextDev.eventData;
-      if (eventData !== null) {
-        warning(
-          !eventData.isEventComponent,
-          'validateDOMNesting: React event components cannot have text DOM nodes as children. ' +
-            'Wrap the child text "%s" in an element.',
-          text,
-        );
-      }
-    }
-  }
+  //删除了 dev 代码
+
+  //创建文本节点
   const textNode: TextInstance = createTextNode(text, rootContainerInstance);
+  //将 fiber 对象作为文本节点的属性 __reactInternalInstance，
+  //方便从节点上找到 fiber 对象
   precacheFiberNode(internalInstanceHandle, textNode);
   return textNode;
 }

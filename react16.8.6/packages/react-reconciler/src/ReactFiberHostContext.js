@@ -66,10 +66,13 @@ function pushHostContainer(fiber: Fiber, nextRootInstance: Container) {
   pop(contextStackCursor, fiber);
   push(contextStackCursor, nextRootContext, fiber);
 }
-
+//将 valueStack 栈中指定位置的 value 赋值给不同 StackCursor.current
 function popHostContainer(fiber: Fiber) {
+  //出栈，将 valueStack 栈中指定位置的 value 赋值给 contextStackCursor.current
   pop(contextStackCursor, fiber);
+  //同上，赋值给 contextFiberStackCursor.current
   pop(contextFiberStackCursor, fiber);
+  //同上，赋值给 rootInstanceStackCursor.current
   pop(rootInstanceStackCursor, fiber);
 }
 
@@ -110,7 +113,7 @@ function pushHostContextForEventComponent(fiber: Fiber): void {
   push(contextFiberStackCursor, fiber, fiber);
   push(contextStackCursor, nextContext, fiber);
 }
-
+//只有当contextFiber的 current 是当前 fiber 时，才会出栈
 function popHostContext(fiber: Fiber): void {
   // Do not pop unless this Fiber provided the current context.
   // pushHostContext() only pushes Fibers that provide unique contexts.
