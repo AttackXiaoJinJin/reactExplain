@@ -9,11 +9,13 @@ import {HostComponent, HostText} from 'shared/ReactWorkTags';
 import invariant from 'shared/invariant';
 
 const randomKey = Math.random()
+  //转成 36 进制
   .toString(36)
+  //从index=2开始截取
   .slice(2);
 const internalInstanceKey = '__reactInternalInstance$' + randomKey;
 const internalEventHandlersKey = '__reactEventHandlers$' + randomKey;
-
+//将 fiber 对象赋值到 DOM 节点上
 export function precacheFiberNode(hostInst, node) {
   node[internalInstanceKey] = hostInst;
 }

@@ -134,7 +134,7 @@ if (__DEV__) {
     webview: true,
   };
 
-  validatePropertiesInDevelopment = function(type, props) {
+  validatePropertiesInDevelopment = function (type, props) {
     validateARIAProperties(type, props);
     validateInputProperties(type, props);
     validateUnknownProperties(type, props, /* canUseEventSystem */ true);
@@ -158,7 +158,7 @@ if (__DEV__) {
   const NORMALIZE_NEWLINES_REGEX = /\r\n?/g;
   const NORMALIZE_NULL_AND_REPLACEMENT_REGEX = /\u0000|\uFFFD/g;
 
-  normalizeMarkupForTextOrAttribute = function(markup: mixed): string {
+  normalizeMarkupForTextOrAttribute = function (markup: mixed): string {
     const markupString =
       typeof markup === 'string' ? markup : '' + (markup: any);
     return markupString
@@ -166,7 +166,7 @@ if (__DEV__) {
       .replace(NORMALIZE_NULL_AND_REPLACEMENT_REGEX, '');
   };
 
-  warnForTextDifference = function(
+  warnForTextDifference = function (
     serverText: string,
     clientText: string | number,
   ) {
@@ -187,7 +187,7 @@ if (__DEV__) {
     );
   };
 
-  warnForPropDifference = function(
+  warnForPropDifference = function (
     propName: string,
     serverValue: mixed,
     clientValue: mixed,
@@ -214,25 +214,25 @@ if (__DEV__) {
     );
   };
 
-  warnForExtraAttributes = function(attributeNames: Set<string>) {
+  warnForExtraAttributes = function (attributeNames: Set<string>) {
     if (didWarnInvalidHydration) {
       return;
     }
     didWarnInvalidHydration = true;
     const names = [];
-    attributeNames.forEach(function(name) {
+    attributeNames.forEach(function (name) {
       names.push(name);
     });
     warningWithoutStack(false, 'Extra attributes from the server: %s', names);
   };
 
-  warnForInvalidEventListener = function(registrationName, listener) {
+  warnForInvalidEventListener = function (registrationName, listener) {
     if (listener === false) {
       warning(
         false,
         'Expected `%s` listener to be a function, instead got `false`.\n\n' +
-          'If you used to conditionally omit it with %s={condition && value}, ' +
-          'pass %s={condition ? value : undefined} instead.',
+        'If you used to conditionally omit it with %s={condition && value}, ' +
+        'pass %s={condition ? value : undefined} instead.',
         registrationName,
         registrationName,
         registrationName,
@@ -249,7 +249,7 @@ if (__DEV__) {
 
   // Parse the HTML and read it back to normalize the HTML string so that it
   // can be used for comparison.
-  normalizeHTML = function(parent: Element, html: string) {
+  normalizeHTML = function (parent: Element, html: string) {
     // We could have created a separate document here to avoid
     // re-initializing custom elements if they exist. But this breaks
     // how <noscript> is being handled. So we use the same document.
@@ -258,9 +258,9 @@ if (__DEV__) {
       parent.namespaceURI === HTML_NAMESPACE
         ? parent.ownerDocument.createElement(parent.tagName)
         : parent.ownerDocument.createElementNS(
-            (parent.namespaceURI: any),
-            parent.tagName,
-          );
+        (parent.namespaceURI: any),
+        parent.tagName,
+        );
     testElement.innerHTML = html;
     return testElement.innerHTML;
   };
@@ -279,15 +279,18 @@ function ensureListeningTo(
   listenTo(registrationName, doc);
 }
 
+//获取根节点的 document 对象
 function getOwnerDocumentFromRootContainer(
   rootContainerElement: Element | Document,
 ): Document {
+
   return rootContainerElement.nodeType === DOCUMENT_NODE
     ? (rootContainerElement: any)
     : rootContainerElement.ownerDocument;
 }
 
-function noop() {}
+function noop() {
+}
 
 export function trapClickOnNonInteractiveElement(node: HTMLElement) {
   // Mobile Safari does not fire properly bubble click events on
@@ -323,6 +326,7 @@ function setInitialDOMProperties(
         }
       }
       // Relies on `updateStylesByID` not mutating `styleUpdates`.
+      //设置 style 的值
       setValueForStyles(domElement, nextProp);
     } else if (propKey === DANGEROUSLY_SET_INNER_HTML) {
       const nextHtml = nextProp ? nextProp[HTML] : undefined;
@@ -339,7 +343,10 @@ function setInitialDOMProperties(
         if (canSetTextContent) {
           setTextContent(domElement, nextProp);
         }
-      } else if (typeof nextProp === 'number') {
+      }
+      //number 的话转成 string
+      else if (typeof nextProp === 'number') {
+
         setTextContent(domElement, '' + nextProp);
       }
     } else if (
@@ -397,6 +404,7 @@ export function createElement(
 
   // We create tags in the namespace of their parent container, except HTML
   // tags get no namespace.
+  //获取 document 对象
   const ownerDocument: Document = getOwnerDocumentFromRootContainer(
     rootContainerElement,
   );
@@ -406,18 +414,8 @@ export function createElement(
     namespaceURI = getIntrinsicNamespace(type);
   }
   if (namespaceURI === HTML_NAMESPACE) {
-    if (__DEV__) {
-      isCustomComponentTag = isCustomComponent(type, props);
-      // Should this check be gated by parent namespace? Not sure we want to
-      // allow <SVG> or <mATH>.
-      warning(
-        isCustomComponentTag || type === type.toLowerCase(),
-        '<%s /> is using incorrect casing. ' +
-          'Use PascalCase for React components, ' +
-          'or lowercase for HTML elements.',
-        type,
-      );
-    }
+    //删除了 dev 代码
+
 
     if (type === 'script') {
       // Create the script via .innerHTML so its "parser-inserted" flag is
@@ -460,33 +458,18 @@ export function createElement(
     domElement = ownerDocument.createElementNS(namespaceURI, type);
   }
 
-  if (__DEV__) {
-    if (namespaceURI === HTML_NAMESPACE) {
-      if (
-        !isCustomComponentTag &&
-        Object.prototype.toString.call(domElement) ===
-          '[object HTMLUnknownElement]' &&
-        !Object.prototype.hasOwnProperty.call(warnedUnknownTags, type)
-      ) {
-        warnedUnknownTags[type] = true;
-        warning(
-          false,
-          'The tag <%s> is unrecognized in this browser. ' +
-            'If you meant to render a React component, start its name with ' +
-            'an uppercase letter.',
-          type,
-        );
-      }
-    }
-  }
+  //删除了 dev 代码
 
   return domElement;
 }
 
+//创建文本节点
 export function createTextNode(
   text: string,
   rootContainerElement: Element | Document,
 ): Text {
+  //获取 document 对象后，通过 document.createTextNode 来创建文本节点
+  //详情请看：https://developer.mozilla.org/zh-CN/docs/Web/API/Document/createTextNode
   return getOwnerDocumentFromRootContainer(rootContainerElement).createTextNode(
     text,
   );
@@ -499,22 +482,7 @@ export function setInitialProperties(
   rootContainerElement: Element | Document,
 ): void {
   const isCustomComponentTag = isCustomComponent(tag, rawProps);
-  if (__DEV__) {
-    validatePropertiesInDevelopment(tag, rawProps);
-    if (
-      isCustomComponentTag &&
-      !didWarnShadyDOM &&
-      (domElement: any).shadyRoot
-    ) {
-      warning(
-        false,
-        '%s is using shady DOM. Using shady DOM with React can ' +
-          'cause things to break subtly.',
-        getCurrentFiberOwnerNameInDevOrNull() || 'A component',
-      );
-      didWarnShadyDOM = true;
-    }
-  }
+  //删除了 dev 代码
 
   // TODO: Make sure that we check isMounted before firing any of these events.
   let props: Object;
@@ -522,6 +490,7 @@ export function setInitialProperties(
     case 'iframe':
     case 'object':
     case 'embed':
+      //React 自定义的绑定事件，暂时跳过
       trapBubbledEvent(TOP_LOAD, domElement);
       props = rawProps;
       break;
@@ -555,6 +524,7 @@ export function setInitialProperties(
       break;
     case 'input':
       ReactDOMInputInitWrapperState(domElement, rawProps);
+      //浅拷贝value/checked等属性
       props = ReactDOMInputGetHostProps(domElement, rawProps);
       trapBubbledEvent(TOP_INVALID, domElement);
       // For controlled components we always need to ensure we're listening
@@ -624,6 +594,8 @@ export function setInitialProperties(
 }
 
 // Calculate the diff between the two objects.
+//计算出新老 props 的差异
+//return updatepayload:Array
 export function diffProperties(
   domElement: Element,
   tag: string,
@@ -631,13 +603,12 @@ export function diffProperties(
   nextRawProps: Object,
   rootContainerElement: Element | Document,
 ): null | Array<mixed> {
-  if (__DEV__) {
-    validatePropertiesInDevelopment(tag, nextRawProps);
-  }
+  //删除了 dev 代码
 
   let updatePayload: null | Array<any> = null;
-
+  //老 props
   let lastProps: Object;
+  //新 props
   let nextProps: Object;
   switch (tag) {
     case 'input':
@@ -678,64 +649,87 @@ export function diffProperties(
   let propKey;
   let styleName;
   let styleUpdates = null;
+
   for (propKey in lastProps) {
     if (
+      //新 props 的原型链上有该属性的话
       nextProps.hasOwnProperty(propKey) ||
+      //或者老 props 的原型链上没有该属性的话（不理解什么情况为 true）
       !lastProps.hasOwnProperty(propKey) ||
+      //或者老 props 的值为 null 的话
       lastProps[propKey] == null
     ) {
+      //跳过此次循环，也就是说不跳过此次循环的条件是该 if 为 false
+      //新 props 没有该属性并且老 props 有该属性并且老 props 该属性不为 null
+      //也就是说，能继续执行下面的代码的前提是：propKey 是去除了的属性(在更新时)
       continue;
     }
+
+    //能执行到这边，说明 propKey 是在更新时被去掉的 propKey
+    //对 style 属性进行操作
     if (propKey === STYLE) {
+      //获取老的 style
       const lastStyle = lastProps[propKey];
+      //遍历老 style
       for (styleName in lastStyle) {
+        //如果 styleName 是老 style 中本来就有的 key 话
         if (lastStyle.hasOwnProperty(styleName)) {
           if (!styleUpdates) {
             styleUpdates = {};
           }
+          //则不更新该 key
           styleUpdates[styleName] = '';
         }
       }
-    } else if (propKey === DANGEROUSLY_SET_INNER_HTML || propKey === CHILDREN) {
+    }
+    else if (propKey === DANGEROUSLY_SET_INNER_HTML || propKey === CHILDREN) {
       // Noop. This is handled by the clear text mechanism.
-    } else if (
+    }
+    else if (
       propKey === SUPPRESS_CONTENT_EDITABLE_WARNING ||
       propKey === SUPPRESS_HYDRATION_WARNING
     ) {
       // Noop
-    } else if (propKey === AUTOFOCUS) {
+    }
+    else if (propKey === AUTOFOCUS) {
       // Noop. It doesn't work on updates anyway.
-    } else if (registrationNameModules.hasOwnProperty(propKey)) {
+    }
+    else if (registrationNameModules.hasOwnProperty(propKey)) {
       // This is a special case. If any listener updates we need to ensure
       // that the "current" fiber pointer gets updated so we need a commit
       // to update this element.
       if (!updatePayload) {
         updatePayload = [];
       }
-    } else {
+    }
+    else {
       // For all other deleted properties we add it to the queue. We use
       // the whitelist in the commit phase instead.
+      //将不符合以上条件的被删除的propKey push 进 updatePayload 中
       (updatePayload = updatePayload || []).push(propKey, null);
     }
   }
+  //循环新 props 的 propKey
   for (propKey in nextProps) {
+    //获取 propKey 的 value
     const nextProp = nextProps[propKey];
     const lastProp = lastProps != null ? lastProps[propKey] : undefined;
     if (
+      //如果新 props 的原型链上没有该 propKey 的话
       !nextProps.hasOwnProperty(propKey) ||
+      //或者新 value 等于老 value 的话（即没有更新）
       nextProp === lastProp ||
+      //或者新老 value 均「宽松等于」 null 的话（'null'还有其他情况吗？）
       (nextProp == null && lastProp == null)
     ) {
+      //不往下执行
+      //也就是说往下执行的条件是：新 props 有该 propKey 并且新老 value 不为 null 且不相等
+      //即有更新的情况
       continue;
     }
     if (propKey === STYLE) {
-      if (__DEV__) {
-        if (nextProp) {
-          // Freeze the next style object so that we can assume it won't be
-          // mutated. We have already warned for this in the past.
-          Object.freeze(nextProp);
-        }
-      }
+      //删除了 dev 代码
+
       if (lastProp) {
         // Unset styles on `lastProp` but not on `nextProp`.
         for (styleName in lastProp) {
@@ -771,7 +765,9 @@ export function diffProperties(
         }
         styleUpdates = nextProp;
       }
-    } else if (propKey === DANGEROUSLY_SET_INNER_HTML) {
+    }
+    // __html
+    else if (propKey === DANGEROUSLY_SET_INNER_HTML) {
       const nextHtml = nextProp ? nextProp[HTML] : undefined;
       const lastHtml = lastProp ? lastProp[HTML] : undefined;
       if (nextHtml != null) {
@@ -782,7 +778,9 @@ export function diffProperties(
         // TODO: It might be too late to clear this if we have children
         // inserted already.
       }
-    } else if (propKey === CHILDREN) {
+    }
+
+    else if (propKey === CHILDREN) {
       if (
         lastProp !== nextProp &&
         (typeof nextProp === 'string' || typeof nextProp === 'number')
@@ -794,7 +792,9 @@ export function diffProperties(
       propKey === SUPPRESS_HYDRATION_WARNING
     ) {
       // Noop
-    } else if (registrationNameModules.hasOwnProperty(propKey)) {
+    }
+    //事件绑定的判断
+    else if (registrationNameModules.hasOwnProperty(propKey)) {
       if (nextProp != null) {
         // We eagerly listen to this even though we haven't committed yet.
         if (__DEV__ && typeof nextProp !== 'function') {
@@ -808,16 +808,18 @@ export function diffProperties(
         // to update this element.
         updatePayload = [];
       }
-    } else {
+    }
+    //不符合以上的需要更新的新 propsKey
+    else {
       // For any other property we always add it to the queue and then we
       // filter it out using the whitelist during the commit.
+      //将新增的 propsKey push 进 updatePayload
       (updatePayload = updatePayload || []).push(propKey, nextProp);
     }
   }
   if (styleUpdates) {
-    if (__DEV__) {
-      validateShorthandPropertyCollisionInDev(styleUpdates, nextProps[STYLE]);
-    }
+    //删除了 dev 代码
+
     (updatePayload = updatePayload || []).push(STYLE, styleUpdates);
   }
   return updatePayload;
@@ -905,7 +907,7 @@ export function diffHydratedProperties(
       warning(
         false,
         '%s is using shady DOM. Using shady DOM with React can ' +
-          'cause things to break subtly.',
+        'cause things to break subtly.',
         getCurrentFiberOwnerNameInDevOrNull() || 'A component',
       );
       didWarnShadyDOM = true;
@@ -1307,7 +1309,7 @@ export function listenToEventResponderEventTypes(
           warning(
             typeof targetEventType === 'object' && targetEventType !== null,
             'Event Responder: invalid entry in event types array. ' +
-              'Entry must be string or an object. Instead, got %s.',
+            'Entry must be string or an object. Instead, got %s.',
             targetEventType,
           );
         }

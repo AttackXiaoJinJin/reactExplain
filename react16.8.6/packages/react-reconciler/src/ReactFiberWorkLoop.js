@@ -1471,7 +1471,7 @@ function completeUnitOfWork(unitOfWork: Fiber): Fiber | null {
         (workInProgress.mode & ProfileMode) === NoMode
       ) {
         //完成该节点的更新
-        next = completeWork(current, workInProgress, renderExpirationTime);
+        next =  (current, workInProgress, renderExpirationTime);
       } else {
         //启动分析器的定时器，并赋成当前时间
         startProfilerTimer(workInProgress);
@@ -1495,7 +1495,7 @@ function completeUnitOfWork(unitOfWork: Fiber): Fiber | null {
         //返回 next，以便执行新 work
         return next;
       }
-      //如果父节点存在，并且其 Effect 链没有被赋值的话
+      //如果父节点存在，并且其 Effect 链没有被赋值的话，也就是说它没有产生副作用的话
       if (
         returnFiber !== null &&
         // Do not append effects to parents if a sibling failed to complete
