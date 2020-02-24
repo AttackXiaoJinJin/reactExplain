@@ -261,7 +261,7 @@ export function finalizeInitialChildren(
   //判断该节点是否需要自动聚焦
   return shouldAutoFocusHostComponent(type, props);
 }
-//返回需要更新的 props 的集合
+//比较更新得出需要更新的 props 的集合
 export function prepareUpdate(
   domElement: Instance,
   type: string,

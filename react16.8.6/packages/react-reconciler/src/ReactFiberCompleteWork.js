@@ -195,8 +195,9 @@ if (supportsMutation) {
   ) {
     // If we have an alternate, that means this is an update and we need to
     // schedule a side-effect to do the updates.
+    //老 props
     const oldProps = current.memoizedProps;
-    //对象引用的内存地址没有变过，即没有更新
+    //新老 props 对象引用的内存地址没有变过，即没有更新
     if (oldProps === newProps) {
       // In mutation mode, this is sufficient for a bailout because
       // we won't touch this node even if children changed.
@@ -205,16 +206,21 @@ if (supportsMutation) {
 
     // If we get updated because one of our children updated, we don't
     // have newProps so we'll have to reuse them.
+    // 如果该节点是因为子节点的更新而更新的,那么是没有新 props 需要更新的，但得复用新 props
+
     // TODO: Split the update API as separate for the props vs. children.
     // Even better would be if children weren't special cased at all tho.
-    //获取 DOM 节点
+    //todo:用不同的 updateAPI 来区分自身更新和因子节点而更新，是更好的方式
+
+    //获取 DOM 节点实例
     const instance: Instance = workInProgress.stateNode;
+    //暂时跳过
     const currentHostContext = getHostContext();
     // TODO: Experiencing an error where oldProps is null. Suggests a host
     // component is hitting the resume path. Figure out why. Possibly
     // related to `hidden`.
-    //return updatepayload:Array
-    //返回需要更新的 props 的集合
+
+    //比较更新得出需要更新的 props 的集合：updatepayload:Array
     const updatePayload = prepareUpdate(
       instance,
       type,
@@ -224,10 +230,11 @@ if (supportsMutation) {
       currentHostContext,
     );
     // TODO: Type this specific to this type of component.
+    //将需更新的 props 集合赋值到 更新队列上
     workInProgress.updateQueue = (updatePayload: any);
     // If the update payload indicates that there is a change or if there
     // is a new ref we mark this as an update. All the work is done in commitWork.
-    //即使是空数组也会加上 Update 的 EffectTag，如input/option/select/textarea
+    //注意：即使是空数组也会加上 Update 的 EffectTag，如input/option/select/textarea
     if (updatePayload) {
       markUpdate(workInProgress);
     }
@@ -738,9 +745,12 @@ function completeWork(
     //DOM 节点的更新，涉及到 virtual dom
     //https://zh-hans.reactjs.org/docs/faq-internals.html#___gatsby
     case HostComponent: {
+      //context 相关，暂时跳过
+      //只有当contextFiber的 current 是当前 fiber 时，才会出栈
       popHostContext(workInProgress);
-
       const rootContainerInstance = getRootHostContainer();
+      //==================
+      //节点类型，比如<div>标签对应的 fiber 对象的 type 为 "div"
       const type = workInProgress.type;
       //如果不是第一次渲染的话
       if (current !== null && workInProgress.stateNode != null) {
@@ -762,7 +772,7 @@ function completeWork(
       else {
         //如果是第一次渲染的话
 
-        //可能是意外终止了
+        //如果没有新 props 更新，但是执行到这里的话，可能是 React 内部出现了问题
         if (!newProps) {
           invariant(
             workInProgress.stateNode !== null,
@@ -772,13 +782,13 @@ function completeWork(
           // This can happen when we abort work.
           break;
         }
-
+        //context 相关，暂时跳过
         const currentHostContext = getHostContext();
         // TODO: Move createInstance to beginWork and keep it on a context
         // "stack" as the parent. Then append children as we go in beginWork
         // or completeWork depending on we want to add then top->down or
         // bottom->up. Top->down is faster in IE11.
-        //曾是服务端渲染
+        //是否曾是服务端渲染
         let wasHydrated = popHydrationState(workInProgress);
         //如果是服务端渲染的话，暂时跳过
         if (wasHydrated) {

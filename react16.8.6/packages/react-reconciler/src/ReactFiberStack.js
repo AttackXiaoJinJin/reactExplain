@@ -34,7 +34,7 @@ function createCursor<T>(defaultValue: T): StackCursor<T> {
 function isEmpty(): boolean {
   return index === -1;
 }
-
+//从后往前，将栈 valueStack 内的元素出栈赋值
 function pop<T>(cursor: StackCursor<T>, fiber: Fiber): void {
   if (index < 0) {
     //删除了 dev 代码
