@@ -605,14 +605,18 @@ export function diffProperties(
 ): null | Array<mixed> {
   //删除了 dev 代码
 
+  //需要更新的 props 集合
   let updatePayload: null | Array<any> = null;
   //老 props
   let lastProps: Object;
   //新 props
   let nextProps: Object;
+  // input/option/select/textarea 无论内容是否有变化都会更新
   switch (tag) {
     case 'input':
+      //获取老 props
       lastProps = ReactDOMInputGetHostProps(domElement, lastRawProps);
+      //获取新 props
       nextProps = ReactDOMInputGetHostProps(domElement, nextRawProps);
       updatePayload = [];
       break;

@@ -120,7 +120,7 @@ function popHostContext(fiber: Fiber): void {
   if (contextFiberStackCursor.current !== fiber) {
     return;
   }
-
+  //从后往前，将栈 valueStack 内的元素出栈赋值
   pop(contextStackCursor, fiber);
   pop(contextFiberStackCursor, fiber);
 }
