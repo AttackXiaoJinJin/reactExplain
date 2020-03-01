@@ -143,7 +143,7 @@ let updateHostText;
 //对 DOM 进行操作时为 true
 if (supportsMutation) {
   // Mutation mode
-
+  //插入子节点
   appendAllChildren = function(
     parent: Instance,
     workInProgress: Fiber,
@@ -755,6 +755,7 @@ function completeWork(
       //如果不是第一次渲染的话
       if (current !== null && workInProgress.stateNode != null) {
         //更新 DOM 时进行 diff 判断
+        //获取更新队列 workInProgress.updateQueue
         updateHostComponent(
           current,
           workInProgress,
@@ -816,7 +817,7 @@ function completeWork(
             currentHostContext,
             workInProgress,
           );
-
+          //插入子节点
           appendAllChildren(instance, workInProgress, false, false);
 
           // Certain renderers require commit-time effects for initial mount.
