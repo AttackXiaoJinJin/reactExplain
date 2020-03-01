@@ -270,6 +270,7 @@ function ensureListeningTo(
   rootContainerElement: Element | Node,
   registrationName: string,
 ): void {
+  //根节点是否是 document
   const isDocumentOrFragment =
     rootContainerElement.nodeType === DOCUMENT_NODE ||
     rootContainerElement.nodeType === DOCUMENT_FRAGMENT_NODE;
@@ -291,7 +292,7 @@ function getOwnerDocumentFromRootContainer(
 
 function noop() {
 }
-
+//初始化 onclick 事件，以便兼容Safari移动端
 export function trapClickOnNonInteractiveElement(node: HTMLElement) {
   // Mobile Safari does not fire properly bubble click events on
   // non-interactive elements, which means delegated click listeners do not
@@ -587,6 +588,7 @@ export function setInitialProperties(
     default:
       if (typeof props.onClick === 'function') {
         // TODO: This cast may not be sound for SVG, MathML or custom elements.
+        //初始化 onclick 事件，以便兼容Safari移动端
         trapClickOnNonInteractiveElement(((domElement: any): HTMLElement));
       }
       break;
@@ -636,59 +638,72 @@ export function diffProperties(
       updatePayload = [];
       break;
     default:
+      //oldProps
       lastProps = lastRawProps;
+      //newProps
       nextProps = nextRawProps;
+      //如果需要更新绑定 click 方法的话
       if (
         typeof lastProps.onClick !== 'function' &&
         typeof nextProps.onClick === 'function'
       ) {
         // TODO: This cast may not be sound for SVG, MathML or custom elements.
+        //初始化 onclick 事件，以便兼容Safari移动端
         trapClickOnNonInteractiveElement(((domElement: any): HTMLElement));
       }
       break;
   }
-
+  //判断新属性，比如 style 是否正确赋值
   assertValidProps(tag, nextProps);
 
   let propKey;
   let styleName;
   let styleUpdates = null;
 
+  //循环操作老 props 中的属性
+  //将删除 props 加入到数组中
   for (propKey in lastProps) {
     if (
-      //新 props 的原型链上有该属性的话
+      //如果新 props 上有该属性的话
       nextProps.hasOwnProperty(propKey) ||
-      //或者老 props 的原型链上没有该属性的话（不理解什么情况为 true）
+      //或者老 props 没有该属性的话（即原型链上的属性，比如：toString() ）
       !lastProps.hasOwnProperty(propKey) ||
-      //或者老 props 的值为 null 的话
+      //或者老 props 的值为 'null' 的话
       lastProps[propKey] == null
     ) {
       //跳过此次循环，也就是说不跳过此次循环的条件是该 if 为 false
-      //新 props 没有该属性并且老 props 有该属性并且老 props 该属性不为 null
-      //也就是说，能继续执行下面的代码的前提是：propKey 是去除了的属性(在更新时)
+      //新 props 没有该属性并且在老 props 上有该属性并且该属性不为 'null'/null
+      //也就是说，能继续执行下面的代码的前提是：propKey 是删除的属性
       continue;
     }
 
-    //能执行到这边，说明 propKey 是在更新时被去掉的 propKey
-    //对 style 属性进行操作
+    //能执行到这边，说明 propKey 是新增属性
+    //对 style 属性进行操作，<div style={{height:30,}}></div>
     if (propKey === STYLE) {
-      //获取老的 style
+      //获取老的 style 属性对象
       const lastStyle = lastProps[propKey];
-      //遍历老 style
+      //遍历老 style 属性，如：height
       for (styleName in lastStyle) {
-        //如果 styleName 是老 style 中本来就有的 key 话
+        //如果老 style 中本来就有 styleName 的话,则将其重置为''
         if (lastStyle.hasOwnProperty(styleName)) {
           if (!styleUpdates) {
             styleUpdates = {};
           }
-          //则不更新该 key
+          //重置(初始化)
           styleUpdates[styleName] = '';
         }
       }
     }
+    //dangerouslySetInnerHTML
+    //https://zh-hans.reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
     else if (propKey === DANGEROUSLY_SET_INNER_HTML || propKey === CHILDREN) {
       // Noop. This is handled by the clear text mechanism.
     }
+    //suppressHydrationWarning
+    //https://zh-hans.reactjs.org/docs/dom-elements.html#suppresshydrationwarning
+
+    //suppressContentEditableWarning
+    //https://zh-hans.reactjs.org/docs/dom-elements.html#suppresscontenteditablewarning
     else if (
       propKey === SUPPRESS_CONTENT_EDITABLE_WARNING ||
       propKey === SUPPRESS_HYDRATION_WARNING
@@ -698,6 +713,7 @@ export function diffProperties(
     else if (propKey === AUTOFOCUS) {
       // Noop. It doesn't work on updates anyway.
     }
+    //如果有绑定事件的话
     else if (registrationNameModules.hasOwnProperty(propKey)) {
       // This is a special case. If any listener updates we need to ensure
       // that the "current" fiber pointer gets updated so we need a commit
@@ -709,21 +725,25 @@ export function diffProperties(
     else {
       // For all other deleted properties we add it to the queue. We use
       // the whitelist in the commit phase instead.
-      //将不符合以上条件的被删除的propKey push 进 updatePayload 中
+      //将不符合以上条件的删除属性 propKey push 进 updatePayload 中
+      //比如 ['className',null]
       (updatePayload = updatePayload || []).push(propKey, null);
     }
   }
+
   //循环新 props 的 propKey
   for (propKey in nextProps) {
-    //获取 propKey 的 value
+    //获取新 prop 的值
     const nextProp = nextProps[propKey];
+    //获取老 prop 的值（因为是根据新 props 遍历的，所以老 props 没有则为 undefined）
     const lastProp = lastProps != null ? lastProps[propKey] : undefined;
     if (
-      //如果新 props 的原型链上没有该 propKey 的话
+      //如果新 props 没有该 propKey 的话（ 比如原型链上的属性，toString() ）
       !nextProps.hasOwnProperty(propKey) ||
       //或者新 value 等于老 value 的话（即没有更新）
       nextProp === lastProp ||
       //或者新老 value 均「宽松等于」 null 的话（'null'还有其他情况吗？）
+      //也就是没有更新
       (nextProp == null && lastProp == null)
     ) {
       //不往下执行
@@ -731,11 +751,18 @@ export function diffProperties(
       //即有更新的情况
       continue;
     }
+
+    //能执行到这边，说明新 prop 的值与老 prop 的值不相同/新增 prop 并且有值
+
+    //关于 style 属性的更新 <input style={{xxx:yyy}}/>
     if (propKey === STYLE) {
       //删除了 dev 代码
 
+      //如果老 props 本来就有这个 prop 的话
       if (lastProp) {
         // Unset styles on `lastProp` but not on `nextProp`.
+
+        //如果新 style 没有该 css 的话,将其置为''（也就是删掉该 css 属性）
         for (styleName in lastProp) {
           if (
             lastProp.hasOwnProperty(styleName) &&
@@ -744,36 +771,53 @@ export function diffProperties(
             if (!styleUpdates) {
               styleUpdates = {};
             }
+            //将其置为''
             styleUpdates[styleName] = '';
           }
         }
         // Update styles that changed since `lastProp`.
+        //这里才是更新 style 属性
         for (styleName in nextProp) {
           if (
+            //新 props 有 style 并且与老 props 不一样的话，就更新 style 属性
             nextProp.hasOwnProperty(styleName) &&
             lastProp[styleName] !== nextProp[styleName]
           ) {
             if (!styleUpdates) {
               styleUpdates = {};
             }
+            //更新 style
+            //更新统一放在 styleUpdates 对象中
             styleUpdates[styleName] = nextProp[styleName];
           }
         }
-      } else {
+      }
+      //如果不是更新的 style 而是新增的话
+      else {
         // Relies on `updateStylesByID` not mutating `styleUpdates`.
+        //第一次初始化
         if (!styleUpdates) {
           if (!updatePayload) {
             updatePayload = [];
           }
+          //将 'style'、null push 进数组 updatePayload 中
+          //['style',null]
           updatePayload.push(propKey, styleUpdates);
         }
+        //styleUpdates 赋成新 style 的值
         styleUpdates = nextProp;
+        //该方法最后有个 if(styleUpdates)，会 push 这种情况：
+        //['style',null,'style',{height:22,}]
+
       }
     }
     // __html
     else if (propKey === DANGEROUSLY_SET_INNER_HTML) {
+      //新 innerHTML
       const nextHtml = nextProp ? nextProp[HTML] : undefined;
+      //老 innerHTML
       const lastHtml = lastProp ? lastProp[HTML] : undefined;
+      //push('__html','xxxxx')
       if (nextHtml != null) {
         if (lastHtml !== nextHtml) {
           (updatePayload = updatePayload || []).push(propKey, '' + nextHtml);
@@ -783,12 +827,15 @@ export function diffProperties(
         // inserted already.
       }
     }
-
+    //子节点的更新
+    //https://zh-hans.reactjs.org/docs/glossary.html#propschildren
     else if (propKey === CHILDREN) {
       if (
         lastProp !== nextProp &&
+        //子节点是文本节点或数字
         (typeof nextProp === 'string' || typeof nextProp === 'number')
       ) {
+        //push 进数组中
         (updatePayload = updatePayload || []).push(propKey, '' + nextProp);
       }
     } else if (
@@ -797,19 +844,28 @@ export function diffProperties(
     ) {
       // Noop
     }
-    //事件绑定的判断
+    ////如果有绑定事件的话，如<div onClick=(()=>{ xxx })></div>
     else if (registrationNameModules.hasOwnProperty(propKey)) {
+      //绑定事件里有回调函数的话
       if (nextProp != null) {
         // We eagerly listen to this even though we haven't committed yet.
-        if (__DEV__ && typeof nextProp !== 'function') {
-          warnForInvalidEventListener(propKey, nextProp);
-        }
+        //删除了 dev 代码
+
+        //找到 document 对象，React 是将节点上绑定的事件统一委托到 document 上的
+        //涉及到event 那块了，暂时跳过
+        //想立即知道的，请参考：
+        //https://www.cnblogs.com/Darlietoothpaste/p/10039127.html?utm_source=tuicool&utm_medium=referral
         ensureListeningTo(rootContainerElement, propKey);
       }
       if (!updatePayload && lastProp !== nextProp) {
         // This is a special case. If any listener updates we need to ensure
         // that the "current" props pointer gets updated so we need a commit
         // to update this element.
+        //特殊的情况.
+        //在监听器更新前，React 需要确保当前 props 的指针得到更新，
+        // 因此 React 需要一个 commit (即 updatePayload )，确保能更新该节点
+
+        //因此 updatePayload 要不为 null
         updatePayload = [];
       }
     }
@@ -818,14 +874,21 @@ export function diffProperties(
       // For any other property we always add it to the queue and then we
       // filter it out using the whitelist during the commit.
       //将新增的 propsKey push 进 updatePayload
+
+      //在之后的 commit 阶段，会用白名单筛选出这些 props
       (updatePayload = updatePayload || []).push(propKey, nextProp);
     }
   }
+
+  //将有关 style 的更新 push 进 updatePayload 中
   if (styleUpdates) {
     //删除了 dev 代码
 
     (updatePayload = updatePayload || []).push(STYLE, styleUpdates);
   }
+  //类似于['style',{height:14},'__html',xxxx,...]
+  //我很奇怪为什么 React 不用{style:{height:14}, '__html':xxx, }
+  //这种方式去存更新的 props？
   return updatePayload;
 }
 
