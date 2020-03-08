@@ -38,9 +38,10 @@ type TextAreaWithWrapperState = HTMLTextAreaElement & {
  * The rendered element will be initialized with an empty value, the prop
  * `defaultValue` if specified, or the children content (deprecated).
  */
-
+//设置 textarea 内部属性
 export function getHostProps(element: Element, props: Object) {
   const node = ((element: any): TextAreaWithWrapperState);
+  //如果设置 innerHTML 的话，提醒开发者无效
   invariant(
     props.dangerouslySetInnerHTML == null,
     '`dangerouslySetInnerHTML` does not make sense on <textarea>.',
@@ -52,6 +53,8 @@ export function getHostProps(element: Element, props: Object) {
   // completely solve this IE9 bug), but Sebastian+Sophie seemed to like this
   // solution. The value can be a boolean or object so that's why it's forced
   // to be a string.
+
+  //设置 textarea 内部属性
   const hostProps = {
     ...props,
     value: undefined,
@@ -64,27 +67,9 @@ export function getHostProps(element: Element, props: Object) {
 
 export function initWrapperState(element: Element, props: Object) {
   const node = ((element: any): TextAreaWithWrapperState);
-  if (__DEV__) {
-    ReactControlledValuePropTypes.checkPropTypes('textarea', props);
-    if (
-      props.value !== undefined &&
-      props.defaultValue !== undefined &&
-      !didWarnValDefaultVal
-    ) {
-      warning(
-        false,
-        '%s contains a textarea with both value and defaultValue props. ' +
-          'Textarea elements must be either controlled or uncontrolled ' +
-          '(specify either the value prop, or the defaultValue prop, but not ' +
-          'both). Decide between using a controlled or uncontrolled textarea ' +
-          'and remove one of these props. More info: ' +
-          'https://fb.me/react-controlled-components',
-        getCurrentFiberOwnerNameInDevOrNull() || 'A component',
-      );
-      didWarnValDefaultVal = true;
-    }
-  }
+  //删除了 dev 代码
 
+  //textArea 里面的值
   let initialValue = props.value;
 
   // Only bother fetching default value if we're going to use it
@@ -93,13 +78,8 @@ export function initWrapperState(element: Element, props: Object) {
     // TODO (yungsters): Remove support for children content in <textarea>.
     let children = props.children;
     if (children != null) {
-      if (__DEV__) {
-        warning(
-          false,
-          'Use the `defaultValue` or `value` props instead of setting ' +
-            'children on <textarea>.',
-        );
-      }
+      //删除了 dev 代码
+
       invariant(
         defaultValue == null,
         'If you supply `defaultValue` on a <textarea>, do not pass children.',

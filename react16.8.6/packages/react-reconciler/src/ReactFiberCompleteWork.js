@@ -154,31 +154,39 @@ if (supportsMutation) {
     // children to find all the terminal nodes.
     //获取该节点的第一个子节点
     let node = workInProgress.child;
-    //当该节点没有子节点时
+    //当该节点有子节点时
     while (node !== null) {
       //如果是原生节点或 text 节点的话
       if (node.tag === HostComponent || node.tag === HostText) {
         //将node.stateNode挂载到 parent 上
+        //appendChild API:https://developer.mozilla.org/zh-CN/docs/Web/API/Node/appendChild
         appendInitialChild(parent, node.stateNode);
       } else if (node.tag === HostPortal) {
         // If we have a portal child, then we don't want to traverse
         // down its children. Instead, we'll get insertions from each child in
         // the portal directly.
-      } else if (node.child !== null) {
+      }
+      //如果子节点还有子子节点的话
+      else if (node.child !== null) {
+        //return 指向复建点
         node.child.return = node;
+        //一直循环，设置return 属性，直到没有子节点
         node = node.child;
         continue;
       }
       if (node === workInProgress) {
         return;
       }
+      //如果没有兄弟节点的话，返回至父节点
       while (node.sibling === null) {
         if (node.return === null || node.return === workInProgress) {
           return;
         }
         node = node.return;
       }
+      //设置兄弟节点的 return 为父节点
       node.sibling.return = node.return;
+      //遍历兄弟节点
       node = node.sibling;
     }
   };
@@ -809,7 +817,10 @@ function completeWork(
         }
         //不是服务端渲染
         else {
-          //创建 fiber 实例，即 DOM 实例
+           //创建 DOM 实例
+           //1、创建 DOM 元素
+           //2、创建指向 fiber 对象的属性，方便从DOM 实例上获取 fiber 对象
+           //3、创建指向 props 的属性，方便从 DOM 实例上获取 props
           let instance = createInstance(
             type,
             newProps,

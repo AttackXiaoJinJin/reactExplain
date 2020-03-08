@@ -70,7 +70,7 @@ export function getHostProps(element: Element, props: Object) {
 
   return hostProps;
 }
-
+//在 input 对应的 DOM 节点上新建_wrapperState属性
 export function initWrapperState(element: Element, props: Object) {
   //删除了 dev 代码
 

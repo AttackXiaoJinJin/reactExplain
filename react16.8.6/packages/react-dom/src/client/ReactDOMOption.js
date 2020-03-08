@@ -13,7 +13,8 @@ import {getToStringValue, toString} from './ToStringValue';
 
 let didWarnSelectedSetOnOption = false;
 let didWarnInvalidChild = false;
-
+//展平 children
+//可参考：https://www.jianshu.com/p/55626eb8f645
 function flattenChildren(children) {
   let content = '';
 
@@ -38,7 +39,9 @@ function flattenChildren(children) {
 /**
  * Implements an <option> host component that warns when `selected` is set.
  */
-
+//dev 环境下
+//1、判断<option>标签的子节点是否是 number/string
+//2、判断是否正确设置defaultValue/value
 export function validateProps(element: Element, props: Object) {
   if (__DEV__) {
     // This mirrors the codepath above, but runs for hydration too.
@@ -85,8 +88,10 @@ export function postMountWrapper(element: Element, props: Object) {
   }
 }
 
+//获取<option>child 的内容，并且展平 children
 export function getHostProps(element: Element, props: Object) {
   const hostProps = {children: undefined, ...props};
+  //展平 child，可参考我之前写的一篇：https://juejin.im/post/5d46b71a6fb9a06b0c084acd
   const content = flattenChildren(props.children);
 
   if (content) {

@@ -28,6 +28,7 @@ const setInnerHTML = createMicrosoftUnsafeLocalFunction(function(
   // new markup in a temp node and then move the child nodes across into
   // the target node
 
+  //兼容 IE
   if (node.namespaceURI === Namespaces.svg && !('innerHTML' in node)) {
     reusableSVGContainer =
       reusableSVGContainer || document.createElement('div');

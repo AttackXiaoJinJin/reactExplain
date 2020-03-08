@@ -209,6 +209,7 @@ function PropertyInfoRecord(
 const properties = {};
 
 // These props are reserved by React. They shouldn't be written to the DOM.
+//是 React 自定义的一套 DOM 标签属性，不被传统的 DOM 通用
 [
   'children',
   'dangerouslySetInnerHTML',
