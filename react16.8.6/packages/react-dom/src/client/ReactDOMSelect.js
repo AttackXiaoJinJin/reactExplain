@@ -133,40 +133,26 @@ function updateOptions(
  * If `defaultValue` is provided, any options with the supplied values will be
  * selected.
  */
-
+//设置<select>对象属性
+//{
+// children:[],
+// value:undefined
+// }
 export function getHostProps(element: Element, props: Object) {
   return Object.assign({}, props, {
     value: undefined,
   });
 }
-
+//在 select 对应的 DOM 节点上新建_wrapperState属性
 export function initWrapperState(element: Element, props: Object) {
   const node = ((element: any): SelectWithWrapperState);
-  if (__DEV__) {
-    checkSelectPropTypes(props);
-  }
+  //删除了 dev 代码
 
   node._wrapperState = {
     wasMultiple: !!props.multiple,
   };
 
-  if (__DEV__) {
-    if (
-      props.value !== undefined &&
-      props.defaultValue !== undefined &&
-      !didWarnValueDefaultValue
-    ) {
-      warning(
-        false,
-        'Select elements must be either controlled or uncontrolled ' +
-          '(specify either the value prop, or the defaultValue prop, but not ' +
-          'both). Decide between using a controlled or uncontrolled select ' +
-          'element and remove one of these props. More info: ' +
-          'https://fb.me/react-controlled-components',
-      );
-      didWarnValueDefaultValue = true;
-    }
-  }
+  //删除了 dev 代码
 }
 
 export function postMountWrapper(element: Element, props: Object) {

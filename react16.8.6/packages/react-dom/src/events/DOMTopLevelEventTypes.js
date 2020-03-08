@@ -153,29 +153,29 @@ export const TOP_WHEEL = unsafeCastStringToDOMTopLevelType('wheel');
 // Note that events in this list will *not* be listened to at the top level
 // unless they're explicitly whitelisted in `ReactBrowserEventEmitter.listenTo`.
 export const mediaEventTypes = [
-  TOP_ABORT,
-  TOP_CAN_PLAY,
-  TOP_CAN_PLAY_THROUGH,
-  TOP_DURATION_CHANGE,
-  TOP_EMPTIED,
-  TOP_ENCRYPTED,
-  TOP_ENDED,
-  TOP_ERROR,
-  TOP_LOADED_DATA,
-  TOP_LOADED_METADATA,
-  TOP_LOAD_START,
-  TOP_PAUSE,
-  TOP_PLAY,
-  TOP_PLAYING,
-  TOP_PROGRESS,
-  TOP_RATE_CHANGE,
-  TOP_SEEKED,
-  TOP_SEEKING,
-  TOP_STALLED,
-  TOP_SUSPEND,
-  TOP_TIME_UPDATE,
-  TOP_VOLUME_CHANGE,
-  TOP_WAITING,
+  TOP_ABORT, //abort
+  TOP_CAN_PLAY, //canplay
+  TOP_CAN_PLAY_THROUGH, //canplaythrough
+  TOP_DURATION_CHANGE, //durationchange
+  TOP_EMPTIED, //emptied
+  TOP_ENCRYPTED, //encrypted
+  TOP_ENDED, //ended
+  TOP_ERROR, //error
+  TOP_LOADED_DATA, //loadeddata
+  TOP_LOADED_METADATA, //loadedmetadata
+  TOP_LOAD_START, //loadstart
+  TOP_PAUSE, //pause
+  TOP_PLAY, //play
+  TOP_PLAYING, //playing
+  TOP_PROGRESS, //progress
+  TOP_RATE_CHANGE, //ratechange
+  TOP_SEEKED, //seeked
+  TOP_SEEKING, //seeking
+  TOP_STALLED, //stalled
+  TOP_SUSPEND, //suspend
+  TOP_TIME_UPDATE, //timeupdate
+  TOP_VOLUME_CHANGE, //volumechange
+  TOP_WAITING, //waiting
 ];
 
 export function getRawEventName(topLevelType: DOMTopLevelEventType): string {

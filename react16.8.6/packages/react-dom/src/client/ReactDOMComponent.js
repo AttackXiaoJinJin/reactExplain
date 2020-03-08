@@ -56,12 +56,27 @@ import {track} from './inputValueTracking';
 import setInnerHTML from './setInnerHTML';
 import setTextContent from './setTextContent';
 import {
+  TOP_ABORT,
+  TOP_CAN_PLAY,
+  TOP_CAN_PLAY_THROUGH,
+  TOP_DURATION_CHANGE,
+  TOP_EMPTIED,
+  TOP_ENCRYPTED,
+  TOP_ENDED,
   TOP_ERROR,
   TOP_INVALID,
   TOP_LOAD,
-  TOP_RESET,
-  TOP_SUBMIT,
-  TOP_TOGGLE,
+  TOP_LOAD_START,
+  TOP_LOADED_DATA,
+  TOP_LOADED_METADATA,
+  TOP_PAUSE,
+  TOP_PLAY,
+  TOP_PLAYING,
+  TOP_PROGRESS,
+  TOP_RATE_CHANGE,
+  TOP_RESET, TOP_SEEKED, TOP_SEEKING, TOP_STALLED,
+  TOP_SUBMIT, TOP_SUSPEND, TOP_TIME_UPDATE,
+  TOP_TOGGLE, TOP_VOLUME_CHANGE, TOP_WAITING,
 } from '../events/DOMTopLevelEventTypes';
 import {
   listenTo,
@@ -292,6 +307,7 @@ function getOwnerDocumentFromRootContainer(
 
 function noop() {
 }
+
 //初始化 onclick 事件，以便兼容Safari移动端
 export function trapClickOnNonInteractiveElement(node: HTMLElement) {
   // Mobile Safari does not fire properly bubble click events on
@@ -305,7 +321,7 @@ export function trapClickOnNonInteractiveElement(node: HTMLElement) {
   // TODO: Only do this for the relevant Safaris maybe?
   node.onclick = noop;
 }
-
+//初始化 DOM 对象的内部属性
 function setInitialDOMProperties(
   tag: string,
   domElement: Element,
@@ -313,33 +329,38 @@ function setInitialDOMProperties(
   nextProps: Object,
   isCustomComponentTag: boolean,
 ): void {
+  //循环新 props
   for (const propKey in nextProps) {
+    //原型链上的属性不作处理
     if (!nextProps.hasOwnProperty(propKey)) {
       continue;
     }
+    //获取 prop 的值
     const nextProp = nextProps[propKey];
+    //设置 style 属性
     if (propKey === STYLE) {
-      if (__DEV__) {
-        if (nextProp) {
-          // Freeze the next style object so that we can assume it won't be
-          // mutated. We have already warned for this in the past.
-          Object.freeze(nextProp);
-        }
-      }
+      //删除了 dev 代码
+
       // Relies on `updateStylesByID` not mutating `styleUpdates`.
       //设置 style 的值
       setValueForStyles(domElement, nextProp);
-    } else if (propKey === DANGEROUSLY_SET_INNER_HTML) {
+    }
+    //设置 innerHTML 属性
+    else if (propKey === DANGEROUSLY_SET_INNER_HTML) {
       const nextHtml = nextProp ? nextProp[HTML] : undefined;
       if (nextHtml != null) {
         setInnerHTML(domElement, nextHtml);
       }
-    } else if (propKey === CHILDREN) {
+    }
+    //设置子节点
+    else if (propKey === CHILDREN) {
       if (typeof nextProp === 'string') {
         // Avoid setting initial textContent when the text is empty. In IE11 setting
         // textContent on a <textarea> will cause the placeholder to not
         // show within the <textarea> until it has been focused and blurred again.
         // https://github.com/facebook/react/issues/6731#issuecomment-254874553
+
+        //当 text 没有时，禁止设置初始内容
         const canSetTextContent = tag !== 'textarea' || nextProp !== '';
         if (canSetTextContent) {
           setTextContent(domElement, nextProp);
@@ -360,14 +381,16 @@ function setInitialDOMProperties(
       // We could have excluded it in the property list instead of
       // adding a special case here, but then it wouldn't be emitted
       // on server rendering (but we *do* want to emit it in SSR).
-    } else if (registrationNameModules.hasOwnProperty(propKey)) {
+    }
+    //如果有绑定事件的话，如<div onClick=(()=>{ xxx })></div>
+    else if (registrationNameModules.hasOwnProperty(propKey)) {
       if (nextProp != null) {
-        if (__DEV__ && typeof nextProp !== 'function') {
-          warnForInvalidEventListener(propKey, nextProp);
-        }
+        //删除了 dev 代码
+        //https://www.cnblogs.com/Darlietoothpaste/p/10039127.html?utm_source=tuicool&utm_medium=referral
         ensureListeningTo(rootContainerElement, propKey);
       }
     } else if (nextProp != null) {
+      //为 DOM 节点设置属性值
       setValueForProperty(domElement, propKey, nextProp, isCustomComponentTag);
     }
   }
@@ -395,6 +418,7 @@ function updateDOMProperties(
   }
 }
 
+//创建 DOM 元素
 export function createElement(
   type: string,
   props: Object,
@@ -412,8 +436,10 @@ export function createElement(
   let domElement: Element;
   let namespaceURI = parentNamespace;
   if (namespaceURI === HTML_NAMESPACE) {
+    //根据 DOM 实例的标签获取相应的命名空间
     namespaceURI = getIntrinsicNamespace(type);
   }
+  //如果是 html namespace 的话
   if (namespaceURI === HTML_NAMESPACE) {
     //删除了 dev 代码
 
@@ -421,18 +447,31 @@ export function createElement(
     if (type === 'script') {
       // Create the script via .innerHTML so its "parser-inserted" flag is
       // set to true and it does not execute
+
+      //parser-inserted 设置为 true 表示浏览器已经处理了该`<script>`标签
+      //那么该标签就不会被当做脚本执行
+      //https://segmentfault.com/a/1190000008299659
       const div = ownerDocument.createElement('div');
       div.innerHTML = '<script><' + '/script>'; // eslint-disable-line
       // This is guaranteed to yield a script element.
+      //HTMLScriptElement:https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLScriptElement
       const firstChild = ((div.firstChild: any): HTMLScriptElement);
       domElement = div.removeChild(firstChild);
-    } else if (typeof props.is === 'string') {
+    }
+    //如果需要更新的 props里有 is 属性的话，那么创建该元素时，则为它添加「is」attribute
+    //参考：https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes/is
+    else if (typeof props.is === 'string') {
       // $FlowIssue `createElement` should be updated for Web Components
       domElement = ownerDocument.createElement(type, {is: props.is});
-    } else {
+    }
+    //创建 DOM 元素
+    else {
       // Separate else branch instead of using `props.is || undefined` above because of a Firefox bug.
       // See discussion in https://github.com/facebook/react/pull/6896
       // and discussion in https://bugzilla.mozilla.org/show_bug.cgi?id=1276240
+
+      //因为 Firefox 的一个 bug，所以需要特殊处理「is」属性
+
       domElement = ownerDocument.createElement(type);
       // Normally attributes are assigned in `setInitialDOMProperties`, however the `multiple` and `size`
       // attributes on `select`s needs to be added before `option`s are inserted.
@@ -442,6 +481,8 @@ export function createElement(
       // - a bug where the `select` set the first item as selected despite the `size` attribute #14239
       // See https://github.com/facebook/react/issues/13222
       // and https://github.com/facebook/react/issues/14239
+
+      //<select>标签需要在<option>子节点被插入之前，设置`multiple`和`size`属性
       if (type === 'select') {
         const node = ((domElement: any): HTMLSelectElement);
         if (props.multiple) {
@@ -455,7 +496,11 @@ export function createElement(
         }
       }
     }
-  } else {
+  }
+  //SVG/MathML 的元素创建是需要指定命名空间 URI 的
+  else {
+    //创建一个具有指定的命名空间URI和限定名称的元素
+    //https://developer.mozilla.org/zh-CN/docs/Web/API/Document/createElementNS
     domElement = ownerDocument.createElementNS(namespaceURI, type);
   }
 
@@ -476,21 +521,27 @@ export function createTextNode(
   );
 }
 
+//初始化DOM 对象
+//1、对一些标签进行事件绑定/属性的特殊处理
+//2、对 DOM 对象内部属性进行初始化
 export function setInitialProperties(
   domElement: Element,
   tag: string,
   rawProps: Object,
   rootContainerElement: Element | Document,
 ): void {
+  //判断是否是自定义的 DOM 标签
   const isCustomComponentTag = isCustomComponent(tag, rawProps);
   //删除了 dev 代码
 
   // TODO: Make sure that we check isMounted before firing any of these events.
+  //确保在触发这些监听器触发之间，已经初始化了 event
   let props: Object;
   switch (tag) {
     case 'iframe':
     case 'object':
     case 'embed':
+      //load listener
       //React 自定义的绑定事件，暂时跳过
       trapBubbledEvent(TOP_LOAD, domElement);
       props = rawProps;
@@ -498,66 +549,117 @@ export function setInitialProperties(
     case 'video':
     case 'audio':
       // Create listener for each media event
+      //初始化 media 标签的监听器
+
+      // export const mediaEventTypes = [
+      //   TOP_ABORT, //abort
+      //   TOP_CAN_PLAY, //canplay
+      //   TOP_CAN_PLAY_THROUGH, //canplaythrough
+      //   TOP_DURATION_CHANGE, //durationchange
+      //   TOP_EMPTIED, //emptied
+      //   TOP_ENCRYPTED, //encrypted
+      //   TOP_ENDED, //ended
+      //   TOP_ERROR, //error
+      //   TOP_LOADED_DATA, //loadeddata
+      //   TOP_LOADED_METADATA, //loadedmetadata
+      //   TOP_LOAD_START, //loadstart
+      //   TOP_PAUSE, //pause
+      //   TOP_PLAY, //play
+      //   TOP_PLAYING, //playing
+      //   TOP_PROGRESS, //progress
+      //   TOP_RATE_CHANGE, //ratechange
+      //   TOP_SEEKED, //seeked
+      //   TOP_SEEKING, //seeking
+      //   TOP_STALLED, //stalled
+      //   TOP_SUSPEND, //suspend
+      //   TOP_TIME_UPDATE, //timeupdate
+      //   TOP_VOLUME_CHANGE, //volumechange
+      //   TOP_WAITING, //waiting
+      // ];
+
       for (let i = 0; i < mediaEventTypes.length; i++) {
         trapBubbledEvent(mediaEventTypes[i], domElement);
       }
       props = rawProps;
       break;
     case 'source':
+      //error listener
       trapBubbledEvent(TOP_ERROR, domElement);
       props = rawProps;
       break;
     case 'img':
     case 'image':
     case 'link':
+      //error listener
       trapBubbledEvent(TOP_ERROR, domElement);
+      //load listener
       trapBubbledEvent(TOP_LOAD, domElement);
       props = rawProps;
       break;
     case 'form':
+      //reset listener
       trapBubbledEvent(TOP_RESET, domElement);
+      //submit listener
       trapBubbledEvent(TOP_SUBMIT, domElement);
       props = rawProps;
       break;
     case 'details':
+      //toggle listener
       trapBubbledEvent(TOP_TOGGLE, domElement);
       props = rawProps;
       break;
     case 'input':
+      //在 input 对应的 DOM 节点上新建_wrapperState属性
       ReactDOMInputInitWrapperState(domElement, rawProps);
       //浅拷贝value/checked等属性
       props = ReactDOMInputGetHostProps(domElement, rawProps);
+      //invalid listener
       trapBubbledEvent(TOP_INVALID, domElement);
       // For controlled components we always need to ensure we're listening
       // to onChange. Even if there is no listener.
+      //初始化 onChange listener
+      //https://www.cnblogs.com/Darlietoothpaste/p/10039127.html?utm_source=tuicool&utm_medium=referral
+      //暂时跳过
       ensureListeningTo(rootContainerElement, 'onChange');
       break;
     case 'option':
+      //dev 环境下
+      //1、判断<option>标签的子节点是否是 number/string
+      //2、判断是否正确设置defaultValue/value
       ReactDOMOptionValidateProps(domElement, rawProps);
+      //获取 option 的 child
       props = ReactDOMOptionGetHostProps(domElement, rawProps);
       break;
     case 'select':
+      //在 select 对应的 DOM 节点上新建_wrapperState属性
       ReactDOMSelectInitWrapperState(domElement, rawProps);
+      //设置<select>对象属性
       props = ReactDOMSelectGetHostProps(domElement, rawProps);
+      //invalid listener
       trapBubbledEvent(TOP_INVALID, domElement);
       // For controlled components we always need to ensure we're listening
       // to onChange. Even if there is no listener.
+      //初始化 onChange listener
       ensureListeningTo(rootContainerElement, 'onChange');
       break;
     case 'textarea':
+      //在 textarea 对应的 DOM 节点上新建_wrapperState属性
       ReactDOMTextareaInitWrapperState(domElement, rawProps);
+      //设置 textarea 内部属性
       props = ReactDOMTextareaGetHostProps(domElement, rawProps);
+      //invalid listener
       trapBubbledEvent(TOP_INVALID, domElement);
       // For controlled components we always need to ensure we're listening
       // to onChange. Even if there is no listener.
+      //初始化 onChange listener
       ensureListeningTo(rootContainerElement, 'onChange');
       break;
     default:
       props = rawProps;
   }
-
+  //判断新属性，比如 style 是否正确赋值
   assertValidProps(tag, props);
-
+  //设置初始的 DOM 对象属性
   setInitialDOMProperties(
     tag,
     domElement,
@@ -565,11 +667,12 @@ export function setInitialProperties(
     props,
     isCustomComponentTag,
   );
-
+  //对特殊的 DOM 标签进行最后的处理
   switch (tag) {
     case 'input':
       // TODO: Make sure we check if this is still unmounted or do any clean
       // up necessary since we never stop tracking anymore.
+      //
       track((domElement: any));
       ReactDOMInputPostMountWrapper(domElement, rawProps, false);
       break;
@@ -709,8 +812,7 @@ export function diffProperties(
       propKey === SUPPRESS_HYDRATION_WARNING
     ) {
       // Noop
-    }
-    else if (propKey === AUTOFOCUS) {
+    } else if (propKey === AUTOFOCUS) {
       // Noop. It doesn't work on updates anyway.
     }
     //如果有绑定事件的话
@@ -721,8 +823,7 @@ export function diffProperties(
       if (!updatePayload) {
         updatePayload = [];
       }
-    }
-    else {
+    } else {
       // For all other deleted properties we add it to the queue. We use
       // the whitelist in the commit phase instead.
       //将不符合以上条件的删除属性 propKey push 进 updatePayload 中
@@ -844,7 +945,7 @@ export function diffProperties(
     ) {
       // Noop
     }
-    ////如果有绑定事件的话，如<div onClick=(()=>{ xxx })></div>
+    //如果有绑定事件的话，如<div onClick=(()=>{ xxx })></div>
     else if (registrationNameModules.hasOwnProperty(propKey)) {
       //绑定事件里有回调函数的话
       if (nextProp != null) {

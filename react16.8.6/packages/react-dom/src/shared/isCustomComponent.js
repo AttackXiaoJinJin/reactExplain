@@ -7,10 +7,14 @@
  * @flow
  */
 
+//判断是否是自定义的 DOM 标签
 function isCustomComponent(tagName: string, props: Object) {
+  //一般自定义标签的命名规则是带`-`的
   if (tagName.indexOf('-') === -1) {
+    //https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes/is
     return typeof props.is === 'string';
   }
+  //以下的是SVG/MathML的标签属性
   switch (tagName) {
     // These are reserved SVG and MathML elements.
     // We don't mind this whitelist too much because we expect it to never grow.
