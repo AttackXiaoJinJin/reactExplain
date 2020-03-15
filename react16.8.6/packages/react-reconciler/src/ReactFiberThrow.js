@@ -197,16 +197,17 @@ function throwException(
 ) {
   // The source fiber did not complete.
   //effectTag 置为 Incomplete
+  //判断节点更新的过程中出现异常
   sourceFiber.effectTag |= Incomplete;
   // Its effect list is no longer valid.
   //清空 effect 链
   sourceFiber.firstEffect = sourceFiber.lastEffect = null;
 
   //如果是suspend的情况
-  //value 是一个 promise 对象
   if (
     value !== null &&
     typeof value === 'object' &&
+    //value 是一个 promise 对象
     typeof value.then === 'function'
   ) {
     // This is a thenable.
@@ -231,6 +232,7 @@ function throwException(
         // Stash the promise on the boundary fiber. If the boundary times out, we'll
         // attach another listener to flip the boundary back to its normal state.
         const thenables: Set<Thenable> = (workInProgress.updateQueue: any);
+        //清空目标节点的更新队列
         if (thenables === null) {
           const updateQueue = (new Set(): any);
           updateQueue.add(thenable);
@@ -381,6 +383,7 @@ function throwException(
   // We didn't find a boundary that could handle this type of exception. Start
   // over and traverse parent path again, this time treating the exception
   // as an error.
+  //设置workInProgressRootExitStatus=1，即 true
   renderDidError();
   value = createCapturedValue(value, sourceFiber);
   let workInProgress = returnFiber;
@@ -392,8 +395,10 @@ function throwException(
 
       case HostRoot: {
         const errorInfo = value;
+        //添加 ShouldCapture 的副作用
         workInProgress.effectTag |= ShouldCapture;
         workInProgress.expirationTime = renderExpirationTime;
+        //
         const update = createRootErrorUpdate(
           workInProgress,
           errorInfo,

@@ -1027,12 +1027,13 @@ function renderRoot(
 
         break;
       }
-      //捕获异常，并处理
+      //==========================================捕获异常，并处理================================================================
       catch (thrownValue)
       {
         // Reset module-level state that was set during the render phase.
         //重置状态
         resetContextDependencies();
+        // 重置 hooks 状态
         resetHooks();
 
         const sourceFiber = workInProgress;
@@ -1075,6 +1076,7 @@ function renderRoot(
         //但是因为已经是报错的，所以不会再渲染sourceFiber的子节点了
         workInProgress = completeUnitOfWork(sourceFiber);
       }
+      //=============================================================================================================================================
     } while (true);
 
     executionContext = prevExecutionContext;

@@ -26,7 +26,7 @@ export type CapturedError = {
   errorBoundaryName: string | null,
   willRetry: boolean,
 };
-
+//return 一个对象
 export function createCapturedValue<T>(
   value: T,
   source: Fiber,
@@ -34,7 +34,9 @@ export function createCapturedValue<T>(
   // If the value is an error, call this function immediately after it is thrown
   // so the stack is accurate.
   return {
+    //错误对象
     value,
+    //sourceFiber
     source,
     stack: getStackByFiberInDevAndProd(source),
   };

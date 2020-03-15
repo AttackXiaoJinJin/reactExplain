@@ -24,7 +24,7 @@ import getComponentName from 'shared/getComponentName';
 const ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
 
 type LifeCyclePhase = 'render' | 'getChildContext';
-
+//描述 fiber 的信息
 function describeFiber(fiber: Fiber): string {
   switch (fiber.tag) {
     case HostRoot:
@@ -45,11 +45,12 @@ function describeFiber(fiber: Fiber): string {
       return describeComponentFrame(name, source, ownerName);
   }
 }
-
+//从当前 fiber 获取相应的链
 export function getStackByFiberInDevAndProd(workInProgress: Fiber): string {
   let info = '';
   let node = workInProgress;
   do {
+    //描述 fiber 的信息
     info += describeFiber(node);
     node = node.return;
   } while (node);
