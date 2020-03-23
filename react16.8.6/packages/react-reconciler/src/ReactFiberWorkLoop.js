@@ -1074,6 +1074,7 @@ function renderRoot(
         );
         //完成对sourceFiber的渲染，
         //但是因为已经是报错的，所以不会再渲染sourceFiber的子节点了
+        //sourceFiber 即报错的节点
         workInProgress = completeUnitOfWork(sourceFiber);
       }
       //=============================================================================================================================================
@@ -1600,6 +1601,7 @@ function completeUnitOfWork(unitOfWork: Fiber): Fiber | null {
         returnFiber.effectTag |= Incomplete;
       }
     }
+    //=======else end==============================
     //获取兄弟节点
     const siblingFiber = workInProgress.sibling;
     if (siblingFiber !== null) {

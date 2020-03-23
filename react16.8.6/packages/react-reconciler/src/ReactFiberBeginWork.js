@@ -266,6 +266,8 @@ function forceUnmountCurrentAndReconcile(
   workInProgress.child = reconcileChildFibers(
     workInProgress,
     current.child,
+    //nextChildren 为 null 也就是删除内部的所有子节点
+    //渲染出的是一个空的 classComponent
     null,
     renderExpirationTime,
   );
@@ -273,10 +275,12 @@ function forceUnmountCurrentAndReconcile(
   // pass null in place of where we usually pass the current child set. This has
   // the effect of remounting all children regardless of whether their their
   // identity matches.
-
+  //再渲染一遍，此时老 props 为 null（对应上面的 nextChildren = null）
   workInProgress.child = reconcileChildFibers(
     workInProgress,
+    //workInProgress 为 null
     null,
+    //这里的新 props 跟老 props（null）基本是没有共同属性的
     nextChildren,
     renderExpirationTime,
   );
@@ -811,6 +815,7 @@ function finishClassComponent(
 
   // React DevTools reads this flag.
   workInProgress.effectTag |= PerformedWork;
+  //当 classComponent 内部的节点报错时
   if (current !== null && didCaptureError) {
     // If we're recovering from an error, reconcile without reusing any of
     // the existing children. Conceptually, the normal children and the children
