@@ -112,6 +112,7 @@ export function getSelectionInformation() {
  * restore it. This is useful when performing operations that could remove dom
  * nodes and place them back in, resulting in focus being lost.
  */
+//当进行 DOM 操作时，比如删除，可能会丢失选中 DOM 的焦点，此方法能保存丢失的值
 export function restoreSelection(priorSelectionInformation) {
   const curFocusedElem = getActiveElementDeep();
   const priorFocusedElem = priorSelectionInformation.focusedElem;

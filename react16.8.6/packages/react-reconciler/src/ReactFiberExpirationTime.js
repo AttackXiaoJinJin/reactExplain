@@ -155,7 +155,7 @@ export function computeInteractiveExpiration(currentTime: ExpirationTime) {
     HIGH_PRIORITY_BATCH_SIZE,
   );
 }
-
+//通过 expirationTime 推断优先级
 export function inferPriorityFromExpirationTime(
   currentTime: ExpirationTime,
   expirationTime: ExpirationTime,

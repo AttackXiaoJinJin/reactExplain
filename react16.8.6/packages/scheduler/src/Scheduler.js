@@ -298,7 +298,9 @@ function flushWork(hasTimeRemaining, initialTime) {
   }
 }
 
+//临时替换当前的优先级，去执行传进来的 callback
 function unstable_runWithPriority(priorityLevel, eventHandler) {
+  //默认是 NormalPriority
   switch (priorityLevel) {
     case ImmediatePriority:
     case UserBlockingPriority:
@@ -310,12 +312,15 @@ function unstable_runWithPriority(priorityLevel, eventHandler) {
       priorityLevel = NormalPriority;
   }
 
+  //缓存当前优先级 currentPriorityLevel
   var previousPriorityLevel = currentPriorityLevel;
+  //临时替换优先级，去执行 eventHandler()
   currentPriorityLevel = priorityLevel;
-
+  //try 里 return 了，还是会执行 finally 内的语句
   try {
     return eventHandler();
   } finally {
+    //恢复当前优先级为之前的优先级
     currentPriorityLevel = previousPriorityLevel;
   }
 }

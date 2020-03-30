@@ -106,7 +106,7 @@ export function getCurrentPriorityLevel(): ReactPriorityLevel {
       invariant(false, 'Unknown priority level.');
   }
 }
-
+//获取调度优先级
 function reactPriorityToSchedulerPriority(reactPriorityLevel) {
   switch (reactPriorityLevel) {
     case ImmediatePriority:
@@ -124,11 +124,14 @@ function reactPriorityToSchedulerPriority(reactPriorityLevel) {
   }
 }
 
+//获取调度优先级，并临时替换当前的优先级，去执行传进来的 callback
 export function runWithPriority<T>(
   reactPriorityLevel: ReactPriorityLevel,
   fn: () => T,
 ): T {
+  //获取调度优先级
   const priorityLevel = reactPriorityToSchedulerPriority(reactPriorityLevel);
+  //临时替换当前的优先级，去执行传进来的 callback
   return Scheduler_runWithPriority(priorityLevel, fn);
 }
 //对callback进行包装处理，并更新调度队列的状态
@@ -137,7 +140,10 @@ export function scheduleCallback(
   callback: SchedulerCallback,
   options: SchedulerCallbackOptions | void | null,
 ) {
+  //获取调度优先级
   const priorityLevel = reactPriorityToSchedulerPriority(reactPriorityLevel);
+  //返回经过包装处理的task
+
   return Scheduler_scheduleCallback(priorityLevel, callback, options);
 }
 //入队callback，并返回临时的队列

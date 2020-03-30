@@ -204,13 +204,18 @@ export function getPublicInstance(instance: Instance): * {
   return instance;
 }
 
+//返回选中的DOM节点，一般为 document.activeElement || document.body
 export function prepareForCommit(containerInfo: Container): void {
+  //标记React浏览器事件发射器已启用
   eventsEnabled = ReactBrowserEventEmitterIsEnabled();
+  //返回选中的DOM节点，一般为 document.activeElement || document.body
   selectionInformation = getSelectionInformation();
+  //标记React浏览器事件发射器已关闭
   ReactBrowserEventEmitterSetEnabled(false);
 }
 
 export function resetAfterCommit(containerInfo: Container): void {
+  //selectionInformation 一般是 document.activeElement || document.body
   restoreSelection(selectionInformation);
   selectionInformation = null;
   ReactBrowserEventEmitterSetEnabled(eventsEnabled);
