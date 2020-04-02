@@ -225,53 +225,45 @@ function safelyCallDestroy(current, destroy) {
     }
   }
 }
-
+//classComponent 执行getSnapshotBeforeUpdate生命周期 api，将返回的值赋到fiber 对象的__reactInternalSnapshotBeforeUpdate上
+//functionComponent 执行 hooks 上的 effect API
 function commitBeforeMutationLifeCycles(
   current: Fiber | null,
   finishedWork: Fiber,
 ): void {
   switch (finishedWork.tag) {
+    //FunctionComponent会执行commitHookEffectList()
+    //FunctionComponent是 pureComponent，所以不会有副作用
+
+    //useEffect 和 useLayoutEffect 是赋予FunctionComponent有副作用能力的 hooks
+    //useEffect类似于componentDidMount，useLayoutEffect类似于componentDidUpdate
     case FunctionComponent:
     case ForwardRef:
     case SimpleMemoComponent: {
+      //提交 hooks 的 effects
       commitHookEffectList(UnmountSnapshot, NoHookEffect, finishedWork);
       return;
     }
     case ClassComponent: {
       if (finishedWork.effectTag & Snapshot) {
         if (current !== null) {
+          //老 props
           const prevProps = current.memoizedProps;
+          //老 state
           const prevState = current.memoizedState;
+          //getSnapshotBeforeUpdate 的计时开始
           startPhaseTimer(finishedWork, 'getSnapshotBeforeUpdate');
+          //获取 classComponent 的实例
           const instance = finishedWork.stateNode;
           // We could update instance props and state here,
           // but instead we rely on them being set during last render.
           // TODO: revisit this when we implement resuming.
           if (__DEV__) {
-            if (
-              finishedWork.type === finishedWork.elementType &&
-              !didWarnAboutReassigningProps
-            ) {
-              warning(
-                instance.props === finishedWork.memoizedProps,
-                'Expected %s props to match memoized props before ' +
-                  'getSnapshotBeforeUpdate. ' +
-                  'This might either be because of a bug in React, or because ' +
-                  'a component reassigns its own `this.props`. ' +
-                  'Please file an issue.',
-                getComponentName(finishedWork.type) || 'instance',
-              );
-              warning(
-                instance.state === finishedWork.memoizedState,
-                'Expected %s state to match memoized state before ' +
-                  'getSnapshotBeforeUpdate. ' +
-                  'This might either be because of a bug in React, or because ' +
-                  'a component reassigns its own `this.props`. ' +
-                  'Please file an issue.',
-                getComponentName(finishedWork.type) || 'instance',
-              );
-            }
+            //删除了 dev 代码
           }
+          //执行 getSnapshotBeforeUpdate 生命周期 api，在组件update前捕获一些 DOM 信息，
+          //返回自定义的值或 null，统称为 snapshot
+          //关于getSnapshotBeforeUpdate，请参考：https://zh-hans.reactjs.org/docs/react-component.html#getsnapshotbeforeupdate
           const snapshot = instance.getSnapshotBeforeUpdate(
             finishedWork.elementType === finishedWork.type
               ? prevProps
@@ -279,20 +271,13 @@ function commitBeforeMutationLifeCycles(
             prevState,
           );
           if (__DEV__) {
-            const didWarnSet = ((didWarnAboutUndefinedSnapshotBeforeUpdate: any): Set<
-              mixed,
-            >);
-            if (snapshot === undefined && !didWarnSet.has(finishedWork.type)) {
-              didWarnSet.add(finishedWork.type);
-              warningWithoutStack(
-                false,
-                '%s.getSnapshotBeforeUpdate(): A snapshot value (or null) ' +
-                  'must be returned. You have returned undefined.',
-                getComponentName(finishedWork.type),
-              );
-            }
+            //删除了 dev 代码
           }
+          //将 snapshot 赋值到__reactInternalSnapshotBeforeUpdate属性上，
+          // 这种手法跟[React源码解析之updateClassComponent（上）](https://mp.weixin.qq.com/s/F_UdPgdt6wtP78eDqUesoA)
+          // 中的「三、adoptClassInstance」里 instance._reactInternalFiber=workInProgress 类似
           instance.__reactInternalSnapshotBeforeUpdate = snapshot;
+          //getSnapshotBeforeUpdate 的计时结束
           stopPhaseTimer();
         }
       }
@@ -305,6 +290,7 @@ function commitBeforeMutationLifeCycles(
     case IncompleteClassComponent:
       // Nothing to do for these component types
       return;
+    //没有副作用，不应该进入到 commit 阶段
     default: {
       invariant(
         false,
@@ -315,17 +301,25 @@ function commitBeforeMutationLifeCycles(
   }
 }
 
+//循环 FunctionComponent 上的 effect 链，
+//根据hooks 上每个 effect 上的 effectTag，执行destroy/create 操作（类似于 componentDidMount/componentWillUnmount）
 function commitHookEffectList(
   unmountTag: number,
   mountTag: number,
   finishedWork: Fiber,
 ) {
+  //FunctionComponent 的更新队列
+  //补充：FunctionComponent的 side-effect 是放在 updateQueue.lastEffect 上的
+  //ReactFiberHooks.js中的pushEffect()里有说明： componentUpdateQueue.lastEffect = effect.next = effect;
   const updateQueue: FunctionComponentUpdateQueue | null = (finishedWork.updateQueue: any);
   let lastEffect = updateQueue !== null ? updateQueue.lastEffect : null;
+  //如果有副作用 side-effect的话，循环effect 链，根据 effectTag，执行每个 effect
   if (lastEffect !== null) {
+    //第一个副作用
     const firstEffect = lastEffect.next;
     let effect = firstEffect;
     do {
+      //如果包含 unmountTag 这个 effectTag的话，执行destroy()，并将effect.destroy置为 undefined
       if ((effect.tag & unmountTag) !== NoHookEffect) {
         // Unmount
         const destroy = effect.destroy;
@@ -334,44 +328,14 @@ function commitHookEffectList(
           destroy();
         }
       }
+      //如果包含 mountTag 这个 effectTag 的话，执行 create()
       if ((effect.tag & mountTag) !== NoHookEffect) {
         // Mount
         const create = effect.create;
         effect.destroy = create();
 
         if (__DEV__) {
-          const destroy = effect.destroy;
-          if (destroy !== undefined && typeof destroy !== 'function') {
-            let addendum;
-            if (destroy === null) {
-              addendum =
-                ' You returned null. If your effect does not require clean ' +
-                'up, return undefined (or nothing).';
-            } else if (typeof destroy.then === 'function') {
-              addendum =
-                '\n\nIt looks like you wrote useEffect(async () => ...) or returned a Promise. ' +
-                'Instead, write the async function inside your effect ' +
-                'and call it immediately:\n\n' +
-                'useEffect(() => {\n' +
-                '  async function fetchData() {\n' +
-                '    // You can await here\n' +
-                '    const response = await MyAPI.getData(someId);\n' +
-                '    // ...\n' +
-                '  }\n' +
-                '  fetchData();\n' +
-                `}, [someId]); // Or [] if effect doesn't need props or state\n\n` +
-                'Learn more about data fetching with Hooks: https://fb.me/react-hooks-data-fetching';
-            } else {
-              addendum = ' You returned: ' + destroy;
-            }
-            warningWithoutStack(
-              false,
-              'An effect function must not return anything besides a function, ' +
-                'which is used for clean-up.%s%s',
-              addendum,
-              getStackByFiberInDevAndProd(finishedWork),
-            );
-          }
+          //删除了 dev 代码
         }
       }
       effect = effect.next;

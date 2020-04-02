@@ -1887,6 +1887,7 @@ function commitRootImpl(root) {
     //===========第一个 while 循环==============
     do {
       if (__DEV__) {
+        invokeGuardedCallback(null, commitBeforeMutationEffects, null);
         //删除了 dev 代码
       } else {
         try {
@@ -1917,6 +1918,7 @@ function commitRootImpl(root) {
     //=============第二个 while 循环=================
     do {
       if (__DEV__) {
+        invokeGuardedCallback(null, commitMutationEffects, null);
         //删除了 dev 代码
       } else {
         try {
@@ -1956,6 +1958,13 @@ function commitRootImpl(root) {
     //=============第三个 while 循环==========================
     do {
       if (__DEV__) {
+        invokeGuardedCallback(
+          null,
+          commitLayoutEffects,
+          null,
+          root,
+          expirationTime,
+        );
         //删除了 dev 代码
       } else {
         try {
@@ -2116,17 +2125,22 @@ function commitRootImpl(root) {
   return null;
 }
 //===========================================================
-
+//循环 effect 链，对有 Snapshot 的 effect 执行 commitBeforeMutationEffectOnFiber
 function commitBeforeMutationEffects() {
+  //循环 effect 链
   while (nextEffect !== null) {
+    //如果 effectTag 里有 Snapshot 这个 effectTag 的话
+    //关于&，请看[前端小知识10点(2020.2.10)](https://mp.weixin.qq.com/s/tt2XcW4GF7oBBZOPwTiCcg)中的「8、JS 中的 & 是什么意思」
     if ((nextEffect.effectTag & Snapshot) !== NoEffect) {
-      setCurrentDebugFiberInDEV(nextEffect);
+      //dev 可不看
+      // setCurrentDebugFiberInDEV(nextEffect);
+      //计 effect 的数
       recordEffect();
-
+      //获取当前 fiber 节点
       const current = nextEffect.alternate;
       commitBeforeMutationEffectOnFiber(current, nextEffect);
-
-      resetCurrentDebugFiberInDEV();
+      //dev 可不看
+      // resetCurrentDebugFiberInDEV();
     }
     nextEffect = nextEffect.nextEffect;
   }
