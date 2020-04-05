@@ -2146,17 +2146,19 @@ function commitBeforeMutationEffects() {
   }
 }
 
+//提交HostComponent的 side effect，也就是 DOM 节点的操作(增删改)
 function commitMutationEffects() {
   // TODO: Should probably move the bulk of this function to commitWork.
+  //循环 effect 链
   while (nextEffect !== null) {
     setCurrentDebugFiberInDEV(nextEffect);
 
     const effectTag = nextEffect.effectTag;
-
+    //如果有文字节点，则将value 置为''
     if (effectTag & ContentReset) {
       commitResetTextContent(nextEffect);
     }
-
+    ////将 ref 的指向置为 null
     if (effectTag & Ref) {
       const current = nextEffect.alternate;
       if (current !== null) {
@@ -2168,9 +2170,12 @@ function commitMutationEffects() {
     // updates, and deletions. To avoid needing to add a case for every possible
     // bitmap value, we remove the secondary effects from the effect tag and
     // switch on that value.
+    //以下情况是针对 替换(Placement)、更新(Update)和 删除(Deletion) 的 effectTag 的
     let primaryEffectTag = effectTag & (Placement | Update | Deletion);
     switch (primaryEffectTag) {
+      //插入新节点
       case Placement: {
+        //针对该节点及子节点进行插入操作
         commitPlacement(nextEffect);
         // Clear the "placement" from effect tag so that we know that this is
         // inserted, before any life-cycles like componentDidMount gets called.
@@ -2181,6 +2186,7 @@ function commitMutationEffects() {
       }
       case PlacementAndUpdate: {
         // Placement
+        //针对该节点及子节点进行插入操作
         commitPlacement(nextEffect);
         // Clear the "placement" from effect tag so that we know that this is
         // inserted, before any life-cycles like componentDidMount gets called.
@@ -2188,23 +2194,29 @@ function commitMutationEffects() {
 
         // Update
         const current = nextEffect.alternate;
+        //对 DOM 节点上的属性进行更新
         commitWork(current, nextEffect);
         break;
       }
+      //更新节点
+      //旧节点->新节点
       case Update: {
         const current = nextEffect.alternate;
+        //对 DOM 节点上的属性进行更新
         commitWork(current, nextEffect);
         break;
       }
       case Deletion: {
+        //删除节点
         commitDeletion(nextEffect);
         break;
       }
     }
 
     // TODO: Only record a mutation effect if primaryEffectTag is non-zero.
+    //不看
     recordEffect();
-
+    //dev，不看
     resetCurrentDebugFiberInDEV();
     nextEffect = nextEffect.nextEffect;
   }

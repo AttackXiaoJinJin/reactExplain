@@ -373,6 +373,7 @@ export function commitMount(
   }
 }
 
+//进行节点的更新
 export function commitUpdate(
   domElement: Instance,
   updatePayload: Array<mixed>,
@@ -383,12 +384,16 @@ export function commitUpdate(
 ): void {
   // Update the props handle so that we know which props are the ones with
   // with current event handlers.
+
+  //挂载属性：node[internalEventHandlersKey] = props;
   updateFiberProps(domElement, newProps);
   // Apply the diff to the DOM node.
+  //更新 DOM 属性
   updateProperties(domElement, updatePayload, type, oldProps, newProps);
 }
-
+//将该 DOM 节点的 value 设置为 ''
 export function resetTextContent(domElement: Instance): void {
+  //给 DOM 节点设置text
   setTextContent(domElement, '');
 }
 

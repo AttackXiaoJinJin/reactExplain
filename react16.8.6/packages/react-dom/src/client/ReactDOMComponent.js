@@ -321,6 +321,7 @@ export function trapClickOnNonInteractiveElement(node: HTMLElement) {
   // TODO: Only do this for the relevant Safaris maybe?
   node.onclick = noop;
 }
+
 //初始化 DOM 对象的内部属性
 function setInitialDOMProperties(
   tag: string,
@@ -395,7 +396,7 @@ function setInitialDOMProperties(
     }
   }
 }
-
+//更新 DOM 属性
 function updateDOMProperties(
   domElement: Element,
   updatePayload: Array<any>,
@@ -403,16 +404,31 @@ function updateDOMProperties(
   isCustomComponentTag: boolean,
 ): void {
   // TODO: Handle wasCustomComponentTag
+  //遍历更新队列，注意 i=i+2，因为 updatePayload 是这样的：['style',{height:14},'__html',xxxx,...]
+  //关于updatePayload，请看:
+  // [React源码解析之HostComponent的更新(上)](https://juejin.im/post/5e5c5e1051882549003d1fc7)中的「四、diffProperties」
   for (let i = 0; i < updatePayload.length; i += 2) {
+    //要更新的属性
     const propKey = updatePayload[i];
+    //要更新的值
     const propValue = updatePayload[i + 1];
+    //要更新style 属性的话，则执行setValueForStyles
     if (propKey === STYLE) {
+      // 设置 style 的值，请看：
+      // [React源码解析之HostComponent的更新(下)](https://juejin.im/post/5e65f86f6fb9a07cdc600e09)中的「八、setInitialProperties」中的第八点
       setValueForStyles(domElement, propValue);
-    } else if (propKey === DANGEROUSLY_SET_INNER_HTML) {
+    }
+
+    else if (propKey === DANGEROUSLY_SET_INNER_HTML) {
+      // 设置innerHTML属性，请看：
+      // [React源码解析之HostComponent的更新(下)](https://juejin.im/post/5e65f86f6fb9a07cdc600e09)中的「八、setInitialProperties」中的第八点
       setInnerHTML(domElement, propValue);
     } else if (propKey === CHILDREN) {
+      //设置textContent属性，请看：
+      // [React源码解析之HostComponent的更新(下)](https://juejin.im/post/5e65f86f6fb9a07cdc600e09)中的「八、setInitialProperties」中的第八点
       setTextContent(domElement, propValue);
     } else {
+      //为DOM节点设置属性值，即 setAttribute
       setValueForProperty(domElement, propKey, propValue, isCustomComponentTag);
     }
   }
@@ -1004,15 +1020,21 @@ export function updateProperties(
   // Update checked *before* name.
   // In the middle of an update, it is possible to have multiple checked.
   // When a checked radio tries to change name, browser makes another radio's checked false.
+  //如果是 radio 标签的话
   if (
     tag === 'input' &&
     nextRawProps.type === 'radio' &&
     nextRawProps.name != null
   ) {
+    //单选按钮的相关操作，可不看
     ReactDOMInputUpdateChecked(domElement, nextRawProps);
   }
+  //判断是否是自定义的 DOM 标签，具体请看：
+  //[React源码解析之HostComponent的更新(下)](https://mp.weixin.qq.com/s/aB8jRVFzJ6EkkIqPVF3r1Q)中的「八、setInitialProperties」
 
+  //之前是否是自定义标签
   const wasCustomComponentTag = isCustomComponent(tag, lastRawProps);
+  //待更新的是否是自定义标签
   const isCustomComponentTag = isCustomComponent(tag, nextRawProps);
   // Apply the diff.
   updateDOMProperties(
@@ -1024,6 +1046,7 @@ export function updateProperties(
 
   // TODO: Ensure that an update gets scheduled if any of the special props
   // changed.
+  //特殊标签的特殊处理，可不看
   switch (tag) {
     case 'input':
       // Update the wrapper around inputs *after* updating props. This has to
