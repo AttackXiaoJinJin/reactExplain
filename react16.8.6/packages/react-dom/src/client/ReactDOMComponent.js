@@ -1010,6 +1010,7 @@ export function diffProperties(
 }
 
 // Apply the diff.
+//diff prop，找出DOM 节点上属性的不同，以更新
 export function updateProperties(
   domElement: Element,
   updatePayload: Array<any>,

@@ -2184,6 +2184,7 @@ function commitMutationEffects() {
         nextEffect.effectTag &= ~Placement;
         break;
       }
+      //替换并更新该节点是Placement和Update的结合，就不讲了
       case PlacementAndUpdate: {
         // Placement
         //针对该节点及子节点进行插入操作

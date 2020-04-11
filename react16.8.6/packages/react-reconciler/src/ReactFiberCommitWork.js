@@ -1183,34 +1183,8 @@ function commitDeletion(current: Fiber): void {
 function commitWork(current: Fiber | null, finishedWork: Fiber): void {
   //因为是执行 DOM 操作，所以supportsMutation为 true，下面这一段不看
   if (!supportsMutation) {
-    switch (finishedWork.tag) {
-      case FunctionComponent:
-      case ForwardRef:
-      case MemoComponent:
-      case SimpleMemoComponent: {
-        // Note: We currently never use MountMutation, but useLayout uses
-        // UnmountMutation.
-        commitHookEffectList(UnmountMutation, MountMutation, finishedWork);
-        return;
-      }
-      case Profiler: {
-        return;
-      }
-      case SuspenseComponent: {
-        commitSuspenseComponent(finishedWork);
-        attachSuspenseRetryListeners(finishedWork);
-        return;
-      }
-      case SuspenseListComponent: {
-        attachSuspenseRetryListeners(finishedWork);
-        return;
-      }
-    }
-
-    commitContainer(finishedWork);
-    return;
+    //删除了本情况代码
   }
-
 
   switch (finishedWork.tag) {
     case FunctionComponent:
