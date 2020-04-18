@@ -351,7 +351,7 @@ export const noTimeout = -1;
 // -------------------
 
 export const supportsMutation = true;
-
+ //判断是否是自动聚焦的 DOM 标签，是的话则调用 node.focus() 获取焦点
 export function commitMount(
   domElement: Instance,
   type: string,
@@ -364,6 +364,7 @@ export function commitMount(
   // does to implement the `autoFocus` attribute on the client). But
   // there are also other cases when this might happen (such as patching
   // up text content during hydration mismatch). So we'll check this again.
+  //判断是否是自动聚焦的 DOM 标签，是的话则调用 node.focus() 获取焦点
   if (shouldAutoFocusHostComponent(type, newProps)) {
     ((domElement: any):
       | HTMLButtonElement

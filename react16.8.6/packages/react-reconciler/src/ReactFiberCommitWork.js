@@ -181,14 +181,11 @@ function safelyCallComponentWillUnmount(current, instance) {
 
 function safelyDetachRef(current: Fiber) {
   const ref = current.ref;
+  //ref 不为 null，如果是 function，则 ref(null)，否则 ref.current=null
   if (ref !== null) {
     if (typeof ref === 'function') {
       if (__DEV__) {
-        invokeGuardedCallback(null, ref, null, null);
-        if (hasCaughtError()) {
-          const refError = clearCaughtError();
-          captureCommitPhaseError(current, refError);
-        }
+        //删除了 dev 代码
       } else {
         try {
           ref(null);
@@ -289,6 +286,7 @@ function commitBeforeMutationLifeCycles(
   }
 }
 
+
 //循环 FunctionComponent 上的 effect 链，
 //根据hooks 上每个 effect 上的 effectTag，执行destroy/create 操作（类似于 componentDidMount/componentWillUnmount）
 function commitHookEffectList(
@@ -308,6 +306,7 @@ function commitHookEffectList(
     let effect = firstEffect;
     do {
       //如果包含 unmountTag 这个 effectTag的话，执行destroy()，并将effect.destroy置为 undefined
+      //NoHookEffect即NoEffect
       if ((effect.tag & unmountTag) !== NoHookEffect) {
         // Unmount
         const destroy = effect.destroy;
@@ -336,6 +335,10 @@ export function commitPassiveHookEffects(finishedWork: Fiber): void {
   commitHookEffectList(NoHookEffect, MountPassive, finishedWork);
 }
 
+//重点看 FunctionComponent/ClassComponent/HostComponent
+//① FunctionComponent——执行effect.destroy()/effect.create()
+//② ClassComponent——componentDidMount()/componentDidUpdate()，effect 链——执行 setState 的 callback，capturedEffect 链执行 componentDidCatch()
+//③ HostComponent——判断是否是自动聚焦的 DOM 标签，是的话则调用 node.focus() 获取焦点
 function commitLifeCycles(
   finishedRoot: FiberRoot,
   current: Fiber | null,
@@ -346,45 +349,28 @@ function commitLifeCycles(
     case FunctionComponent:
     case ForwardRef:
     case SimpleMemoComponent: {
+      //循环 FunctionComponent 上的 effect 链，执行 effect.destroy()/create()，类似于 componentWillUnmount()/componentDidMount()
       commitHookEffectList(UnmountLayout, MountLayout, finishedWork);
       break;
     }
     case ClassComponent: {
       const instance = finishedWork.stateNode;
+      //有 update 的 effectTag 的话
       if (finishedWork.effectTag & Update) {
+        //如果是第一次渲染的话，则执行 componentDidMount()
         if (current === null) {
           startPhaseTimer(finishedWork, 'componentDidMount');
           // We could update instance props and state here,
           // but instead we rely on them being set during last render.
           // TODO: revisit this when we implement resuming.
           if (__DEV__) {
-            if (
-              finishedWork.type === finishedWork.elementType &&
-              !didWarnAboutReassigningProps
-            ) {
-              warning(
-                instance.props === finishedWork.memoizedProps,
-                'Expected %s props to match memoized props before ' +
-                  'componentDidMount. ' +
-                  'This might either be because of a bug in React, or because ' +
-                  'a component reassigns its own `this.props`. ' +
-                  'Please file an issue.',
-                getComponentName(finishedWork.type) || 'instance',
-              );
-              warning(
-                instance.state === finishedWork.memoizedState,
-                'Expected %s state to match memoized state before ' +
-                  'componentDidMount. ' +
-                  'This might either be because of a bug in React, or because ' +
-                  'a component reassigns its own `this.props`. ' +
-                  'Please file an issue.',
-                getComponentName(finishedWork.type) || 'instance',
-              );
-            }
+            //删除了 dev 代码
           }
           instance.componentDidMount();
           stopPhaseTimer();
-        } else {
+        }
+        //如果是多次渲染的话，则执行 componentDidUpdate()
+        else {
           const prevProps =
             finishedWork.elementType === finishedWork.type
               ? current.memoizedProps
@@ -394,30 +380,9 @@ function commitLifeCycles(
           // We could update instance props and state here,
           // but instead we rely on them being set during last render.
           // TODO: revisit this when we implement resuming.
+          //删除了 dev 代码
           if (__DEV__) {
-            if (
-              finishedWork.type === finishedWork.elementType &&
-              !didWarnAboutReassigningProps
-            ) {
-              warning(
-                instance.props === finishedWork.memoizedProps,
-                'Expected %s props to match memoized props before ' +
-                  'componentDidUpdate. ' +
-                  'This might either be because of a bug in React, or because ' +
-                  'a component reassigns its own `this.props`. ' +
-                  'Please file an issue.',
-                getComponentName(finishedWork.type) || 'instance',
-              );
-              warning(
-                instance.state === finishedWork.memoizedState,
-                'Expected %s state to match memoized state before ' +
-                  'componentDidUpdate. ' +
-                  'This might either be because of a bug in React, or because ' +
-                  'a component reassigns its own `this.props`. ' +
-                  'Please file an issue.',
-                getComponentName(finishedWork.type) || 'instance',
-              );
-            }
+
           }
           instance.componentDidUpdate(
             prevProps,
@@ -428,35 +393,20 @@ function commitLifeCycles(
         }
       }
       const updateQueue = finishedWork.updateQueue;
+      //如果更新队列不为空的话
       if (updateQueue !== null) {
+        //删除了 dev 代码
         if (__DEV__) {
-          if (
-            finishedWork.type === finishedWork.elementType &&
-            !didWarnAboutReassigningProps
-          ) {
-            warning(
-              instance.props === finishedWork.memoizedProps,
-              'Expected %s props to match memoized props before ' +
-                'processing the update queue. ' +
-                'This might either be because of a bug in React, or because ' +
-                'a component reassigns its own `this.props`. ' +
-                'Please file an issue.',
-              getComponentName(finishedWork.type) || 'instance',
-            );
-            warning(
-              instance.state === finishedWork.memoizedState,
-              'Expected %s state to match memoized state before ' +
-                'processing the update queue. ' +
-                'This might either be because of a bug in React, or because ' +
-                'a component reassigns its own `this.props`. ' +
-                'Please file an issue.',
-              getComponentName(finishedWork.type) || 'instance',
-            );
-          }
+
         }
         // We could update instance props and state here,
         // but instead we rely on them being set during last render.
         // TODO: revisit this when we implement resuming.
+        //将 capturedUpdate 队列放到 update 队列末尾
+        //循环 effect 链，执行 setState() 的 callback
+        //清除 effect 链
+        //循环 capturedEffect 链，执行 componentDidCatch()
+        //清除 capturedEffect 链
         commitUpdateQueue(
           finishedWork,
           updateQueue,
@@ -466,6 +416,7 @@ function commitLifeCycles(
       }
       return;
     }
+    //fiberRoot 节点，暂时跳过
     case HostRoot: {
       const updateQueue = finishedWork.updateQueue;
       if (updateQueue !== null) {
@@ -489,6 +440,7 @@ function commitLifeCycles(
       }
       return;
     }
+    //DOM 标签
     case HostComponent: {
       const instance: Instance = finishedWork.stateNode;
 
@@ -496,14 +448,17 @@ function commitLifeCycles(
       // (eg DOM renderer may schedule auto-focus for inputs and form controls).
       // These effects should only be committed when components are first mounted,
       // aka when there is no current/alternate.
+      //如果是第一次渲染，并且该节点需要更新的话，就需要判断是否是自动聚焦的 DOM 标签
       if (current === null && finishedWork.effectTag & Update) {
         const type = finishedWork.type;
         const props = finishedWork.memoizedProps;
+        // 判断是否是自动聚焦的 DOM 标签
         commitMount(instance, type, props, finishedWork);
       }
 
       return;
     }
+    //文本节点，无生命周期方法
     case HostText: {
       // We have no life-cycles associated with text.
       return;
@@ -512,6 +467,7 @@ function commitLifeCycles(
       // We have no life-cycles associated with portals.
       return;
     }
+    //以下的情况也跳过
     case Profiler: {
       if (enableProfilerTimer) {
         const onRender = finishedWork.memoizedProps.onRender;
@@ -608,34 +564,26 @@ function hideOrUnhideAllChildren(finishedWork, isHidden) {
     }
   }
 }
-
+//获取 instance 实例，并指定给 ref
 function commitAttachRef(finishedWork: Fiber) {
   const ref = finishedWork.ref;
   if (ref !== null) {
     const instance = finishedWork.stateNode;
     let instanceToUse;
+    //获取可使用的 instance(实例)
     switch (finishedWork.tag) {
+      //DOM标签
       case HostComponent:
         instanceToUse = getPublicInstance(instance);
         break;
       default:
         instanceToUse = instance;
     }
+    //指定 ref 的引用
     if (typeof ref === 'function') {
       ref(instanceToUse);
     } else {
-      if (__DEV__) {
-        if (!ref.hasOwnProperty('current')) {
-          warningWithoutStack(
-            false,
-            'Unexpected ref object provided for %s. ' +
-              'Use either a ref-setter function or React.createRef().%s',
-            getComponentName(finishedWork.type),
-            getStackByFiberInDevAndProd(finishedWork),
-          );
-        }
-      }
-
+      //删除了 dev 代码
       ref.current = instanceToUse;
     }
   }
@@ -658,7 +606,7 @@ function commitDetachRef(current: Fiber) {
 
 //卸载 ref 和执行 componentWillUnmount()/effect.destroy()
 function commitUnmount(current: Fiber): void {
-  //执行onCommitFiberUnmount()
+  //执行onCommitFiberUnmount()，查了下是个空 function
   onCommitUnmount(current);
 
   switch (current.tag) {
@@ -667,7 +615,7 @@ function commitUnmount(current: Fiber): void {
     case ForwardRef:
     case MemoComponent:
     case SimpleMemoComponent: {
-      //下面代码结构和[React源码解析之Commit第一子阶段「before mutation」](https://mp.weixin.qq.com/s/YtgEVlZz1i5Yp87HrGrgRA)中的「三、commitHookEffectList()」
+      //下面代码结构和[React源码解析之Commit第一子阶段「before mutation」](https://mp.weixin.qq.com/s/YtgEVlZz1i5Yp87HrGrgRA)中的「三、commitHookEffectList()」相似
       //大致思路是循环 effect 链，执行每个 effect 上的 destory()
       const updateQueue: FunctionComponentUpdateQueue | null = (current.updateQueue: any);
       if (updateQueue !== null) {
@@ -698,6 +646,7 @@ function commitUnmount(current: Fiber): void {
       }
       return;
     }
+    //如果是 DOM 标签的话
     case HostComponent: {
       //安全卸载 ref
       safelyDetachRef(current);
@@ -725,15 +674,18 @@ function commitUnmount(current: Fiber): void {
     }
   }
 }
-
+//在目标节点被删除前，从该节点开始深度优先遍历，卸载该节点及其子节点 ref 和执行该节点及其子节点 componentWillUnmount()/effect.destroy()
 function commitNestedUnmounts(root: Fiber): void {
   // While we're inside a removed host node we don't want to call
   // removeChild on the inner nodes because they're removed by the top
   // call anyway. We also want to call componentWillUnmount on all
   // composites before this host node is removed from the tree. Therefore
   // we do an inner loop while we're still inside the host node.
+  //当在被删除的目标节点的内部时，我们不想在内部调用removeChild，因为子节点会被父节点给统一删除
+  //但是 React 要在目标节点被删除的时候，执行componentWillUnmount，这就是commitNestedUnmounts的目的
   let node: Fiber = root;
   while (true) {
+    // 卸载 ref 和执行 componentWillUnmount()/effect.destroy()
     commitUnmount(node);
     // Visit children because they may contain more composite or host nodes.
     // Skip portals because commitUnmount() currently visits them recursively.
@@ -760,19 +712,25 @@ function commitNestedUnmounts(root: Fiber): void {
     node = node.sibling;
   }
 }
-
+//重置 fiber 对象，释放内存(注意是属性值置为 null，不会删除属性)
 function detachFiber(current: Fiber) {
   // Cut off the return pointers to disconnect it from the tree. Ideally, we
   // should clear the child pointer of the parent alternate to let this
   // get GC:ed but we don't know which for sure which parent is the current
   // one so we'll settle for GC:ing the subtree of this child. This child
   // itself will be GC:ed when the parent updates the next time.
+
+  //重置目标 fiber对象，理想情况下，也应该清除父 fiber的指向(该 fiber)，这样有利于垃圾回收
+  //但是 React确定不了父节点，所以会在目标 fiber 下生成一个子 fiber，代表垃圾回收，该子节点
+  //会在父节点更新的时候，成为垃圾回收
   current.return = null;
   current.child = null;
   current.memoizedState = null;
   current.updateQueue = null;
   current.dependencies = null;
   const alternate = current.alternate;
+  //使用的doubleBuffer技术，Fiber在更新后，不用再重新创建对象，而是复制自身，并且两者相互复用，用来提高性能
+  //相当于是当前 fiber 的一个副本，用来节省内存用的，也要清空属性
   if (alternate !== null) {
     alternate.return = null;
     alternate.child = null;
@@ -1080,12 +1038,14 @@ function unmountHostComponents(current): void {
       //执行到这边，说明找到了符合条件的父节点
       currentParentIsValid = true;
     }
-    //如果是 DOM 元素或文本元素的话
+    //如果是 DOM 元素或文本元素的话(主要看这个)
     if (node.tag === HostComponent || node.tag === HostText) {
+      //在目标节点被删除前，从该节点开始深度优先遍历，卸载 ref 和执行 componentWillUnmount()/effect.destroy()
       commitNestedUnmounts(node);
       // After all the children have unmounted, it is now safe to remove the
       // node from the tree.
-      //我们只看 false 的情况
+      //我们只看 false 的情况，也就是操作 DOM 标签的情况
+      //currentParentIsContainer=false
       if (currentParentIsContainer) {
         removeChildFromContainer(
           ((currentParent: any): Container),
@@ -1094,6 +1054,7 @@ function unmountHostComponents(current): void {
       }
 
       else {
+        //源码：parentInstance.removeChild(child);
         removeChild(
           ((currentParent: any): Instance),
           (node.stateNode: Instance | TextInstance),
@@ -1101,34 +1062,16 @@ function unmountHostComponents(current): void {
       }
       // Don't visit children because we already visited them.
     }
-
+    //suspense 组件不看
     else if (
       enableSuspenseServerRenderer &&
       node.tag === DehydratedSuspenseComponent
     ) {
-      // Delete the dehydrated suspense boundary and all of its content.
-      if (currentParentIsContainer) {
-        clearSuspenseBoundaryFromContainer(
-          ((currentParent: any): Container),
-          (node.stateNode: SuspenseInstance),
-        );
-      } else {
-        clearSuspenseBoundary(
-          ((currentParent: any): Instance),
-          (node.stateNode: SuspenseInstance),
-        );
-      }
-    } else if (node.tag === HostPortal) {
-      if (node.child !== null) {
-        // When we go into a portal, it becomes the parent to remove from.
-        // We will reassign it back when we pop the portal on the way up.
-        currentParent = node.stateNode.containerInfo;
-        currentParentIsContainer = true;
-        // Visit children because portals might contain host components.
-        node.child.return = node;
-        node = node.child;
-        continue;
-      }
+      //不看这部分
+    }
+    //portal 不看
+    else if (node.tag === HostPortal) {
+      //不看这部分
     }
     //上述情况都不符合，可能是一个 Component 组件
     else {
@@ -1165,6 +1108,7 @@ function unmountHostComponents(current): void {
 }
 
 function commitDeletion(current: Fiber): void {
+  //因为是 DOM 操作，所以supportsMutation为 true
   if (supportsMutation) {
     // Recursively delete all host nodes from the parent.
     // Detach refs and call componentWillUnmount() on the whole subtree.
@@ -1177,6 +1121,7 @@ function commitDeletion(current: Fiber): void {
     //卸载 ref
     commitNestedUnmounts(current);
   }
+  //重置 fiber 属性
   detachFiber(current);
 }
 //对 DOM 节点上的属性进行更新

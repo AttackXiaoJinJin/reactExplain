@@ -8,8 +8,9 @@
  */
 
 export type HookEffectTag = number;
-
+//0
 export const NoEffect = /*             */ 0b00000000;
+//2
 export const UnmountSnapshot = /*      */ 0b00000010;
 export const UnmountMutation = /*      */ 0b00000100;
 export const MountMutation = /*        */ 0b00001000;

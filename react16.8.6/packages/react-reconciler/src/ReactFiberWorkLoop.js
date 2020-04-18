@@ -1969,6 +1969,9 @@ function commitRootImpl(root) {
       } else {
         try {
           //commit lifecycles,也就是触发生命周期的 api
+
+          //① 循环 effect 链，针对不同的 fiber 类型，进行effect.destroy()/componentDidMount()/callback/node.focus()等操作
+          //② 指定 ref 的引用
           commitLayoutEffects(root, expirationTime);
         } catch (error) {
           invariant(nextEffect !== null, 'Should be working on an effect.');
@@ -2222,20 +2225,27 @@ function commitMutationEffects() {
     nextEffect = nextEffect.nextEffect;
   }
 }
-
+//① 循环 effect 链，针对不同的 fiber 类型，进行effect.destroy()/componentDidMount()/callback/node.focus()等操作
+//② 指定 ref 的引用
 function commitLayoutEffects(
   root: FiberRoot,
   committedExpirationTime: ExpirationTime,
 ) {
   // TODO: Should probably move the bulk of this function to commitWork.
+  //循环 effect 链
   while (nextEffect !== null) {
+    //dev 环境代码，不看
     setCurrentDebugFiberInDEV(nextEffect);
 
     const effectTag = nextEffect.effectTag;
-
+    //如果有 Update、Callback 的 effectTag 的话
     if (effectTag & (Update | Callback)) {
       recordEffect();
       const current = nextEffect.alternate;
+      //重点看 FunctionComponent/ClassComponent/HostComponent
+      //① FunctionComponent——执行effect.destroy()
+      //② ClassComponent——componentDidMount()/componentDidUpdate()，effect 链——执行 setState 的 callback，capturedEffect 链执行 componentDidCatch
+      //③ HostComponent——判断是否是自动聚焦的 DOM 标签，是的话则调用 node.focus() 获取焦点
       commitLayoutEffectOnFiber(
         root,
         current,
@@ -2243,16 +2253,17 @@ function commitLayoutEffects(
         committedExpirationTime,
       );
     }
-
+    //指定 ref 的引用
     if (effectTag & Ref) {
       recordEffect();
+      //获取 instance 实例，并指定给 ref
       commitAttachRef(nextEffect);
     }
-
+    //副作用
     if (effectTag & Passive) {
       rootDoesHavePassiveEffects = true;
     }
-
+    //dev 环境，不看
     resetCurrentDebugFiberInDEV();
     nextEffect = nextEffect.nextEffect;
   }

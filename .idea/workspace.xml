@@ -3,9 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="11f8bc77-0e8b-4e46-ba98-688306b0187b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-dom/src/client/ReactDOMComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-dom/src/client/ReactDOMComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-dom/src/client/ReactDOMHostConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-dom/src/client/ReactDOMHostConfig.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberCommitWork.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberCommitWork.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactFiberWorkLoop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactHookEffectTags.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactHookEffectTags.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactUpdateQueue.js" beforeDir="false" afterPath="$PROJECT_DIR$/react16.8.6/packages/react-reconciler/src/ReactUpdateQueue.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +184,8 @@
       <workItem from="1585894237482" duration="17181000" />
       <workItem from="1586312839227" duration="409000" />
       <workItem from="1586341120677" duration="224000" />
-      <workItem from="1586586496876" duration="3336000" />
+      <workItem from="1586586496876" duration="30178000" />
+      <workItem from="1587208511623" duration="172000" />
     </task>
     <servers />
   </component>
@@ -209,9 +212,13 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state width="625" height="500" key="SwitcherDM" timestamp="1586595080304">
+    <state width="625" height="500" key="SwitcherDM" timestamp="1586706416547">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="625" height="500" key="SwitcherDM/0.23.1680.1027@0.23.1680.1027" timestamp="1586595080304" />
+    <state width="625" height="500" key="SwitcherDM/0.23.1680.1027@0.23.1680.1027" timestamp="1586706416547" />
+    <state x="470" y="251" width="740" height="570" key="find.popup" timestamp="1586830480783">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="470" y="251" width="740" height="570" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1586830480783" />
   </component>
 </project>

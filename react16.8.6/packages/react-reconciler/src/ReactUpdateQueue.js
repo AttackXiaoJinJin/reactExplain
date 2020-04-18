@@ -657,6 +657,12 @@ export function checkHasForceUpdateAfterProcessing(): boolean {
   return hasForceUpdate;
 }
 
+//如果 capturedUpdate 队列存在，则将其放到 update 队列末尾
+//清除 capturedUpdate 队列
+//循环 effect 链，执行 effect 上的 callback，也就是 this.setState({},()=>{})里的 callback
+//清除 effect 链
+//循环 capturedEffect 链，执行 capturedEffect 上的 callback，即 componentDidCatch()
+//清除 capturedEffect 链
 export function commitUpdateQueue<State>(
   finishedWork: Fiber,
   finishedQueue: UpdateQueue<State>,
@@ -667,24 +673,36 @@ export function commitUpdateQueue<State>(
   // lower priority updates left over, we need to keep the captured updates
   // in the queue so that they are rebased and not dropped once we process the
   // queue again at the lower priority.
+  //如果目标节点 render 时，捕获到了 update error，并且仍有低优先级的 update 未执行，那么 React 会在
+  //队列中保持这 update error，并去让低优先级的 update 去执行该 update error
+
+  //在更新时，捕获到了 error
+  //如果 update 队列仍存在，则将 capturedUpdate 放到正常 update 队列的末尾
+  //清除 capturedUpdate 链表
   if (finishedQueue.firstCapturedUpdate !== null) {
     // Join the captured update list to the end of the normal list.
+    //将 capturedUpdate 链表放到正常 update 队列的末尾
     if (finishedQueue.lastUpdate !== null) {
       finishedQueue.lastUpdate.next = finishedQueue.firstCapturedUpdate;
       finishedQueue.lastUpdate = finishedQueue.lastCapturedUpdate;
     }
     // Clear the list of captured updates.
+    //将 capturedUpdate 放到正常 update 队列的末尾后，清除 capturedUpdate 链表
     finishedQueue.firstCapturedUpdate = finishedQueue.lastCapturedUpdate = null;
   }
 
   // Commit the effects
+  //循环 effect 链，执行 effect 上的 callback，也就是 this.setState({},()=>{})里的 callback
   commitUpdateEffects(finishedQueue.firstEffect, instance);
+  //清除 effect 链
   finishedQueue.firstEffect = finishedQueue.lastEffect = null;
-
+  //循环 capturedEffect 链，执行 capturedEffect 上的 callback，即 componentDidCatch()
   commitUpdateEffects(finishedQueue.firstCapturedEffect, instance);
+  //清除 capturedEffect 链
   finishedQueue.firstCapturedEffect = finishedQueue.lastCapturedEffect = null;
 }
 
+//循环 effect 链，执行 effect 上的 callback
 function commitUpdateEffects<State>(
   effect: Update<State> | null,
   instance: any,
@@ -693,6 +711,8 @@ function commitUpdateEffects<State>(
     const callback = effect.callback;
     if (callback !== null) {
       effect.callback = null;
+      //源码：callback.call(context);
+      //注意是用 .call() 来执行 callback 的，目的就是指定 this
       callCallback(callback, instance);
     }
     effect = effect.nextEffect;
