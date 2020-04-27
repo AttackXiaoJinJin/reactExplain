@@ -42,6 +42,7 @@
 
 ***
 <h3>ComponentUpdate</h3>
+
 [React之childExpirationTime](https://juejin.im/post/5dcdfee86fb9a01ff600fe1d)
 <br/><br/>
 [React源码解析之FunctionComponent（上）](https://juejin.im/post/5ddbe114e51d45231e010c75)
@@ -62,6 +63,7 @@
 
 ***
 <h3>NodeUpdate</h3>
+
 [React源码解析之completeUnitOfWork](https://juejin.im/post/5e4a02bd51882549122aa50c)
 <br/><br/>
 [React源码解析之completeWork和HostText的更新](https://juejin.im/post/5e535d7e6fb9a07cbf46b282)
@@ -71,9 +73,11 @@
 [React源码解析之HostComponent的更新(下)](https://juejin.im/post/5e65f86f6fb9a07cdc600e09)
 ***
 <h3>错误处理</h3>
+
 [React源码解析之「错误处理」流程](https://juejin.im/post/5e7963956fb9a07cdc60253f)
 ***
 <h3>Commit阶段</h3>
+
 [React源码解析之commitRoot整体流程概览](https://juejin.im/post/5e829d1e6fb9a03c621666b5)
 <br/><br/>
 [React源码解析之Commit第一子阶段「before mutation」](https://juejin.im/post/5e883ff76fb9a03c860b6ab0)
