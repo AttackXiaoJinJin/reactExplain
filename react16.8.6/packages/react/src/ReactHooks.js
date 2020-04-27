@@ -94,6 +94,7 @@ export function useEffect(
   create: () => (() => void) | void,
   inputs: Array<mixed> | void | null,
 ) {
+  // const dispatcher = ReactCurrentDispatcher.current;
   const dispatcher = resolveDispatcher();
   return dispatcher.useEffect(create, inputs);
 }

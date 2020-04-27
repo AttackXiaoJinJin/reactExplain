@@ -204,6 +204,7 @@ function flushSyncCallbackQueueImpl() {
         for (; i < queue.length; i++) {
           let callback = queue[i];
           do {
+            //callback：renderRoot()
             callback = callback(isSync);
           } while (callback !== null);
         }

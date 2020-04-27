@@ -19,6 +19,7 @@ const ReactCurrentDispatcher = {
    * @type {ReactComponent}
    */
   //current对应渲染的某一节点
+  //那么何时是赋值成 Dispatcher 呢？
   current: (null: null | Dispatcher),
 };
 

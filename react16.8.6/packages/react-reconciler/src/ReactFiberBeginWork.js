@@ -636,7 +636,9 @@ function updateFunctionComponent(
   //如果不是第一次渲染，并且没有接收到更新的话
   //didReceiveUpdate:更新上的优化
   if (current !== null && !didReceiveUpdate) {
-    bailoutHooks(current, workInProgress, renderExpirationTime);
+  }
+  //跳过hooks更新
+  bailoutHooks(current, workInProgress, renderExpirationTime);
     return bailoutOnAlreadyFinishedWork(
       current,
       workInProgress,
