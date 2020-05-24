@@ -329,7 +329,7 @@ function commitHookEffectList(
     } while (effect !== firstEffect);
   }
 }
-
+//执行 fiber 上的副作用
 export function commitPassiveHookEffects(finishedWork: Fiber): void {
   commitHookEffectList(UnmountPassive, NoHookEffect, finishedWork);
   commitHookEffectList(NoHookEffect, MountPassive, finishedWork);

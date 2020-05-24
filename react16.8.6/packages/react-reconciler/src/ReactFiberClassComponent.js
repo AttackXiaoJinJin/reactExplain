@@ -566,6 +566,7 @@ function constructClassInstance(
   // Instantiate twice to help detect side-effects.
   //删除了 dev 代码
   //ctor即workInProgress.type，也就是定义classComponet的类
+  //2020513，在这边 new 了 class App{}
   const instance = new ctor(props, context);
   // instance.state 即开发层面的 this.state
   // 注意这个写法，连等赋值

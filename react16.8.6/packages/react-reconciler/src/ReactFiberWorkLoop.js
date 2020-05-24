@@ -2294,12 +2294,15 @@ export function flushPassiveEffects() {
   // Note: This currently assumes there are no passive effects on the root
   // fiber, because the root is not part of its own effect list. This could
   // change in the future.
+  //effect 链表上第一个有副作用的 fiber
+  //比如在 app() 中调用了 useEffect()
   let effect = root.current.firstEffect;
   while (effect !== null) {
     if (__DEV__) {
       //删除了 dev 代码
     } else {
       try {
+        //执行 fiber 上的副作用
         commitPassiveHookEffects(effect);
       } catch (error) {
         invariant(effect !== null, 'Should be working on an effect.');

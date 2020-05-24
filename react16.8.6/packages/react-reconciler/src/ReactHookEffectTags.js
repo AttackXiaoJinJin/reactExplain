@@ -8,13 +8,12 @@
  */
 
 export type HookEffectTag = number;
-//0
-export const NoEffect = /*             */ 0b00000000;
-//2
-export const UnmountSnapshot = /*      */ 0b00000010;
-export const UnmountMutation = /*      */ 0b00000100;
-export const MountMutation = /*        */ 0b00001000;
-export const UnmountLayout = /*        */ 0b00010000;
-export const MountLayout = /*          */ 0b00100000;
-export const MountPassive = /*         */ 0b01000000;
-export const UnmountPassive = /*       */ 0b10000000;
+
+export const NoEffect = /*             */ 0b00000000; //0
+export const UnmountSnapshot = /*      */ 0b00000010; //2
+export const UnmountMutation = /*      */ 0b00000100; //4
+export const MountMutation = /*        */ 0b00001000; //8
+export const UnmountLayout = /*        */ 0b00010000; //16
+export const MountLayout = /*          */ 0b00100000; //32
+export const MountPassive = /*         */ 0b01000000; //64
+export const UnmountPassive = /*       */ 0b10000000; //128
