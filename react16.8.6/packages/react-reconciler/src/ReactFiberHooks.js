@@ -312,7 +312,6 @@ function areHookInputsEqual(
   prevDeps: Array<mixed> | null,
 ) {
   //删除了 dev 代码
-
   if (prevDeps === null) {
     //删除了 dev 代码
     return false;
@@ -924,7 +923,7 @@ function mountEffectImpl(fiberEffectTag, hookEffectTag, create, deps): void {
   //useEffect hook 的 memoizedState 并不是一个具体的值，而是一个 effect 对象
   hook.memoizedState = pushEffect(hookEffectTag, create, undefined, nextDeps);
 }
-
+//比较 deps 判断是否需要重新执行 useEffect 的 callback
 function updateEffectImpl(fiberEffectTag, hookEffectTag, create, deps): void {
   // 当前正在 update 的 fiber 上的 hook
   const hook = updateWorkInProgressHook();
