@@ -91,6 +91,13 @@
 [React源码解析之Commit最后子阶段「layout」(附Commit阶段流程图)](https://juejin.im/post/5ea6f1746fb9a0437c3929c5)
 <br/><br/>
 ***
+<h3>React-Hooks</h3>
+
+[ReactHooks源码解析之useState及为什么useState要按顺序执行](https://juejin.im/post/5eb7c96ff265da7b90055137)
+<br/><br/>
+[ReactHooks源码解析之useEffect](https://juejin.im/post/5ed3356bf265da76cf6e4f75)
+<br/><br/>
+***
 <h2>微信公众号</h2>
 
 每周分享前端干货和生活感悟！
