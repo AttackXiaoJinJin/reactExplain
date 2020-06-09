@@ -1,4 +1,13 @@
 <h1>React源码解析</h1>
+<h3>说明</h3>
+
+* 本源码可从[https://github.com/AttackXiaoJinJin/reactExplain/blob/master/react16.8.6/CHANGELOG.md](https://github.com/AttackXiaoJinJin/reactExplain/blob/master/react16.8.6/CHANGELOG.md)
+查看版本号，建议直接 fork，若从官网下载源码，考虑到 [文件名称被rename](https://github.com/AttackXiaoJinJin/reactExplain/issues/147) 的问题，建议版本号从16.9.0开始
+官网 release 地址：
+[https://github.com/facebook/react/releases?after=v16.10.2](https://github.com/facebook/react/releases?after=v16.10.2)
+
+* 如果找不到对应的`函数名`/`文件名`，建议全局搜索里面的代码块进行查找
+
 <h3>API</h3>
 
 [React源码解析之React.createElement()和ReactElement()](https://juejin.im/post/5d2b0763f265da1bd14686c5)

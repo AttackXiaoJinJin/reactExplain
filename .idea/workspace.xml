@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="11f8bc77-0e8b-4e46-ba98-688306b0187b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,6 +199,8 @@
       <workItem from="1590166228324" duration="19413000" />
       <workItem from="1590715765424" duration="397000" />
       <workItem from="1590846542106" duration="1166000" />
+      <workItem from="1591066881097" duration="273000" />
+      <workItem from="1591682060889" duration="662000" />
     </task>
     <servers />
   </component>
@@ -228,9 +231,9 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="625" height="500" key="SwitcherDM/0.23.1680.1027@0.23.1680.1027" timestamp="1590166253441" />
-    <state x="400" y="141" width="1099" height="679" key="find.popup" timestamp="1590847407042">
+    <state x="400" y="141" width="1099" height="679" key="find.popup" timestamp="1591682475368">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="400" y="141" width="1099" height="679" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1590847407042" />
+    <state x="400" y="141" width="1099" height="679" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1591682475368" />
   </component>
 </project>
