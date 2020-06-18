@@ -107,6 +107,16 @@
 [ReactHooks源码解析之useEffect](https://juejin.im/post/5ed3356bf265da76cf6e4f75)
 <br/><br/>
 ***
+<h3>好文分享</h3>
+
+[图解React](http://www.7km.top) ——作者：[公里柒(KM.Seven)](https://github.com/7kms)
+<br/><br/>
+[React源码揭秘1 架构设计与首屏渲染]()——作者：[卡颂](https://juejin.im/user/5aea853b518825670f7baf2e/posts)
+<br/><br/>
+[这可能是最通俗的 React Fiber(时间分片) 打开方式](https://juejin.im/post/5dadc6045188255a270a0f85)——作者：[荒山](https://juejin.im/user/5762733b2e958a00696163ea/posts)
+<br/><br/>
+[走进React Fiber 架构](https://juejin.im/post/5df21c895188251260743972#heading-36)——作者：[intopiece_槟](https://juejin.im/user/59435713128fe1006a278401/posts)
+***
 <h2>微信公众号</h2>
 
 每周分享前端干货和生活感悟！
